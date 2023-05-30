@@ -1,0 +1,18 @@
+import Image from 'next/image'
+
+function Home() {
+  return (
+    <>
+    <h1>Meu PetShop</h1>
+    <Image
+        src="/doguito.png"
+        alt="Foto do cachorro mascote do petshop"
+        width={300}
+        height={250}
+    />
+    <p>Bem vindo ao Doguito Petshop!</p>
+    </>
+  )
+}
+
+export default Home
