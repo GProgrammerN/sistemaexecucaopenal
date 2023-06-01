@@ -11,11 +11,10 @@ export default function MenuItem(props: MenuItemProps) {
     function renderizarLink(){
     return (
         <div className={`flex flex-col justify-center items-center h-20 w-20 
-        text-gray-500
-         ${props.className}
+        ${props.className}
       `}>
         {props.icone}
-          <span className={`text-xs font-light`}>
+          <span className={`text-xs font-light`} >
             {props.texto}     
           </span>    
         </div>
