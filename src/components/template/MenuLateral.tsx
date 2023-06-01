@@ -1,3 +1,4 @@
+'use client';
 import { IconeAjutes, IconeCasa, IconeSair, IconeSino } from "../icons"
 import Logo from "./Logo"
 import MenuItem from "./MenuItem"
@@ -27,6 +28,7 @@ export default function MenuLateral(){
                       hover:bg-red-400
                       hover:text-white dark:hover:text-white
                     `}    
+                    onClick={() => console.log('logout')}
                 />  
             </ul>
     
