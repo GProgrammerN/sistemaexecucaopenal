@@ -16,7 +16,7 @@ export default function Layout(props: CabecalhoProps) {
         <div className={`flex`}>
             <Titulo titulo={props.titulo} subtitulo={props.subtitulo}/>
             <div className={`flex flex-grow justify-end`}>
-                <BotaoAlternarTema tema={xtema} alternarTema={setXtema}/>
+                <BotaoAlternarTema />
             </div>
         </div>
     )
