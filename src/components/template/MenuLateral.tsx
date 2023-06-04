@@ -1,8 +1,11 @@
 'use client';
+import { useAuth } from "@/data/context/AuthContext";
 import { IconeAjutes, IconeCasa, IconeSair, IconeSino } from "../icons"
 import Logo from "./Logo"
 import MenuItem from "./MenuItem"
+
 export default function MenuLateral(){
+    const { logout } = useAuth()
     return(
         <aside className={`
             flex flex-col
@@ -28,7 +31,7 @@ export default function MenuLateral(){
                       hover:bg-red-400
                       hover:text-white dark:hover:text-white
                     `}    
-                    onClick={() => console.log('logout')}
+                    onClick={logout}
                 />  
             </ul>
     

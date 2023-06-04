@@ -10,7 +10,7 @@ export default function BotaoAlternarTema(){
     function AlternarTema () 
     { setXtema(xtema === '' ? 'dark' : '')}
   
-      return (
+    return (
 
         xtema === 'dark' ? (
         <div onClick={AlternarTema} className={`
@@ -51,5 +51,6 @@ export default function BotaoAlternarTema(){
             </div>
         </div>
     )
-      )
+    
+    )
 }
