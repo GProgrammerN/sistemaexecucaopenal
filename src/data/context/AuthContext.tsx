@@ -2,7 +2,7 @@
 import { createContext, useContext, useState } from 'react'
 import firebase from '../../firebase/config'
 import Usuario from '@/app/model/Usuario'
-import router from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface AuthContextProps{
     usuario: Usuario
@@ -32,7 +32,7 @@ export function AuthProvider(props:any){
         )
         if(resp.user?.email){
             const usuario = await usuarioNormalizado(resp.user)
-            pushA()
+            setUsuario(usuario)
         }
     }
     return(
@@ -45,9 +45,6 @@ export function AuthProvider(props:any){
     )
 }
 
-function pushA(){
-    router.push('/')
-}
 
 export default AuthContext
 export const useAuth = () => useContext(AuthContext)

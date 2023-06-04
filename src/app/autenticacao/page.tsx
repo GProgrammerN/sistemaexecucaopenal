@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthInput from "@/components/auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
 import { useAuth } from "@/data/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Autenticacao() {
 
@@ -26,6 +27,10 @@ export default function Autenticacao() {
             console.log('cadastrar')
             exibirErro('Ocorreu um erro no cadastro!')
         }    
+    }
+    
+    if (usuario) {
+        useRouter().push('/')
     }
 
     return (
