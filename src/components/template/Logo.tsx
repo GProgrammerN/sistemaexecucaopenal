@@ -1,4 +1,4 @@
-import Localimage from "./img/LOGO_APP_BRANCO.png"
+import Localimage from "../../../public/images/LOGO_APP_BRANCO.png"
 import Image from "next/image"
 export default function Logo() {
   return (

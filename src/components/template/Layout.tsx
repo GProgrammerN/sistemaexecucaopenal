@@ -3,6 +3,8 @@ import MenuLateral from "./MenuLateral"
 import Cabecalho from "./Cabecalho"
 import Conteudo from "./Conteudo"
 import { useGlobalContext } from "@/data/context/AppContext";
+import ForcarAutenticacao from "../auth/ForcarAutenticacao";
+
 
 interface LayoutProps {
     titulo: string
@@ -14,6 +16,7 @@ export default function Layout(props: LayoutProps) {
     const {xtema, setXtema } = useGlobalContext();
 
     return(
+        <ForcarAutenticacao>
         <div className={` ${xtema} flex h-screen w-screen`}>
             <MenuLateral />
             <div className={`flex flex-col w-full p-7
@@ -24,5 +27,6 @@ export default function Layout(props: LayoutProps) {
                 </Conteudo>
             </div>
         </div>
+        </ForcarAutenticacao>
     )
 }

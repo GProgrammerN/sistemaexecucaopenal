@@ -2,8 +2,12 @@
 import { useState } from "react";
 import AuthInput from "@/components/auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
+import { useAuth } from "@/data/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Autenticacao() {
+
+    const {cadastrar, login, usuario, loginGoogle} = useAuth()
 
     const [modo, setModo] = useState<'login' | 'cadastro'>('login')
     const [erro, setErro] = useState(null)
@@ -15,14 +19,20 @@ export default function Autenticacao() {
         setTimeout(() => setErro(null), tempoSegundos*1000)
     }
 
-    function submeter() {
-        if(modo === 'login') {
-            console.log('login')
-            exibirErro('Ocorreu um erro no login!')
-        } else {
-            console.log('cadastrar')
-            exibirErro('Ocorreu um erro no cadastro!')
-        }    
+    async function submeter() {
+        try{
+            if(modo === 'login') {
+                await login(email, senha)
+            } else {
+                await cadastrar(email, senha)
+            }    
+        }catch(e:any){
+            exibirErro(e?.message ?? 'Erro desconhecido')
+        }
+    }
+    
+    if (usuario) {
+        useRouter().push('/')
     }
 
     return (
@@ -75,7 +85,7 @@ export default function Autenticacao() {
 
             <hr className="my-6 border-gray-300 w-f" />
 
-            <button onClick={submeter} className={`
+            <button onClick={loginGoogle} className={`
                 w-full bg-red-500 hover:bg-red-400
                 text-white rounded-lg px-4 py-3
             `}>

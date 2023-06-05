@@ -7,10 +7,18 @@ export default function BotaoAlternarTema(){
 
     const {xtema, setXtema } = useGlobalContext();
 
-    function AlternarTema () 
-    { setXtema(xtema === '' ? 'dark' : '')}
+    function AlternarTema (){
+        setXtema(xtema === '' ? 'dark' : '')
+        const novoTema = xtema === '' ? 'dark' : ''
+        localStorage.setItem('xtema', novoTema)
+    }
   
-      return (
+    useEffect(() => {
+        const temaSalvo = localStorage.getItem('xtema')
+        setXtema(temaSalvo)
+    }, [])
+
+    return (
 
         xtema === 'dark' ? (
         <div onClick={AlternarTema} className={`
@@ -51,5 +59,6 @@ export default function BotaoAlternarTema(){
             </div>
         </div>
     )
-      )
+    
+    )
 }
