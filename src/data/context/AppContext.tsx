@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, Dispatch, SetStateAction, useState } from "react";
+import { createContext, useContext, Dispatch, SetStateAction, useState, useEffect } from "react";
 
 interface ContextProps{
     xtema: string,
@@ -15,6 +15,7 @@ const GlobalContext = createContext<ContextProps>({
 export const GlobalContextProvider = ({children}) =>{
     
     const [xtema, setXtema] = useState('');
+
 
     return(
         <GlobalContext.Provider value={{xtema, setXtema}}>

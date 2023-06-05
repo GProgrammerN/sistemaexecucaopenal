@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function Autenticacao() {
 
-    const {usuario, loginGoogle} = useAuth()
+    const {cadastrar, login, usuario, loginGoogle} = useAuth()
 
     const [modo, setModo] = useState<'login' | 'cadastro'>('login')
     const [erro, setErro] = useState(null)
@@ -19,14 +19,16 @@ export default function Autenticacao() {
         setTimeout(() => setErro(null), tempoSegundos*1000)
     }
 
-    function submeter() {
-        if(modo === 'login') {
-            console.log('login')
-            exibirErro('Ocorreu um erro no login!')
-        } else {
-            console.log('cadastrar')
-            exibirErro('Ocorreu um erro no cadastro!')
-        }    
+    async function submeter() {
+        try{
+            if(modo === 'login') {
+                await login(email, senha)
+            } else {
+                await cadastrar(email, senha)
+            }    
+        }catch(e:any){
+            exibirErro(e?.message ?? 'Erro desconhecido')
+        }
     }
     
     if (usuario) {
