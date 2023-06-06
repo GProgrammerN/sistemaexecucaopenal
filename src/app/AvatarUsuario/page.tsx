@@ -5,7 +5,7 @@ export default function AvatarUsuario() {
     const { usuario } = useAuth()
 
 return(
-    <div className="flex flex-col">
+    <div className="hidden sm:flex flex-col items-center">
         <Link href="/perfil">
             <img 
                 src = {usuario?.imageUrl ?? '/images/avatar.png'}
@@ -13,8 +13,8 @@ return(
                 className="h-10 w-10 rounded-full cursor-pointer ml-3"
                 />
         </Link>
-        <p className="text-white text-sm">
-            {usuario?.nome ?? 'No Name'}
+        <p className="dark:text-white text-black text-sm">
+        {usuario?.nome.slice(0, 15) ?? 'Sem Apelido'}
         </p>
     
     </div>
