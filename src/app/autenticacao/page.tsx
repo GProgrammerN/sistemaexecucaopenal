@@ -1,4 +1,7 @@
 'use client';
+
+import fundo from "../../../public/images/JusticaCalc.jpg"
+import Image from "next/image";
 import { useState } from "react";
 import AuthInput from "@/components/auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
@@ -28,7 +31,7 @@ export default function Autenticacao() {
         })
         .catch((error) => {
             var errorCode = error.code;
-            var errorMessage = error.message;
+            var erro = error.message;
         })
     }
 
@@ -51,10 +54,7 @@ export default function Autenticacao() {
     return (
        <div className="flex h-screen items-center justify-center">
         <div className=" hidden md:block md:w-1/2 lg:w-2/3" >
-            <img 
-                src="https://media.istockphoto.com/id/1146468306/pt/foto/african-client-hand-sign-business-contract-at-meeting-closeup-view.jpg?s=1024x1024&w=is&k=20&c=G9oi9RFR-FEiQ7yoprkCpx7TdD9N_jOZ6CDXDdbBE2c="
-                className="h-screen w-full object-cover"
-            />
+            <Image src= {fundo} alt = 'Fundo Padrãp' className="h-screen w-full object-cover" />
         </div>
         <div className="m-10 w-full md:w-1/2 lg:w-1/3" >
             <h1 className={`
