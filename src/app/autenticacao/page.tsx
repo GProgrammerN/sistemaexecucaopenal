@@ -4,6 +4,7 @@ import AuthInput from "@/components/auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
 import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
+import firebase from '../../firebase/config'
 
 export default function Autenticacao() {
 
@@ -17,6 +18,18 @@ export default function Autenticacao() {
     function exibirErro(msg:any, tempoSegundos = 5){
         setErro(msg)
         setTimeout(() => setErro(null), tempoSegundos*1000)
+    }
+
+    function resetasenha(){
+        firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+            //
+            //            
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        })
     }
 
     async function submeter() {
@@ -110,6 +123,9 @@ export default function Autenticacao() {
                 </p>
 
             )}
+            <p>
+                <a onClick={resetasenha} className="text-purple-700 hover:text-purple-500 font-semibold cursor-pointer"> Esqueceu sua senha</a>
+            </p>
 
         </div>
        </div>
