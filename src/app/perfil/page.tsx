@@ -12,3 +12,18 @@ export default function Perfil() {
       </Layout>
     )
 }
+
+/*
+const user = firebase.auth().currentUser;
+
+user.updateProfile({
+  displayName: "Jane Q. User",
+  photoURL: "https://example.com/jane-q-user/profile.jpg"
+}).then(() => {
+  // Update successful
+  // ...
+}).catch((error) => {
+  // An error occurred
+  // ...
+});
+*/

@@ -1,8 +1,8 @@
 import AvatarUsuario from "@/app/AvatarUsuario/page"
 import BotaoAlternarTema from "./BotaoAlternarTema"
-import MenuLateral from "./MenuLateral"
 import Titulo from "./Titulo"
 import { useGlobalContext } from "@/data/context/AppContext"
+
 
 interface CabecalhoProps {
     titulo: string
