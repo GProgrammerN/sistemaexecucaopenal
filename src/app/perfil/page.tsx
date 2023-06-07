@@ -42,6 +42,30 @@ export default function Perfil() {
       // ...
     });
   }
+  function atualizaSenha(ref: any) {
+    const element = inputSenhaRef.current;
+    const novaSenha = element?.value
+
+    user?.updatePassword(novaSenha).then(() => {
+       // Update successful.
+    }).catch((error) => {
+      // An error ocurred
+      // ...
+    });
+  }
+
+  function alterarEmail(ref: any) {
+    const element = inputEmailRef.current;
+    const novoEmail = element?.value
+
+    user?.updateEmail(novoEmail).then(() => {
+      // Update successful
+      // ...
+    }).catch((error) => {
+     // An error occurred
+     // ...
+    });
+  }
 
   return (
     <Layout titulo="Perfil do Usuário"
@@ -74,11 +98,11 @@ export default function Perfil() {
           <label htmlFor="inputSenha" className="dark:text-white text-black pr-4">Senha</label>
           <input ref={inputSenhaRef} className="
     appearance-none bg-transparent border-none bg-neutral-800 text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="password" placeholder="Senha" id="inputSenha"/>
-          <button className="
-    flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button">
-            Salvar
+            type="password" placeholder="Senha 6 caracteres ou mais" id="inputSenha"/>
+<button className="
+    flex-shrink-0 bg-orange-500 hover:bg-orange-600 border-orange-500 hover:border-orange-600 text-sm border-4 text-white py-1 px-2 rounded"
+            type="button" onClick={atualizaSenha}>
+            Alterar
           </button>
         </div>
         <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
