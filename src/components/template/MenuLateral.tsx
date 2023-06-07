@@ -4,9 +4,9 @@ import { IconeAjutes, IconeCasa, IconeSair, IconeSino } from "../icons"
 import Logo from "./Logo"
 import MenuItem from "./MenuItem"
 
-export default function MenuLateral(){
+export default function MenuLateral() {
     const { logout } = useAuth()
-    return(
+    return (
         <aside className={`
             flex flex-col
             bg-gray-200 text-gray-700
@@ -14,27 +14,27 @@ export default function MenuLateral(){
             `}>
             <div className={`
                 flex flex-col items-center justify-center
-                bg-gradient-to-r from-indigo-100 to-purple-900
+                bg-gradient-to-r from-gray-800 to-purple-900
                 h-20 w-20`}>
                 <Logo />
             </div>
             <ul className="flex-grow">
                 <MenuItem url='/' texto="Inicio" icone={IconeCasa} />
-                <MenuItem url="/ajustes" texto="Ajustes" icone={IconeAjutes} />
+                <MenuItem url="/perfil" texto="Ajustes" icone={IconeAjutes} />
                 <MenuItem url="/notificacoes" texto="Notificações" icone={IconeSino} />
             </ul>
             <ul>
                 <MenuItem
-                     texto="Sair" icone={IconeSair} 
+                    texto="Sair" icone={IconeSair}
                     className={`
                       text-red-600 dark:text-red-400 
                       hover:bg-red-400
                       hover:text-white dark:hover:text-white
-                    `}    
+                    `}
                     onClick={logout}
-                />  
+                />
             </ul>
-    
+
         </aside>
     )
 }

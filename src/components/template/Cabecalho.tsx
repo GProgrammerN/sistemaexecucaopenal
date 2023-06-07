@@ -7,15 +7,15 @@ import { useGlobalContext } from "@/data/context/AppContext"
 interface CabecalhoProps {
     titulo: string
     subtitulo: string
-   
+
 }
 
 export default function Layout(props: CabecalhoProps) {
-    const {xtema, setXtema } = useGlobalContext();
+    const { xtema, setXtema } = useGlobalContext();
 
-    return(
+    return (
         <div className={`flex`}>
-            <Titulo titulo={props.titulo} subtitulo={props.subtitulo}/>
+            <Titulo titulo={props.titulo} subtitulo={props.subtitulo} />
             <div className={`flex flex-grow justify-end items-center`}>
                 <BotaoAlternarTema />
                 <AvatarUsuario />
