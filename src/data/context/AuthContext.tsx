@@ -88,7 +88,7 @@ export function AuthProvider(props:any){
                 new firebase.auth.GoogleAuthProvider()
             )
                 await configurarSessao(resp.user)
-                useRouter().push('/')
+//                useRouter().push('/')
             
         } finally {
             setCarregando(false)

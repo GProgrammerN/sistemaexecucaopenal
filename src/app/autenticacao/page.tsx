@@ -54,7 +54,7 @@ export default function Autenticacao() {
     return (
         <div className="flex h-screen items-center justify-center">
             <div className=" hidden md:block md:w-1/2 lg:w-2/3" >
-                <Image src={fundo} alt='Fundo Padrãp' className="h-screen w-full object-cover" />
+                <Image src={fundo} alt='Fundo Padrão' className="h-screen w-full object-cover" />
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3" >
                 <h1 className={`

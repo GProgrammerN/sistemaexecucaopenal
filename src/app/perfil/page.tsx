@@ -1,31 +1,48 @@
 'use client';
-import { useEffect, useState } from "react";
 import firebase from '../../firebase/config'
 import Layout from "@/components/template/Layout"
+import Conteudo from "@/components/template/Conteudo"
 import { useRef } from 'react';
-
+import { IconeInformacao } from '@/components/icons';
+import { useState } from 'react';
 
 
 export default function Perfil() {
 
   const user = firebase.auth().currentUser;
 
-  const inputNomeRef = useRef(null);
-  const inputEmailRef = useRef(null);
-  const inputSenhaRef = useRef(null);
-  const inputAvatarRef = useRef(null);
+  const inputNomeRef = useRef<any>(null);
+  const inputEmailRef = useRef<any>(null);
+  const inputSenhaRef = useRef<any>(null);
+  const inputAvatarRef = useRef<any>(null);
+  const [erro, setErro] = useState(null);
+  const [muda, setMuda] = useState(false)
+
+  function exibirErro(msg: any, tempoSegundos = 5, atencao: boolean) {
+    if (atencao) {
+      setMuda(true)
+    } else {
+      setMuda(false)
+    }
+
+    setErro(msg)
+    setTimeout(() => setErro(null), tempoSegundos * 1000)
+  }
+
 
   function atualizaUsuario(ref: any) {
-    const element = inputNomeRef.current;
-    const novoNome = element?.value
+    const element = inputNomeRef.current
+    const novoNome = element.value
     user?.updateProfile({
       displayName: novoNome
     }).then(() => {
-      // Update successful
-      // ...
+      //
+      exibirErro('Alterado com sucesso', 3, false)
+      //
     }).catch((error) => {
-      // An error occurred
-      // ...
+      //
+      exibirErro('Erro desconhecido', 3, true)
+      //
     });
   }
 
@@ -35,22 +52,28 @@ export default function Perfil() {
     user?.updateProfile({
       photoURL: novoAvatar
     }).then(() => {
-      // Update successful
-      // ...
+      //
+      exibirErro('Alterado com sucesso', 3, false)
+      //
     }).catch((error) => {
-      // An error occurred
-      // ...
+      //
+      exibirErro('Erro desconhecido', 3, true)
+      //
     });
   }
+  
   function atualizaSenha(ref: any) {
     const element = inputSenhaRef.current;
     const novaSenha = element?.value
 
     user?.updatePassword(novaSenha).then(() => {
-       // Update successful.
+      //
+      exibirErro('Alterado com sucesso', 3, false)
+      //
     }).catch((error) => {
-      // An error ocurred
-      // ...
+      //
+      exibirErro('Erro desconhecido', 3, true)
+      //
     });
   }
 
@@ -62,15 +85,15 @@ export default function Perfil() {
       // Update successful
       // ...
     }).catch((error) => {
-     // An error occurred
-     // ...
-    });
+      // An error occurred
+      // ...
+    })
   }
 
   return (
     <Layout titulo="Perfil do Usuário"
       subtitulo="Administre suas informações de usuário.">
-      <h1>Perfil de Usuário</h1>
+      <Conteudo children="Alterações no perfil do usuário" />
       <form className="flex flex-col justify-center items-center m-2">
         <div className="flex items-center border-b w-100 mb-2 border-teal-500 py-2">
           <label htmlFor="inputNome" className="dark:text-white text-black pr-4">Nome</label>
@@ -98,15 +121,15 @@ export default function Perfil() {
           <label htmlFor="inputSenha" className="dark:text-white text-black pr-4">Senha</label>
           <input ref={inputSenhaRef} className="
     appearance-none bg-transparent border-none bg-neutral-800 text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="password" placeholder="Senha 6 caracteres ou mais" id="inputSenha"/>
-<button className="
+            type="password" placeholder="Senha 6 caracteres ou mais" id="inputSenha" />
+          <button className="
     flex-shrink-0 bg-orange-500 hover:bg-orange-600 border-orange-500 hover:border-orange-600 text-sm border-4 text-white py-1 px-2 rounded"
             type="button" onClick={atualizaSenha}>
             Alterar
           </button>
         </div>
         <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
-        <label htmlFor="inputAvatar" className="dark:text-white text-black pr-4">Foto    </label>
+          <label htmlFor="inputAvatar" className="dark:text-white text-black pr-4">Foto    </label>
           <input ref={inputAvatarRef} className="
     appearance-none bg-transparent border-none text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text" placeholder="http://www.suaimagem.jpg" id="inputAvatar" />
@@ -116,12 +139,21 @@ export default function Perfil() {
             Salvar
           </button>
         </div>
+        {erro ? (
+          <div className = {`flex items-center text-white py-3 px-5 my-2 border-2 rounded-lg
+            ${muda ? 'bg-red-400 border-red-700' : 'bg-blue-400  border-blue-700'}
+             `}>
+            {IconeInformacao}
+            <span className={`ml-3`}>{erro}</span>
+          </div>
+        ) : false}
       </form>
 
     </Layout>
 
   )
 }
+
 
 /* ATUALIZAR PERFIL DO USUÁRIO
 const user = firebase.auth().currentUser;
