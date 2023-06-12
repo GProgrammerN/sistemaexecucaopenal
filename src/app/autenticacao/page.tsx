@@ -11,6 +11,8 @@ import firebase from '../../firebase/config'
 
 export default function Autenticacao() {
 
+    const { logout } = useAuth()
+
     const { cadastrar, login, usuario, loginGoogle } = useAuth()
 
     const [modo, setModo] = useState<'login' | 'cadastro'>('login')
@@ -46,8 +48,45 @@ export default function Autenticacao() {
             exibirErro(e?.message ?? 'Erro desconhecido')
         }
     }
+ 
+    function gravar() {
+        var id= firebase.auth().currentUser?.uid
+        var xemail= firebase.auth().currentUser?.email
 
+        const referencia = firebase.database().ref("usuario/"+id)
+
+        referencia.get().then((snapshot) => {
+            if (!snapshot.exists()) {
+                var dataAtual = new Date();
+                var dia = dataAtual.getDate();
+                var mes = (dataAtual.getMonth() + 1);
+                var ano = dataAtual.getFullYear();
+                var validade =  new Date( ano, mes, dia).toString()
+                referencia.set({email: xemail, expira: validade})
+            } else {
+                const data = snapshot.val()
+                console.log(data)
+                const obj = JSON.parse(JSON.stringify(data))
+                var datae = obj.expira
+                var datar = new Date(datae)
+                var dataAtual = new Date()
+                if (datar <= dataAtual){
+                    alert("Validade do sistema expirada! Renove a assinatura.")
+                    firebase.auth().signOut().then(() => {
+                        //logout
+                    }).catch(() => {
+                        //{logout}
+                    })
+                }
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
+        
+    }
+    
     if (usuario) {
+        gravar()
         useRouter().push('/')
     }
 
