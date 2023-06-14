@@ -9,9 +9,10 @@ import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
 import firebase from '../../firebase/config'
 
-export default function Autenticacao() {
 
-    const { logout } = useAuth()
+
+
+export default function Autenticacao() {
 
     const { cadastrar, login, usuario, loginGoogle } = useAuth()
 
@@ -45,15 +46,46 @@ export default function Autenticacao() {
                 await cadastrar(email, senha)
             }
         } catch (e: any) {
-            exibirErro(e?.message ?? 'Erro desconhecido')
+
+            if (e.code == 'auth/user-disabled') {
+                exibirErro('O usuário informado está desabilitado.')
+              } else if (e.code == 'auth/user-not-found') {
+                exibirErro('O usuário informado não está cadastrado.')
+              } else if (e.code == 'auth/invalid-email') {
+                exibirErro('O domínio do e-mail informado é inválido.')
+              } else if (e.code == 'auth/wrong-password') {
+                exibirErro('A senha informada está incorreta.')
+              } else {
+                exibirErro('Erro desconhecido')
+              }
+
+
         }
     }
  
     function gravar() {
+        const db = firebase.firestore();
         var id= firebase.auth().currentUser?.uid
         var xemail= firebase.auth().currentUser?.email
 
-        const referencia = firebase.database().ref("usuario/"+id)
+        var dataAtual = new Date();
+        var dia = dataAtual.getDate();
+        var mes = (dataAtual.getMonth() + 1);
+        var ano = dataAtual.getFullYear();
+        var validade =  new Date( ano, mes, dia).toString()
+
+        db.collection('usuario').doc(id).set({
+            email: xemail, 
+            expira: validade
+        })
+        .then((docRef) => {
+            console.log("Documento gravado com ID: ",docRef.id )
+        })
+        .catch((error) => {
+            console.error("Erro adicionando documento", erro)
+        })
+
+/*        const referencia = firebase.database().ref("usuario/"+id)
 
         referencia.get().then((snapshot) => {
             if (!snapshot.exists()) {
@@ -82,7 +114,7 @@ export default function Autenticacao() {
           }).catch((error) => {
             console.error(error);
           });
-        
+  */      
     }
     
     if (usuario) {
