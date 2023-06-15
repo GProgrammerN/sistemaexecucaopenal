@@ -84,37 +84,6 @@ export default function Autenticacao() {
         .catch((error) => {
             console.error("Erro adicionando documento", erro)
         })
-
-/*        const referencia = firebase.database().ref("usuario/"+id)
-
-        referencia.get().then((snapshot) => {
-            if (!snapshot.exists()) {
-                var dataAtual = new Date();
-                var dia = dataAtual.getDate();
-                var mes = (dataAtual.getMonth() + 1);
-                var ano = dataAtual.getFullYear();
-                var validade =  new Date( ano, mes, dia).toString()
-                referencia.set({email: xemail, expira: validade})
-            } else {
-                const data = snapshot.val()
-                console.log(data)
-                const obj = JSON.parse(JSON.stringify(data))
-                var datae = obj.expira
-                var datar = new Date(datae)
-                var dataAtual = new Date()
-                if (datar <= dataAtual){
-                    alert("Validade do sistema expirada! Renove a assinatura.")
-                    firebase.auth().signOut().then(() => {
-                        //logout
-                    }).catch(() => {
-                        //{logout}
-                    })
-                }
-            }
-          }).catch((error) => {
-            console.error(error);
-          });
-  */      
     }
     
     if (usuario) {
