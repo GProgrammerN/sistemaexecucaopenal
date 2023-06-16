@@ -2,7 +2,7 @@
 import Layout from "@/components/template/Layout"
 import { FormEvent, useEffect, useState } from "react"
 import firebase from '../firebase/config'
-
+import { useRouter } from "next/navigation";
 var clientes = [{}]
 clientes.shift()
 
@@ -48,13 +48,26 @@ export default function Home() {
           clientes.push(x)
         });
         setClienta(clientes)
+        clientes = []
       }
     
       )
+  }, [status])
 
-
-
+  useEffect(() => {
+    db.collection("usuario/" + id + "/clientes/").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var x = doc.data()
+          clientes.push(x)
+        });
+        setClienta(clientes)
+        clientes = []
+      }
+    
+      )
   }, [])
+
 
   function buscar(event: FormEvent){
     const palavra = event.target.value 
@@ -77,13 +90,14 @@ export default function Home() {
   }
 
   function deletar(ref: string) {
-    setStatus(!status)
     const referencia = db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
-      .then(() => {
-        alert("Cliente excluido com sucesso!")
-      }).catch((error) => {
-        console.error("Erro ao excluir cliente: ", error);
-      });
+    .then(() => {
+      alert("Cliente excluido com sucesso!")
+      setStatus(!status)
+    }).catch((error) => {
+      console.error("Erro ao excluir cliente: ", error);
+    }
+    )
   }
 
   function editar(ref: string){
@@ -114,7 +128,7 @@ export default function Home() {
   function atualizar() {
 
     db.collection("usuario").doc(id).collection("clientes").doc(nomeantigo).update({
-      nome: xnome,
+//      nome: xnome,
       matricula: xmatricula,
       processo: xprocesso,
       presidio: xpresidio,
@@ -133,10 +147,14 @@ export default function Home() {
     setDatacondicional('')
     setDatafim('')
     setAtualizando(false)
+    setStatus(!status)
   }
 
 
-  function gravar() {
+  function gravar(event: FormEvent) {
+
+    event.preventDefault()
+
     db.collection('usuario/' + id + '/clientes/').doc(xnome).set({
       nome: xnome,
       matricula: xmatricula,
@@ -156,6 +174,7 @@ export default function Home() {
     setDataprogressao('')
     setDatacondicional('')
     setDatafim('')
+    setStatus(!status)
   }
 
   return (
@@ -203,7 +222,7 @@ export default function Home() {
         </form>
       </main>
         {atualizando ? 
-          <a className="cursor-pointer" onClick={atualizar}>ATUALIZA</a>
+          <button className="cursor-pointer" onClick={atualizar}>ATUALIZA</button>
         :
         <a className="cursor-pointer" onClick={gravar}>GRAVAR</a>
         }
