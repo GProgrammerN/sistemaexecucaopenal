@@ -12,7 +12,7 @@ export default function AvatarUsuario() {
                 className="h-10 w-10 rounded-full"
             />
             <p className="dark:text-white text-black text-sm">
-                {usuario?.nome?.slice(0, 15) ?? 'Sem Apelido'}
+                {usuario?.nome?.slice(0, 40) ?? 'Sem Apelido'}
             </p>
 
         </div>
