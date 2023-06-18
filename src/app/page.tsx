@@ -6,30 +6,15 @@ import firebase from '../firebase/config'
 import { TbSelect } from "react-icons/tb"
 import { TbTrashOff } from "react-icons/tb"
 
-import Select from 'react-select'
-
-const options = [
-  { value: "1", label: "Crime não hediondo posterior a Lei 13.964, sem violencia ou grave ameaça a pessoa. 1" },
-  { value: "2", label: "Crime não hediondo posterior a Lei 13.964, com violencia ou grave ameaça a pessoa. 2" },
-  { value: "4", label: "Crime hediondo ou equiparado, posterior a Lei 13.964, com resultado morte. 4" },
-  { value: "5", label: "Crime não hediondo ou equiparado anterior a Lei 13.964. 5" },
-  { value: "6", label: "Crime hediondo ou equiparado anterior a Lei 13.964 e posterior a Lei 11.464/07. 6" },
-  { value: "7", label: "Crime hediondo ou equiparado anterior a Lei 11.464/07. 7" },
-  { value: "8", label: "Exercer comando de organização criminosa para prática de crime hediondo. 8" },
-  { value: "9", label: "Crime de constituição de milícia privada. 9" },
-  { value: "10", label: "Art. 112 §3º LEP 1/8 Mulheres gestantes ou responsáveis. 10" }
-]
-
-const opcao = [
-  { value: "1", label: "Primário" },
-  { value: "2", label: "Reincidente" }
-]
-
 var clientes = [{}]
 clientes.shift()
 
 var delitos = [{}]
 delitos.shift()
+
+var remicoes = [{}]
+remicoes.shift()
+
 
 type Cliente = {
   nome: string,
@@ -51,18 +36,18 @@ type Delito = {
   anosPena: string
 }
 
+type Remicao = {
+  descricao: string,
+  tipoRemicao: string,
+  qtdI: string,
+  qtdC: string
+}
+
 export default function Home() {
 
-  // Delitos
-  const [xtipocrime, setTipocrime] = useState('')
-  const [xprirei, setPrirei] = useState('')
-  const [xdescriD, setDescriD] = useState('')
-  const [xdiasPena, setDiasPena] = useState('')
-  const [xmesesPena, setMesesPena] = useState('')
-  const [xanosPena, setAnosPena] = useState('')
-
+  
   // Clientes
-
+  
   const [nomeantigo, setNomeantigo] = useState('')
   const [xnome, setNome] = useState('')
   const [xmatricula, setMatricula] = useState('')
@@ -73,17 +58,38 @@ export default function Home() {
   const [xdatacondicional, setDatacondicional] = useState('//')
   const [xdatafim, setDatafim] = useState('//')
   const db = firebase.firestore()
+  
+  // Delitos
+  const [xtipocrime, setTipocrime] = useState('')
+  const [xprirei, setPrirei] = useState('')
+  const [xdescriD, setDescriD] = useState('')
+  const [xdiasPena, setDiasPena] = useState('')
+  const [xmesesPena, setMesesPena] = useState('')
+  const [xanosPena, setAnosPena] = useState('')
+
+  // Remição
+  const [xdescricao, setDescricao] = useState('')
+  const [xtipoRemicao, setTiporemicao] = useState('')
+  const [xqtdI, setQtdI] = useState('')
+  const [xqtdC, setQtdC] = useState('')
+
 
   const [status, setStatus] = useState(false)
   const [status2, setStatus2] = useState(false)
-
+  const [status3, setStatus3] = useState(false)
+  const [mostra, setMostra] = useState(false)
+  
   const [atualizando, setAtualizando] = useState(false)
   const [atualizando2, setAtualizando2] = useState(false)
-  const [busca, setBusca] = useState<Cliente[]>()
+  const [atualizando3, setAtualizando3] = useState(false)
 
+  const [busca, setBusca] = useState<Cliente[]>()
+  
   const [clienta, setClienta] = useState<Cliente[]>()
 
   const [delita, setDelita] = useState<Delito[]>()
+
+  const [remica, setRemica] = useState<Remicao[]>()
 
   const [estabuscando, setEstabuscando] = useState(false)
 
@@ -100,7 +106,7 @@ export default function Home() {
         clientes = []
       }
       )
-    }, [status])
+  }, [status])
 
   useEffect(() => {
     db.collection("usuario/" + id + "/clientes/").get()
@@ -155,21 +161,45 @@ export default function Home() {
           alert("Delito excluido com sucesso!")
           setStatus2(!status2)
           db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              var y = doc.data()
-              delitos.push(y)
-            });
-            setDelita(delitos)
-            delitos = []
-          }
-          )
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                var y = doc.data()
+                delitos.push(y)
+              });
+              setDelita(delitos)
+              delitos = []
+            }
+            )
         }).catch((error) => {
           console.error("Erro ao excluir Delito: ", error);
         }
         )
     }
   }
+
+  function deletarremicao(ref: string) {
+    if (confirm("Confirma exclusão da Remição/Detração?") == true) {
+      db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(ref).delete()
+        .then(() => {
+          alert("Remição/Detração excluida com sucesso!")
+          setStatus3(!status3)
+          db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                var z = doc.data()
+                remicoes.push(z)
+              });
+              setRemica(remicoes)
+              remicoes = []
+            }
+            )
+        }).catch((error) => {
+          console.error("Erro ao excluir Remição/Detração: ", error);
+        }
+        )
+    }
+  }
+
 
   function editardelito(ref: string) {
     setAtualizando2(true)
@@ -180,6 +210,27 @@ export default function Home() {
     setMesesPena(ref.mesesPena)
     setAnosPena(ref.anosPena)
     setStatus2(!status2)
+  }
+
+  function editarremicao(ref: string) {
+    setAtualizando3(true)
+    setTiporemicao(ref.tipoRemicao)
+    setDescricao(ref.descricao)
+    setQtdI(ref.qtdI)
+    var convertido = ''
+    if(ref.tipoRemicao == "1"){
+      convertido = (parseInt(ref.qtdI)).toString()
+      setQtdC(convertido)
+    }
+    if(ref.tipoRemicao == "2"){
+      convertido = (parseInt(ref.qtdI)/3).toString()
+      setQtdC(convertido)
+    }
+    if(ref.tipoRemicao == "3"){
+      convertido = (parseInt(ref.qtdI)/12).toString()
+      setQtdC(convertido)
+    }
+    setStatus3(!status3)
   }
 
   function editar(ref: string) {
@@ -193,18 +244,29 @@ export default function Home() {
     setDataprogressao(ref.dataprogressao)
     setDatacondicional(ref.datacondicional)
     setDatafim(ref.datafim)
-    
+    setMostra(true)
     db.collection("usuario").doc(id).collection("clientes").doc(ref.nome).collection("delitos").get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        var y = doc.data()
-        delitos.push(y)
-      });
-      setDelita(delitos)
-      delitos = []
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var y = doc.data()
+          delitos.push(y)
+        });
+        setDelita(delitos)
+        delitos = []
+      }
+      )
+
+    db.collection("usuario").doc(id).collection("clientes").doc(ref.nome).collection("remicoes").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var z = doc.data()
+          remicoes.push(z)
+        });
+        setRemica(remicoes)
+        remicoes = []
+      }
+      )
     }
-    )
-  }
 
   function atualizar() {
 
@@ -275,25 +337,66 @@ export default function Home() {
     setDiasPena('')
     setMesesPena('')
     setAnosPena('')
-    setStatus(!status)
+    setStatus2(!status2)
 
     db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        var y = doc.data()
-        delitos.push(y)
-      });
-      setDelita(delitos)
-      delitos = []
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var y = doc.data()
+          delitos.push(y)
+        });
+        setDelita(delitos)
+        delitos = []
+      }
+      )
+
+  }
+
+  function gravarremicao() {
+    var convertido =''
+    if(xtipoRemicao == "1"){
+      convertido = (parseInt(xqtdI)).toString()
+      setQtdC(convertido)
     }
-    )
+    if(xtipoRemicao == "2"){
+      convertido = (parseInt(xqtdI)/3).toString()
+      setQtdC(convertido)
+    }
+    if(xtipoRemicao == "3"){
+      convertido = (parseInt(xqtdI)/12).toString()
+      setQtdC(convertido)
+    }
+
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).set({
+      descricao: xdescricao,
+      tipoRemicao: xtipoRemicao,
+      qtdI: xqtdI,
+      qtdC: convertido,
+    })
+    alert("Remição/Detração cadastrado com sucesso!")
+    setDescricao('')
+    setTiporemicao('')
+    setQtdI('')
+    setQtdC('')
+    setStatus3(!status3)
+
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var z = doc.data()
+          remicoes.push(z)
+        });
+        setRemica(remicoes)
+        remicoes = []
+      }
+      )
 
   }
 
   function atualizardelito() {
 
     db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
-//      descriD: xdescriD,
+      descriD: xdescriD,
       tipocrime: xtipocrime,
       prirei: xprirei,
       diasPena: xdiasPena,
@@ -307,20 +410,62 @@ export default function Home() {
     setDiasPena('')
     setMesesPena('')
     setAnosPena('')
-    setStatus(!status2)
-    setAtualizando2(atualizando2)
-
+    setStatus2(!status2)
+    setAtualizando2(!atualizando2)
 
     db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        var y = doc.data()
-        delitos.push(y)
-      });
-      setDelita(delitos)
-      delitos = []
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var y = doc.data()
+          delitos.push(y)
+        });
+        setDelita(delitos)
+        delitos = []
+      }
+      )
+  }
+
+  function atualizarremicao() {
+
+    var convertido =''
+    if(xtipoRemicao == "1"){
+      convertido = (parseInt(xqtdI)).toString()
+      setQtdC(xqtdI)
     }
-    )
+    if(xtipoRemicao == "2"){
+      convertido = (parseInt(xqtdI)/3).toString()
+      setQtdC(convertido)
+    }
+    if(xtipoRemicao == "3"){
+      convertido = (parseInt(xqtdI)/12).toString()
+      setQtdC(convertido)
+    }
+
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).update({
+      descricao: xdescricao,
+      tiporemicao: xtipoRemicao,
+      qtdI: xqtdI,
+      qtdC: xqtdC
+    })
+    alert("Remição/Detração atualizado com sucesso!")
+    setDescricao('')
+    setTiporemicao('')
+    setQtdI('')
+    setQtdC('')
+    setStatus3(!status3)
+    setAtualizando3(!atualizando3)
+
+
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var z = doc.data()
+          remicoes.push(z)
+        });
+        setRemica(remicoes)
+        remicoes = []
+      }
+      )
   }
 
 
@@ -383,13 +528,13 @@ export default function Home() {
               <input className="block" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
             </label>
             <label>PROGRESSÃO:
-              <input className="block" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+              <input readOnly className="block" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
             </label>
             <label>CONDICIONAL:
-              <input className="block" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
+              <input readOnly className="block" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
             </label>
             <label>TÉRMINO:
-              <input className="block" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+              <input readOnly className="block" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
             </label>
           </div>
         </form>
@@ -400,10 +545,26 @@ export default function Home() {
         <button className="cursor-pointer" onClick={gravar}>GRAVAR</button>
       }
       <h1>Cadastro de Delitos</h1>
-      <form className="border-2 text-sm text-">
+      <form className="border-2 text-sm flex">
+        <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-full">
+          {delita?.map(deli => {
+            return (
+              <div className="flex justify-start text-sm">
+                <a className="text-right cursor-pointer" onClick={() => editardelito(deli)}>
+                  <TbSelect />
+                </a>
+                <a className="text-right cursor-pointer" onClick={() => deletardelito(deli.descriD)}>
+                  <TbTrashOff />
+                </a>
+                <p className="text-left">{deli.descriD}</p>
+              </div>
+            )
+          })}
+        </div>
         <div className="flex flex-row flex-wrap justify-between items-center">
           <label>Tipo de Crime
             <select className='block' value={xtipocrime} name="crimes" id="crimes" onChange={event => setTipocrime(event.target.value)}>
+              <option value="0">Selecione o tipo de crime</option>
               <option value="1">Crime não hediondo posterior a Lei 13.964, sem violencia ou grave ameaça a pessoa. 1</option>
               <option value="2">Crime não hediondo posterior a Lei 13.964, com violencia ou grave ameaça a pessoa. 2</option>
               <option value="3">Crime hediondo ou equiparado, posterior a Lei 13.964, tendo ou não violencia ou grave ameaça a pessoa. 3</option>
@@ -416,14 +577,15 @@ export default function Home() {
               <option value="10">Art. 112 §3º LEP 1/8 Mulheres gestantes ou responsáveis. 10</option>
             </select>
           </label>
-          <label>Rincidência
+          <label>Reincidência
             <select className='block' value={xprirei} name="reincidencia" id="reincidencia" onChange={event => setPrirei(event.target.value)}>
+              <option value="0">Selecione</option>
               <option value="1">Primário</option>
               <option value="2">Reincidente</option>
             </select>
           </label>
           <label>Descrição
-            <input className="block w-40" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
+            <input className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
           </label>
           <label>Qt.Dias
             <input className="block w-16" type="number" value={xdiasPena} placeholder="Qtd. dias" onChange={event => setDiasPena(event.target.value)} />
@@ -436,25 +598,53 @@ export default function Home() {
           </label>
         </div>
       </form>
-      <div className=" bg-blue-300 text-center border-2 overflow-auto h-20">
-        {delita?.map(deli => {
-          return (
-            <div className="flex justify-start text-sm">
-              <a className="text-right cursor-pointer" onClick={() => editardelito(deli)}>
-                <TbSelect />
-              </a>
-              <a className="text-right cursor-pointer" onClick={() => deletardelito(deli.descriD)}>
-                <TbTrashOff />
-              </a>
-              <p className="text-left">{deli.descriD}</p>
-            </div>
-          )
-        })}
-      </div>
-      {atualizando2 ? 
+      {atualizando2 ?
         <button className="cursor-pointer" onClick={atualizardelito}>ATUALIZAR</button>
-      :
+        :
         <button className="cursor-pointer" onClick={gravardelito}>GRAVAR</button>
+      }
+
+<h1>Cadastro de Detração e Remições</h1>
+      <form className="border-2 text-sm flex">
+        <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-96">
+          {remica?.map(remi => {
+            return (
+              <div className="flex justify-start text-sm">
+                <a className="text-right cursor-pointer" onClick={() => editarremicao(remi)}>
+                  <TbSelect />
+                </a>
+                <a className="text-right cursor-pointer" onClick={() => deletarremicao(remi.descricao)}>
+                  <TbTrashOff />
+                </a>
+                <p className="text-left">{remi.descricao}</p>
+              </div>
+            )
+          })}
+        </div>
+        <div className="flex flex-row justify-between items-center">
+          <label>Remição / Detração
+            <select className='block' value={xtipoRemicao} name="remicao" id="remicao" onChange={event => setTiporemicao(event.target.value)}>
+              <option value="0" >Selecione</option>
+              <option value="1" >Detração</option>
+              <option value="2" >Remição por Trabalho</option>
+              <option value="3" >Remição por Estudo</option>
+            </select>
+          </label>
+          <label>Descrição
+            <input className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
+          </label>
+          <label>Qt.Informada
+            <input className="block w-20" type="number" value={xqtdI} placeholder="" onChange={event => setQtdI(event.target.value)}  />
+          </label>
+          <label>Qt.Calculada
+            <input readOnly className="block w-20" type="number" value={xqtdC} placeholder="" onChange={event => setQtdC(event.target.value)}/>
+          </label>
+        </div>
+      </form>
+      {atualizando3 ?
+        <button className="cursor-pointer" onClick={atualizarremicao}>ATUALIZAR</button>
+        :
+        <button className="cursor-pointer" onClick={gravarremicao}>GRAVAR</button>
       }
     </Layout>
   )
