@@ -192,16 +192,35 @@ export default function Home() {
 
   function deletar(ref: string) {
     if (confirm("Confirma exclusão do cliente?") == true) {
+      delita?.map(deli => {
+
+        db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(deli.descriD).delete()
+          .then(() => {
+          }).catch((error) => {
+            console.error("Erro ao excluir Delito: ", error);
+          }
+          )
+      })
+      remica?.map(remi => {
+        db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(remi.descricao).delete()
+          .then(() => {
+          }).catch((error) => {
+            console.error("Erro ao excluir Remição/Detração: ", error);
+          }
+          )
+      })
       const referencia = db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
         .then(() => {
-          //          alert("Cliente excluido com sucesso!")
           setStatus(!status)
+          setStatus2(!status2)
+          setStatus3(!status3)
         }).catch((error) => {
           console.error("Erro ao excluir cliente: ", error);
         }
         )
-    }
+   }
   }
+
 
   function deletardelito(ref: string) {
     if (confirm("Confirma exclusão do Delito?") == true) {
