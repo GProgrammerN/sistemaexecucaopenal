@@ -48,7 +48,6 @@ export default function Home() {
 
   // Clientes
 
-  const [nomeantigo, setNomeantigo] = useState('')
   const [xnome, setNome] = useState('')
   const [xmatricula, setMatricula] = useState('')
   const [xprocesso, setProcesso] = useState('')
@@ -63,14 +62,12 @@ export default function Home() {
   const [xtipocrime, setTipocrime] = useState('')
   const [xprirei, setPrirei] = useState('')
   const [xdescriD, setDescriD] = useState('')
-  const [xdescriOld, setDescriOld] = useState('')
   const [xdiasPena, setDiasPena] = useState('')
   const [xmesesPena, setMesesPena] = useState('')
   const [xanosPena, setAnosPena] = useState('')
 
   // Remição
   const [xdescricao, setDescricao] = useState('')
-  const [xdescricaoOld, setDescricaoOld] = useState('')
   const [xtipoRemicao, setTiporemicao] = useState('')
   const [xqtdI, setQtdI] = useState('')
   const [xqtdC, setQtdC] = useState('')
@@ -79,7 +76,6 @@ export default function Home() {
   const [status, setStatus] = useState(false)
   const [status2, setStatus2] = useState(false)
   const [status3, setStatus3] = useState(false)
-  const [mostra, setMostra] = useState(false)
 
   const [atualizando, setAtualizando] = useState(false)
   const [atualizando2, setAtualizando2] = useState(false)
@@ -114,15 +110,15 @@ export default function Home() {
   useEffect(() => {
     if (xnome.length == 0) {
       db.collection("usuario").doc(id).collection("clientes").doc(' ').collection("delitos").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var y = doc.data()
-          delitos.push(y)
-        });
-        setDelita(delitos)
-        delitos = []
-      }
-      )
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            var y = doc.data()
+            delitos.push(y)
+          });
+          setDelita(delitos)
+          delitos = []
+        }
+        )
     } else {
       db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
         .then((querySnapshot) => {
@@ -138,17 +134,17 @@ export default function Home() {
   }, [status2])
 
   useEffect(() => {
-    if(xnome.length == 0){
+    if (xnome.length == 0) {
       db.collection("usuario").doc(id).collection("clientes").doc(" ").collection("remicoes").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var z = doc.data()
-          remicoes.push(z)
-        });
-        setRemica(remicoes)
-        remicoes = []
-      }
-      )
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            var z = doc.data()
+            remicoes.push(z)
+          });
+          setRemica(remicoes)
+          remicoes = []
+        }
+        )
     } else {
       db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
         .then((querySnapshot) => {
@@ -238,7 +234,6 @@ export default function Home() {
     setTipocrime(ref.tipocrime)
     setPrirei(ref.prirei)
     setDescriD(ref.descriD)
-    setDescriOld(ref.descriD)
     setDiasPena(ref.diasPena)
     setMesesPena(ref.mesesPena)
     setAnosPena(ref.anosPena)
@@ -249,14 +244,12 @@ export default function Home() {
     setAtualizando3(true)
     setTiporemicao(ref.tipoRemicao)
     setDescricao(ref.descricao)
-    setDescricaoOld(ref.descricao)
     setQtdI(ref.qtdI)
     setQtdC(ref.qtdC)
   }
 
   function editar(ref: string) {
     setAtualizando(true)
-    setNomeantigo(ref.nome)
     setNome(ref.nome)
     setMatricula(ref.matricula)
     setPresidio(ref.presidio)
@@ -265,15 +258,14 @@ export default function Home() {
     setDataprogressao(ref.dataprogressao)
     setDatacondicional(ref.datacondicional)
     setDatafim(ref.datafim)
-    setMostra(true)
     setStatus2(!status2)
     setStatus3(!status3)
   }
 
   function atualizar() {
 
-    db.collection("usuario").doc(id).collection("clientes").doc(nomeantigo).update({
-      nome: nomeantigo,
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+      nome: xnome,
       matricula: xmatricula,
       processo: xprocesso,
       presidio: xpresidio,
@@ -371,8 +363,8 @@ export default function Home() {
   }
 
   function atualizardelito() {
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriOld).update({
-      descriD: xdescriOld,
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
+      descriD: xdescriD,
       tipocrime: xtipocrime,
       prirei: xprirei,
       diasPena: xdiasPena,
@@ -405,8 +397,8 @@ export default function Home() {
       setQtdC(convertido)
     }
 
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricaoOld).update({
-      descricao: xdescricaoOld,
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).update({
+      descricao: xdescricao,
       tiporemicao: xtipoRemicao,
       qtdI: xqtdI,
       qtdC: convertido
@@ -464,9 +456,15 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-row flex-wrap justify-between items-center  p-1" >
-            <label >NOME:
-              <input required className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
-            </label>
+            {atualizando ?
+              <label >NOME:
+                <input readOnly className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
+              </label>
+              :
+              <label >NOME:
+                <input className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
+              </label>
+            }
             <label>MATRICULA:
               <input required className='block' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
             </label>
@@ -536,9 +534,15 @@ export default function Home() {
               <option value="2">Reincidente</option>
             </select>
           </label>
-          <label>Descrição
-            <input className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
-          </label>
+          {atualizando2 ?
+            <label>Descrição
+              <input readOnly className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
+            </label>
+            :
+            <label>Descrição
+              <input className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
+            </label>
+          }
           <label>Qt.Dias
             <input className="block w-16" type="number" value={xdiasPena} placeholder="Qtd. dias" onChange={event => setDiasPena(event.target.value)} />
           </label>
@@ -582,9 +586,15 @@ export default function Home() {
               <option value="3" >Remição por Estudo</option>
             </select>
           </label>
-          <label>Descrição
-            <input className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
-          </label>
+          {atualizando3 ?
+            <label>Descrição
+              <input readOnly className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
+            </label>
+            :
+            <label>Descrição
+              <input className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
+            </label>
+          }
           <label>Qt.Informada
             <input className="block w-20" type="number" value={xqtdI} placeholder="" onChange={event => setQtdI(event.target.value)} />
           </label>
