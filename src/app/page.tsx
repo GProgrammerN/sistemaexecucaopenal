@@ -45,9 +45,9 @@ type Remicao = {
 
 export default function Home() {
 
-  
+
   // Clientes
-  
+
   const [nomeantigo, setNomeantigo] = useState('')
   const [xnome, setNome] = useState('')
   const [xmatricula, setMatricula] = useState('')
@@ -58,17 +58,19 @@ export default function Home() {
   const [xdatacondicional, setDatacondicional] = useState('//')
   const [xdatafim, setDatafim] = useState('//')
   const db = firebase.firestore()
-  
+
   // Delitos
   const [xtipocrime, setTipocrime] = useState('')
   const [xprirei, setPrirei] = useState('')
   const [xdescriD, setDescriD] = useState('')
+  const [xdescriOld, setDescriOld] = useState('')
   const [xdiasPena, setDiasPena] = useState('')
   const [xmesesPena, setMesesPena] = useState('')
   const [xanosPena, setAnosPena] = useState('')
 
   // Remição
   const [xdescricao, setDescricao] = useState('')
+  const [xdescricaoOld, setDescricaoOld] = useState('')
   const [xtipoRemicao, setTiporemicao] = useState('')
   const [xqtdI, setQtdI] = useState('')
   const [xqtdC, setQtdC] = useState('')
@@ -78,13 +80,13 @@ export default function Home() {
   const [status2, setStatus2] = useState(false)
   const [status3, setStatus3] = useState(false)
   const [mostra, setMostra] = useState(false)
-  
+
   const [atualizando, setAtualizando] = useState(false)
   const [atualizando2, setAtualizando2] = useState(false)
   const [atualizando3, setAtualizando3] = useState(false)
 
   const [busca, setBusca] = useState<Cliente[]>()
-  
+
   const [clienta, setClienta] = useState<Cliente[]>()
 
   const [delita, setDelita] = useState<Delito[]>()
@@ -108,6 +110,59 @@ export default function Home() {
       )
   }, [status])
 
+
+  useEffect(() => {
+    if (xnome.length == 0) {
+      db.collection("usuario").doc(id).collection("clientes").doc(' ').collection("delitos").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var y = doc.data()
+          delitos.push(y)
+        });
+        setDelita(delitos)
+        delitos = []
+      }
+      )
+    } else {
+      db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            var y = doc.data()
+            delitos.push(y)
+          });
+          setDelita(delitos)
+          delitos = []
+        }
+        )
+    }
+  }, [status2])
+
+  useEffect(() => {
+    if(xnome.length == 0){
+      db.collection("usuario").doc(id).collection("clientes").doc(" ").collection("remicoes").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var z = doc.data()
+          remicoes.push(z)
+        });
+        setRemica(remicoes)
+        remicoes = []
+      }
+      )
+    } else {
+      db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            var z = doc.data()
+            remicoes.push(z)
+          });
+          setRemica(remicoes)
+          remicoes = []
+        }
+        )
+    }
+  }, [status3])
+
   useEffect(() => {
     db.collection("usuario/" + id + "/clientes/").get()
       .then((querySnapshot) => {
@@ -123,9 +178,7 @@ export default function Home() {
 
   function buscar(event: FormEvent) {
     const palavra = event.target.value
-
     console.log(palavra)
-
     if (palavra != '') {
       setEstabuscando(true)
       const dados = new Array
@@ -145,7 +198,7 @@ export default function Home() {
     if (confirm("Confirma exclusão do cliente?") == true) {
       const referencia = db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
         .then(() => {
-          alert("Cliente excluido com sucesso!")
+          //          alert("Cliente excluido com sucesso!")
           setStatus(!status)
         }).catch((error) => {
           console.error("Erro ao excluir cliente: ", error);
@@ -155,21 +208,11 @@ export default function Home() {
   }
 
   function deletardelito(ref: string) {
-    if (confirm("Confirma exclusão do cliente?") == true) {
+    if (confirm("Confirma exclusão do Delito?") == true) {
       db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(ref).delete()
         .then(() => {
-          alert("Delito excluido com sucesso!")
+          //          alert("Delito excluido com sucesso!")
           setStatus2(!status2)
-          db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                var y = doc.data()
-                delitos.push(y)
-              });
-              setDelita(delitos)
-              delitos = []
-            }
-            )
         }).catch((error) => {
           console.error("Erro ao excluir Delito: ", error);
         }
@@ -181,18 +224,8 @@ export default function Home() {
     if (confirm("Confirma exclusão da Remição/Detração?") == true) {
       db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(ref).delete()
         .then(() => {
-          alert("Remição/Detração excluida com sucesso!")
+          //          alert("Remição/Detração excluida com sucesso!")
           setStatus3(!status3)
-          db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                var z = doc.data()
-                remicoes.push(z)
-              });
-              setRemica(remicoes)
-              remicoes = []
-            }
-            )
         }).catch((error) => {
           console.error("Erro ao excluir Remição/Detração: ", error);
         }
@@ -200,12 +233,12 @@ export default function Home() {
     }
   }
 
-
   function editardelito(ref: string) {
     setAtualizando2(true)
     setTipocrime(ref.tipocrime)
     setPrirei(ref.prirei)
     setDescriD(ref.descriD)
+    setDescriOld(ref.descriD)
     setDiasPena(ref.diasPena)
     setMesesPena(ref.mesesPena)
     setAnosPena(ref.anosPena)
@@ -216,21 +249,9 @@ export default function Home() {
     setAtualizando3(true)
     setTiporemicao(ref.tipoRemicao)
     setDescricao(ref.descricao)
+    setDescricaoOld(ref.descricao)
     setQtdI(ref.qtdI)
-    var convertido = ''
-    if(ref.tipoRemicao == "1"){
-      convertido = (parseInt(ref.qtdI)).toString()
-      setQtdC(convertido)
-    }
-    if(ref.tipoRemicao == "2"){
-      convertido = (parseInt(ref.qtdI)/3).toString()
-      setQtdC(convertido)
-    }
-    if(ref.tipoRemicao == "3"){
-      convertido = (parseInt(ref.qtdI)/12).toString()
-      setQtdC(convertido)
-    }
-    setStatus3(!status3)
+    setQtdC(ref.qtdC)
   }
 
   function editar(ref: string) {
@@ -245,33 +266,14 @@ export default function Home() {
     setDatacondicional(ref.datacondicional)
     setDatafim(ref.datafim)
     setMostra(true)
-    db.collection("usuario").doc(id).collection("clientes").doc(ref.nome).collection("delitos").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var y = doc.data()
-          delitos.push(y)
-        });
-        setDelita(delitos)
-        delitos = []
-      }
-      )
-
-    db.collection("usuario").doc(id).collection("clientes").doc(ref.nome).collection("remicoes").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var z = doc.data()
-          remicoes.push(z)
-        });
-        setRemica(remicoes)
-        remicoes = []
-      }
-      )
-    }
+    setStatus2(!status2)
+    setStatus3(!status3)
+  }
 
   function atualizar() {
 
     db.collection("usuario").doc(id).collection("clientes").doc(nomeantigo).update({
-      //      nome: xnome,
+      nome: nomeantigo,
       matricula: xmatricula,
       processo: xprocesso,
       presidio: xpresidio,
@@ -321,7 +323,6 @@ export default function Home() {
   }
 
   function gravardelito() {
-
     db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).set({
       descriD: xdescriD,
       tipocrime: xtipocrime,
@@ -338,32 +339,20 @@ export default function Home() {
     setMesesPena('')
     setAnosPena('')
     setStatus2(!status2)
-
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var y = doc.data()
-          delitos.push(y)
-        });
-        setDelita(delitos)
-        delitos = []
-      }
-      )
-
   }
 
   function gravarremicao() {
-    var convertido =''
-    if(xtipoRemicao == "1"){
+    var convertido = ''
+    if (xtipoRemicao == "1") {
       convertido = (parseInt(xqtdI)).toString()
       setQtdC(convertido)
     }
-    if(xtipoRemicao == "2"){
-      convertido = (parseInt(xqtdI)/3).toString()
+    if (xtipoRemicao == "2") {
+      convertido = (Math.trunc(parseInt(xqtdI) / 3)).toString()
       setQtdC(convertido)
     }
-    if(xtipoRemicao == "3"){
-      convertido = (parseInt(xqtdI)/12).toString()
+    if (xtipoRemicao == "3") {
+      convertido = (Math.trunc(parseInt(xqtdI) / 12)).toString()
       setQtdC(convertido)
     }
 
@@ -379,24 +368,11 @@ export default function Home() {
     setQtdI('')
     setQtdC('')
     setStatus3(!status3)
-
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var z = doc.data()
-          remicoes.push(z)
-        });
-        setRemica(remicoes)
-        remicoes = []
-      }
-      )
-
   }
 
   function atualizardelito() {
-
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
-      descriD: xdescriD,
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriOld).update({
+      descriD: xdescriOld,
       tipocrime: xtipocrime,
       prirei: xprirei,
       diasPena: xdiasPena,
@@ -412,40 +388,28 @@ export default function Home() {
     setAnosPena('')
     setStatus2(!status2)
     setAtualizando2(!atualizando2)
-
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var y = doc.data()
-          delitos.push(y)
-        });
-        setDelita(delitos)
-        delitos = []
-      }
-      )
   }
 
   function atualizarremicao() {
-
-    var convertido =''
-    if(xtipoRemicao == "1"){
+    var convertido = ''
+    if (xtipoRemicao == "1") {
       convertido = (parseInt(xqtdI)).toString()
       setQtdC(xqtdI)
     }
-    if(xtipoRemicao == "2"){
-      convertido = (parseInt(xqtdI)/3).toString()
+    if (xtipoRemicao == "2") {
+      convertido = (Math.trunc(parseInt(xqtdI) / 3)).toString()
       setQtdC(convertido)
     }
-    if(xtipoRemicao == "3"){
-      convertido = (parseInt(xqtdI)/12).toString()
+    if (xtipoRemicao == "3") {
+      convertido = (Math.trunc(parseInt(xqtdI) / 12)).toString()
       setQtdC(convertido)
     }
 
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).update({
-      descricao: xdescricao,
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricaoOld).update({
+      descricao: xdescricaoOld,
       tiporemicao: xtipoRemicao,
       qtdI: xqtdI,
-      qtdC: xqtdC
+      qtdC: convertido
     })
     alert("Remição/Detração atualizado com sucesso!")
     setDescricao('')
@@ -454,18 +418,6 @@ export default function Home() {
     setQtdC('')
     setStatus3(!status3)
     setAtualizando3(!atualizando3)
-
-
-    db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var z = doc.data()
-          remicoes.push(z)
-        });
-        setRemica(remicoes)
-        remicoes = []
-      }
-      )
   }
 
 
@@ -556,7 +508,7 @@ export default function Home() {
                 <a className="text-right cursor-pointer" onClick={() => deletardelito(deli.descriD)}>
                   <TbTrashOff />
                 </a>
-                <p className="text-left">{deli.descriD}</p>
+                <p className="text-left">{deli.descriD + " " + deli.anosPena + " ANOS " + deli.mesesPena + " MESES " + deli.diasPena + " DIAS"}</p>
               </div>
             )
           })}
@@ -604,7 +556,7 @@ export default function Home() {
         <button className="cursor-pointer" onClick={gravardelito}>GRAVAR</button>
       }
 
-<h1>Cadastro de Detração e Remições</h1>
+      <h1>Cadastro de Detração e Remições</h1>
       <form className="border-2 text-sm flex">
         <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-96">
           {remica?.map(remi => {
@@ -616,7 +568,7 @@ export default function Home() {
                 <a className="text-right cursor-pointer" onClick={() => deletarremicao(remi.descricao)}>
                   <TbTrashOff />
                 </a>
-                <p className="text-left">{remi.descricao}</p>
+                <p className="text-left">{remi.descricao + " QT.INF. " + remi.qtdI + " QT.CALC. " + remi.qtdC}</p>
               </div>
             )
           })}
@@ -634,10 +586,10 @@ export default function Home() {
             <input className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
           </label>
           <label>Qt.Informada
-            <input className="block w-20" type="number" value={xqtdI} placeholder="" onChange={event => setQtdI(event.target.value)}  />
+            <input className="block w-20" type="number" value={xqtdI} placeholder="" onChange={event => setQtdI(event.target.value)} />
           </label>
           <label>Qt.Calculada
-            <input readOnly className="block w-20" type="number" value={xqtdC} placeholder="" onChange={event => setQtdC(event.target.value)}/>
+            <input readOnly className="block w-20" type="number" value={xqtdC} placeholder="" onChange={event => setQtdC(event.target.value)} />
           </label>
         </div>
       </form>
