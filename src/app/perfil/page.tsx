@@ -5,6 +5,7 @@ import Conteudo from "@/components/template/Conteudo"
 import { useRef } from 'react';
 import { IconeInformacao } from '@/components/icons';
 import { useState } from 'react';
+import CampoPerfil from '@/components/template/CampoPerfil';
 
 
 export default function Perfil() {
@@ -17,6 +18,8 @@ export default function Perfil() {
   const inputAvatarRef = useRef<any>(null);
   const [erro, setErro] = useState(null);
   const [muda, setMuda] = useState(false)
+  const [nome, setNome] = useState('')
+  const [senha, setSenha] = useState('')
 
   function exibirErro(msg: any, tempoSegundos = 5, atencao: boolean) {
     if (atencao) {
@@ -30,11 +33,12 @@ export default function Perfil() {
   }
 
 
-  function atualizaUsuario(ref: any) {
-    const element = inputNomeRef.current
-    const novoNome = element.value
+  function atualizaUsuario() {
+    //    const element = inputNomeRef.current
+    //    const novoNome = element.value
+    console.log(nome)
     user?.updateProfile({
-      displayName: novoNome
+      displayName: nome
     }).then(() => {
       //
       exibirErro('Alterado com sucesso', 3, false)
@@ -61,12 +65,10 @@ export default function Perfil() {
       //
     });
   }
-  
-  function atualizaSenha(ref: any) {
-    const element = inputSenhaRef.current;
-    const novaSenha = element?.value
 
-    user?.updatePassword(novaSenha).then(() => {
+  function atualizaSenha() {
+    
+    user?.updatePassword(senha).then(() => {
       //
       exibirErro('Alterado com sucesso', 3, false)
       //
@@ -93,41 +95,11 @@ export default function Perfil() {
   return (
     <Layout titulo="Perfil do Usuário"
       subtitulo="Administre suas informações de usuário.">
-      <Conteudo children="Alterações no perfil do usuário" />
+      <Conteudo />
       <form className="flex flex-col justify-center items-center m-2">
-        <div className="flex items-center border-b w-100 mb-2 border-teal-500 py-2">
-          <label htmlFor="inputNome" className="dark:text-white text-black pr-4">Nome</label>
-          <input ref={inputNomeRef} className="
-    appearance-none bg-transparent border-none text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="text" placeholder="Nome de Exibição" id="inputNome" />
-          <button className="
-    flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button" onClick={atualizaUsuario}>
-            Salvar
-          </button>
-        </div>
-        <div className="flex items-center border-b w-100 mb-2 border-teal-500 py-2">
-          <label htmlFor="inputEmail" className="dark:text-white text-black pr-4">Email</label>
-          <input ref={inputEmailRef} className="
-    appearance-none bg-transparent border-none dark:bg-gray-700 bg-gray-800 text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="email" placeholder="E-mail" id="inputEmail" />
-          <button className="
-    flex-shrink-0 bg-orange-500 hover:bg-orange-600 border-orange-500 hover:border-orange-600 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button">
-            Alterar
-          </button>
-        </div>
-        <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
-          <label htmlFor="inputSenha" className="dark:text-white text-black pr-4">Senha</label>
-          <input ref={inputSenhaRef} className="
-    appearance-none bg-transparent border-none bg-neutral-800 text-gray-300 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="password" placeholder="Senha 6 caracteres ou mais" id="inputSenha" />
-          <button className="
-    flex-shrink-0 bg-orange-500 hover:bg-orange-600 border-orange-500 hover:border-orange-600 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button" onClick={atualizaSenha}>
-            Alterar
-          </button>
-        </div>
+        <CampoPerfil campo='Nome' placeholder='Coloque seu Nome' id='inputNome' type='text' botaovalor={true} funcao={atualizaUsuario} funcaoInput={event => setNome(event.target.value)}/>
+        <CampoPerfil campo='Email' placeholder='exemplo@gmail.com' id='inputEmail' type='email' botaovalor={false}/>
+        <CampoPerfil campo='Senha' placeholder='Senha 6 caracteres ou mais' id='inputSenha' type='password' botaovalor={false} funcao={atualizaSenha} funcaoInput={event => setSenha(event.target.value)}/>
         <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
           <label htmlFor="inputAvatar" className="dark:text-white text-black pr-4">Foto    </label>
           <input ref={inputAvatarRef} className="
@@ -140,7 +112,7 @@ export default function Perfil() {
           </button>
         </div>
         {erro ? (
-          <div className = {`flex items-center text-white py-3 px-5 my-2 border-2 rounded-lg
+          <div className={`flex items-center text-white py-3 px-5 my-2 border-2 rounded-lg
             ${muda ? 'bg-red-400 border-red-700' : 'bg-blue-400  border-blue-700'}
              `}>
             {IconeInformacao}

@@ -218,7 +218,7 @@ export default function Home() {
           console.error("Erro ao excluir cliente: ", error);
         }
         )
-   }
+    }
   }
 
 
@@ -442,39 +442,39 @@ export default function Home() {
             <div className="flex flex-col justify-between items-left">
               <input type="text" placeholder="Buscar" onChange={buscar} />
             </div>
-            <div className=" bg-blue-300 text-center border-2 ml-1 h-20 overflow-auto">
+            <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
               {estabuscando ?
                 busca?.map(cli => {
                   return (
-                    <div key={cli.nome} className="flex justify-start text-sm">
-                      <a className="text-right cursor-pointer" onClick={() => editar(cli)}>
+                    <div key={cli.nome} className="flex justify-start text-base p-1">
+                      <a className="cursor-pointer" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
-                      <a className="text-right cursor-pointer" onClick={() => deletar(cli.nome)}>
+                      <a className="cursor-pointer" onClick={() => deletar(cli.nome)}>
                         <TbTrashOff />
                       </a>
-                      <p className="text-left">{cli.nome}</p>
+                      <p className="">{cli.nome}</p>
                     </div>
                   )
                 })
                 :
                 clienta?.map(cli => {
                   return (
-                    <div className="flex justify-start text-sm">
-                      <a className="text-right cursor-pointer" onClick={() => editar(cli)}>
+                    <div className="flex justify-start text-base p-1">
+                      <a className="cursor-pointer" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
-                      <a className="text-right cursor-pointer" onClick={() => deletar(cli.nome)}>
+                      <a className="cursor-pointer" onClick={() => deletar(cli.nome)}>
                         <TbTrashOff />
                       </a>
-                      <p className="text-left">{cli.nome}</p>
+                      <p className="">{cli.nome}</p>
                     </div>
                   )
                 })
               }
             </div>
           </div>
-          <div className="flex flex-row flex-wrap justify-between items-center  p-1" >
+          <div className="flex flex-row flex-wrap justify-between items-center p-1" >
             {atualizando ?
               <label >NOME:
                 <input readOnly className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
@@ -580,7 +580,7 @@ export default function Home() {
       }
 
       <h1>Cadastro de Detração e Remições</h1>
-      <form className="border-2 text-sm flex">
+      <form className="border-2 flex w-full">
         <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-96">
           {remica?.map(remi => {
             return (
