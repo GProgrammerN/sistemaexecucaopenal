@@ -461,10 +461,10 @@ export default function Home() {
                 clienta?.map(cli => {
                   return (
                     <div className="flex justify-start text-base pl-1 pt-1 items-center">
-                      <a className="cursor-pointer text-green-400" onClick={() => editar(cli)}>
+                      <a className="cursor-pointer mr-1 text-green-400" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
-                      <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
+                      <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                         <TbTrashOff />
                       </a>
                       <p className="">{cli.nome}</p>
@@ -519,10 +519,10 @@ export default function Home() {
           {delita?.map(deli => {
             return (
               <div className="flex justify-start text-base pl-1 pt-1 items-center">
-                <a className="text-right cursor-pointer text-green-400" onClick={() => editardelito(deli)}>
+                <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editardelito(deli)}>
                   <TbSelect />
                 </a>
-                <a className="text-right cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
+                <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
                   <TbTrashOff />
                 </a>
                 <p className="text-left">{deli.descriD + " " + deli.anosPena + " ANOS " + deli.mesesPena + " MESES " + deli.diasPena + " DIAS"}</p>
@@ -585,10 +585,10 @@ export default function Home() {
           {remica?.map(remi => {
             return (
               <div className="flex justify-start text-base pl-1 pt-1 items-center">
-                <a className="text-right cursor-pointer text-green-400" onClick={() => editarremicao(remi)}>
+                <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editarremicao(remi)}>
                   <TbSelect />
                 </a>
-                <a className="text-right cursor-pointer text-red-500" onClick={() => deletarremicao(remi.descricao)}>
+                <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletarremicao(remi.descricao)}>
                   <TbTrashOff />
                 </a>
                 <p className="text-left">{remi.descricao + " QT.INF. " + remi.qtdI + " QT.CALC. " + remi.qtdC}</p>
