@@ -437,10 +437,10 @@ export default function Home() {
     <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
       <h1 className="">Cadastro de Clientes</h1>
       <main className="flex justify-center items-center">
-        <form className="mr-1 w-full flex border-2">
+        <form className="mr-1 w-full flex border-2 rounded">
           <div className="w-3/6 p-1 flex flex-col">
             <div className="flex flex-col justify-between items-left">
-              <input type="text" placeholder="Buscar" onChange={buscar} />
+              <input type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Buscar" onChange={buscar} />
             </div>
             <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
               {estabuscando ?
@@ -474,36 +474,36 @@ export default function Home() {
               }
             </div>
           </div>
-          <div className="flex flex-row flex-wrap justify-between items-center p-1" >
+          <div className="flex flex-row flex-wrap justify-between items-center p-1 dark:text-white text-black" >
             {atualizando ?
               <label >NOME:
-                <input readOnly className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
+                <input readOnly className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
               </label>
               :
               <label >NOME:
-                <input className="block" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
+                <input className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
               </label>
             }
             <label>MATRICULA:
-              <input required className='block' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
+              <input required className='block  dark:bg-gray-400 dark:placeholder-white' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
             </label>
             <label>PRESIDIO:
-              <input className="block" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
+              <input className="block  dark:bg-gray-400 dark:placeholder-white" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
             </label>
             <label>PROCESSO EXECUÇÃO:
-              <input className='block' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
+              <input className='block dark:bg-gray-400 dark:placeholder-white' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
             </label>
             <label>DT PRISÃO:
-              <input className="block" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
+              <input className="block dark:bg-gray-400" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
             </label>
             <label>PROGRESSÃO:
-              <input readOnly className="block" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+              <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
             </label>
             <label>CONDICIONAL:
-              <input readOnly className="block" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
+              <input readOnly className="block dark:bg-gray-400" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
             </label>
             <label>TÉRMINO:
-              <input readOnly className="block" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+              <input readOnly className="block dark:bg-gray-400" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
             </label>
           </div>
         </form>
@@ -514,8 +514,8 @@ export default function Home() {
         <button className="cursor-pointer" onClick={gravar}>GRAVAR</button>
       }
       <h1>Cadastro de Delitos</h1>
-      <form className="border-2 text-sm flex">
-        <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-full">
+      <form className="border-2 text-sm flex rounded">
+        <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
           {delita?.map(deli => {
             return (
               <div className="flex justify-start text-sm">
@@ -532,7 +532,7 @@ export default function Home() {
         </div>
         <div className="flex flex-row flex-wrap justify-between items-center">
           <label>Tipo de Crime
-            <select className='block' value={xtipocrime} name="crimes" id="crimes" onChange={event => setTipocrime(event.target.value)}>
+            <select className='block  dark:bg-gray-400' value={xtipocrime} name="crimes" id="crimes" onChange={event => setTipocrime(event.target.value)}>
               <option value="0">Selecione o tipo de crime</option>
               <option value="1">Crime não hediondo posterior a Lei 13.964, sem violencia ou grave ameaça a pessoa. 1</option>
               <option value="2">Crime não hediondo posterior a Lei 13.964, com violencia ou grave ameaça a pessoa. 2</option>
@@ -547,7 +547,7 @@ export default function Home() {
             </select>
           </label>
           <label>Reincidência
-            <select className='block' value={xprirei} name="reincidencia" id="reincidencia" onChange={event => setPrirei(event.target.value)}>
+            <select className='block dark:bg-gray-400' value={xprirei} name="reincidencia" id="reincidencia" onChange={event => setPrirei(event.target.value)}>
               <option value="0">Selecione</option>
               <option value="1">Primário</option>
               <option value="2">Reincidente</option>
@@ -555,21 +555,21 @@ export default function Home() {
           </label>
           {atualizando2 ?
             <label>Descrição
-              <input readOnly className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
+              <input readOnly className="block w-72 dark:bg-gray-400 dark:placeholder-white" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
             </label>
             :
             <label>Descrição
-              <input className="block w-72" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
+              <input className="block w-72 dark:bg-gray-400 dark:placeholder-white" type="string" value={xdescriD} placeholder="Descrição do delito" onChange={event => setDescriD(event.target.value)} />
             </label>
           }
-          <label>Qt.Dias
-            <input className="block w-16" type="number" value={xdiasPena} placeholder="Qtd. dias" onChange={event => setDiasPena(event.target.value)} />
+          <label>Qt.Anos
+            <input className="block w-16 dark:bg-gray-400 dark:placeholder-white" type="number" value={xanosPena} placeholder="Anos" onChange={event => setAnosPena(event.target.value)} />
           </label>
           <label>Qt.Meses
-            <input className="block w-16" type="number" value={xmesesPena} placeholder="Qtd. meses" onChange={event => setMesesPena(event.target.value)} />
+            <input className="block w-16 dark:bg-gray-400 dark:placeholder-white" type="number" value={xmesesPena} placeholder="Meses" onChange={event => setMesesPena(event.target.value)} />
           </label>
-          <label>Qt.Anos
-            <input className="block w-16" type="number" value={xanosPena} placeholder="Qtd. anos" onChange={event => setAnosPena(event.target.value)} />
+          <label>Qt.Dias
+            <input className="block w-16 dark:bg-gray-400 dark:placeholder-white" type="number" value={xdiasPena} placeholder="Dias" onChange={event => setDiasPena(event.target.value)} />
           </label>
         </div>
       </form>
@@ -580,8 +580,8 @@ export default function Home() {
       }
 
       <h1>Cadastro de Detração e Remições</h1>
-      <form className="border-2 flex w-full">
-        <div className=" bg-blue-300 text-center border-2 overflow-auto h-20 w-96">
+      <form className="border-2 flex rounded">
+        <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-2/5">
           {remica?.map(remi => {
             return (
               <div className="flex justify-start text-sm">
@@ -596,9 +596,9 @@ export default function Home() {
             )
           })}
         </div>
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row flex-wrap justify-between items-center w-3/5">
           <label>Remição / Detração
-            <select className='block' value={xtipoRemicao} name="remicao" id="remicao" onChange={event => setTiporemicao(event.target.value)}>
+            <select className='block dark:bg-gray-400' value={xtipoRemicao} name="remicao" id="remicao" onChange={event => setTiporemicao(event.target.value)}>
               <option value="0" >Selecione</option>
               <option value="1" >Detração</option>
               <option value="2" >Remição por Trabalho</option>
@@ -607,18 +607,18 @@ export default function Home() {
           </label>
           {atualizando3 ?
             <label>Descrição
-              <input readOnly className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
+              <input readOnly className="block w-72 dark:bg-gray-400 dark:placeholder-white" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
             </label>
             :
             <label>Descrição
-              <input className="block w-72" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
+              <input className="block w-72 dark:bg-gray-400 dark:placeholder-white" type="string" value={xdescricao} placeholder="Descrição Remição/Detração" onChange={event => setDescricao(event.target.value)} />
             </label>
           }
           <label>Qt.Informada
-            <input className="block w-20" type="number" value={xqtdI} placeholder="" onChange={event => setQtdI(event.target.value)} />
+            <input className="block w-20 dark:bg-gray-400 dark:placeholder-white" type="number" value={xqtdI} placeholder="Inf." onChange={event => setQtdI(event.target.value)} />
           </label>
           <label>Qt.Calculada
-            <input readOnly className="block w-20" type="number" value={xqtdC} placeholder="" onChange={event => setQtdC(event.target.value)} />
+            <input readOnly className="block w-20 dark:bg-gray-400 dark:placeholder-white" type="number" value={xqtdC} placeholder="Calc." onChange={event => setQtdC(event.target.value)} />
           </label>
         </div>
       </form>
