@@ -446,11 +446,11 @@ export default function Home() {
               {estabuscando ?
                 busca?.map(cli => {
                   return (
-                    <div key={cli.nome} className="flex justify-start text-base p-1">
-                      <a className="cursor-pointer" onClick={() => editar(cli)}>
+                    <div key={cli.nome} className="flex justify-start text-base pl-1 pt-1 items-center">
+                      <a className="cursor-pointer text-green-400" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
-                      <a className="cursor-pointer" onClick={() => deletar(cli.nome)}>
+                      <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
                         <TbTrashOff />
                       </a>
                       <p className="">{cli.nome}</p>
@@ -460,11 +460,11 @@ export default function Home() {
                 :
                 clienta?.map(cli => {
                   return (
-                    <div className="flex justify-start text-base p-1">
-                      <a className="cursor-pointer" onClick={() => editar(cli)}>
+                    <div className="flex justify-start text-base pl-1 pt-1 items-center">
+                      <a className="cursor-pointer text-green-400" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
-                      <a className="cursor-pointer" onClick={() => deletar(cli.nome)}>
+                      <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
                         <TbTrashOff />
                       </a>
                       <p className="">{cli.nome}</p>
@@ -509,20 +509,20 @@ export default function Home() {
         </form>
       </main>
       {atualizando ?
-        <button className="cursor-pointer" onClick={atualizar}>ATUALIZAR</button>
+        <button className="cursor-pointer w-32 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
         :
-        <button className="cursor-pointer" onClick={gravar}>GRAVAR</button>
+        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravar}>GRAVAR</button>
       }
       <h1>Cadastro de Delitos</h1>
       <form className="border-2 text-sm flex rounded">
         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
           {delita?.map(deli => {
             return (
-              <div className="flex justify-start text-sm">
-                <a className="text-right cursor-pointer" onClick={() => editardelito(deli)}>
+              <div className="flex justify-start text-base pl-1 pt-1 items-center">
+                <a className="text-right cursor-pointer text-green-400" onClick={() => editardelito(deli)}>
                   <TbSelect />
                 </a>
-                <a className="text-right cursor-pointer" onClick={() => deletardelito(deli.descriD)}>
+                <a className="text-right cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
                   <TbTrashOff />
                 </a>
                 <p className="text-left">{deli.descriD + " " + deli.anosPena + " ANOS " + deli.mesesPena + " MESES " + deli.diasPena + " DIAS"}</p>
@@ -574,9 +574,9 @@ export default function Home() {
         </div>
       </form>
       {atualizando2 ?
-        <button className="cursor-pointer" onClick={atualizardelito}>ATUALIZAR</button>
+        <button className="cursor-pointer w-32 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizardelito}>ATUALIZAR</button>
         :
-        <button className="cursor-pointer" onClick={gravardelito}>GRAVAR</button>
+        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
       }
 
       <h1>Cadastro de Detração e Remições</h1>
@@ -584,11 +584,11 @@ export default function Home() {
         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-2/5">
           {remica?.map(remi => {
             return (
-              <div className="flex justify-start text-sm">
-                <a className="text-right cursor-pointer" onClick={() => editarremicao(remi)}>
+              <div className="flex justify-start text-base pl-1 pt-1 items-center">
+                <a className="text-right cursor-pointer text-green-400" onClick={() => editarremicao(remi)}>
                   <TbSelect />
                 </a>
-                <a className="text-right cursor-pointer" onClick={() => deletarremicao(remi.descricao)}>
+                <a className="text-right cursor-pointer text-red-500" onClick={() => deletarremicao(remi.descricao)}>
                   <TbTrashOff />
                 </a>
                 <p className="text-left">{remi.descricao + " QT.INF. " + remi.qtdI + " QT.CALC. " + remi.qtdC}</p>
@@ -623,9 +623,9 @@ export default function Home() {
         </div>
       </form>
       {atualizando3 ?
-        <button className="cursor-pointer" onClick={atualizarremicao}>ATUALIZAR</button>
+        <button className="cursor-pointer w-232 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
         :
-        <button className="cursor-pointer" onClick={gravarremicao}>GRAVAR</button>
+        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
       }
     </Layout>
   )
