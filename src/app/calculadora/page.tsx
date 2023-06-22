@@ -43,8 +43,6 @@ type Remicao = {
     qtdC: string
 }
 
-var vez = true
-
 export default function Home() {
 
 
@@ -92,10 +90,6 @@ export default function Home() {
     const [mostra, setMostra] = useState(false)
 
     var id = firebase.auth().currentUser?.uid
-
-    function inicio() {
-        setStatus(!status)
-    }
 
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
@@ -464,25 +458,174 @@ export default function Home() {
                 dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
             }
         })
+        remica?.map(remi => {
+            if (parseInt(remi.qtdC) > 0) {
+                dataf.setDate(dataf.getDate() - parseInt(remi.qtdC))
+            }
+        })
         dataf.setDate(dataf.getDate() + 1)
+
         var x = formatDate(dataf)
         x = x.toString()
         setDatafim(x)
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             datafim: x
         })
+
+        var umdia = (1000 * 60 * 60 * 24)
+        var xdatap = new Date(xdataprisao)
+        var xdataf = new Date(xdatafim)
+        var xdatal = new Date(xdataprisao)
+        const c = Math.abs(xdataf.getTime() - xdatap.getTime())
+        var d = Math.ceil(c / (1000 * 3600 * 24))
+
+        delita?.map(deli => {
+            if (deli.tipocrime == "1") {
+                if (deli.prirei == "1") {
+//                    setpercentual("16%")
+                    var calculap = (d * 16 / 100)
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/3')
+                    var calculal = (d / 3 * 1) + 1
+                    xdatal.setDate(xdatap.getDate() + calculal)
+                } else {
+//                    setpercentual("20%")
+                    calculap = (d * 20 / 100)
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/2')
+                    calculal = (d / 2 * 1) + 1
+                    xdatal.setDate(xdatap.getDate() + calculal)
+                }
+            }
+            if (deli.tipocrime == "2") {
+                if (deli.prirei == "1") {
+//                    setpercentual("25%")
+                    calculap = d * 25 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/3')
+                    calculal = (d / 3 * 1) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                } else {
+//                    setpercentual("30%")
+                    calculap = d * 30 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/2')
+                    calculal = (d / 2 * 1) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                }
+            }
+            if (deli.tipocrime == "3") {
+                if (deli.prirei == "1") {
+//                    setpercentual("40%")
+                    calculap = d * 40 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('2/3')
+                    calculal = (d * 2 / 3) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                } else {
+//                    setpercentual("60%")
+                    calculap = d * 60 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+                }
+            }
+            if (deli.tipocrime == "4") {
+                if (deli.prirei == "1") {
+//                    setpercentual("50%")
+                    calculap = d * 50 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+                } else {
+//                    setpercentual("70%")
+                    calculap = d * 70 / 100
+                    xdatap.setDate(xdatap.getDate() + calculap)
+                }
+            }
+            if (deli.tipocrime == "5") {
+//                setpercentual("1/6")
+                calculap = (d * 1 / 6)
+                xdatap.setDate(xdatap.getDate() + calculap)
+                if (deli.prirei == "1") {
+//                    setfracao('1/3')
+                    calculal = (d / 3 * 1) + 1
+                } else {
+//                    setfracao = ('1/2')
+                    calculal = (d / 2 * 1) + 1
+                }
+                xdatal.setDate(xdatal.getDate() + calculal)
+            }
+            if (deli.tipocrime == "6") {
+                if (deli.prirei == "1") {
+//                    setpercentual("2/5")
+                    calculap = (d * 2 / 5)
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/3')
+                    calculal = (d / 3 * 1) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                } else {
+//                    setpercentual("3/5")
+                    calculap = (d * 3 / 5)
+                    xdatap.setDate(xdatap.getDate() + calculap)
+//                    setfracao('1/2')
+                    calculal = (d / 2 * 1) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                }
+            }
+            if (deli.tipocrime == "7") {
+//                setpercentual("1/6")
+                calculap = (d * 1 / 6)
+                xdatap.setDate(xdatap.getDate() + calculap)
+//                setfracao('1/3')
+                calculal = (d / 3 * 2) + 1
+                xdatal.setDate(xdatal.getDate() + calculal)
+            }
+            if (deli.tipocrime == "8" || deli.tipocrime == "9") {
+//                setpercentual("50%")
+                calculap = (d * 50 / 100)
+                xdatap.setDate(xdatap.getDate() + calculap)
+                if (deli.prirei == "1") {
+//                    setfracao('2/3')
+                    calculal = (d / 3 * 2) + 1
+                    xdatal.setDate(xdatal.getDate() + calculal)
+                } else {
+//                    setfracao('')
+                }
+            }
+            if (deli.tipocrime == "10") {
+//                setpercentual("1/8")
+                calculap = (d * 1 / 8)
+                xdatap.setDate(xdatap.getDate() + calculap)
+                if (deli.prirei == "1") {
+//                    setfracao('1/3')
+                    calculal = (d / 3 * 1) + 1
+                } else {
+//                    setfracao('1/2')
+                    calculal = (d / 2 * 1) + 1
+                }
+                xdatal.setDate(xdatal.getDate() + calculal)
+            }
+        })
+        var y = formatDate(xdatap)
+        y = y.toString()
+        setDataprisao(y)
+
+        var z = formatDate(xdatal)
+        z = z.toString()
+        setDatacondicional(z)
+
+        db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+            dataprogressao: y,
+            datacondicional: z
+        })
         setStatus(!status)
     }
 
     return (
-
         <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
             <h1 className="">Cadastro de Clientes</h1>
             <main className="flex justify-center items-center">
                 <form className="mr-1 w-full flex border-2 rounded">
                     <div className="w-3/6 p-1 flex flex-col">
                         <div className="flex flex-col justify-between items-left">
-                            <input onClick={inicio} type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Clique para carregar/buscar clientes" onChange={buscar} />
+                            <input type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Buscar" onChange={buscar} />
                         </div>
                         <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
                             {estabuscando ?
