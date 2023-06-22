@@ -98,6 +98,7 @@ export default function Home() {
                     var x = doc.data()
                     clientes.push(x)
                 });
+                
                 setClienta(clientes)
                 clientes = []
             }
@@ -247,18 +248,18 @@ export default function Home() {
         }
     }
 
-    function editardelito(ref: string) {
+    function editardelito(ref: any) {
         setAtualizando2(true)
         setTipocrime(ref.tipocrime)
         setPrirei(ref.prirei)
-        setDescriD(ref.descriD)
+        setDescriD(ref.descriD) 
         setDiasPena(ref.diasPena)
         setMesesPena(ref.mesesPena)
         setAnosPena(ref.anosPena)
         setStatus2(!status2)
     }
 
-    function editarremicao(ref: string) {
+    function editarremicao(ref: any) {
         setAtualizando3(true)
         setTiporemicao(ref.tipoRemicao)
         setDescricao(ref.descricao)
@@ -266,7 +267,7 @@ export default function Home() {
         setQtdC(ref.qtdC)
     }
 
-    function editar(ref: string) {
+    function editar(ref: any) {
         setAtualizando(true)
         setNome(ref.nome)
         setMatricula(ref.matricula)
