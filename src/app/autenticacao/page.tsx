@@ -9,9 +9,6 @@ import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
 import firebase from '../../firebase/config'
 
-
-
-
 export default function Autenticacao() {
 
     const { cadastrar, login, usuario, loginGoogle } = useAuth()
