@@ -9,6 +9,7 @@ import { TbTrashOff } from "react-icons/tb"
 var clientes = [{}]
 clientes.shift()
 
+
 var delitos = [{}]
 delitos.shift()
 
