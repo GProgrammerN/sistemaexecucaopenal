@@ -95,7 +95,6 @@ export default function Home() {
 
   function inicio() {
     setStatus(!status)
-    setMostra(true)
   }
 
   useEffect(() => {
@@ -285,6 +284,7 @@ export default function Home() {
     setDatafim(ref.datafim)
     setStatus2(!status2)
     setStatus3(!status3)
+    setMostra(true)
   }
 
   function atualizar() {
