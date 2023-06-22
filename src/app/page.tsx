@@ -43,6 +43,8 @@ type Remicao = {
   qtdC: string
 }
 
+var vez = true
+
 export default function Home() {
 
 
@@ -82,16 +84,32 @@ export default function Home() {
   const [atualizando3, setAtualizando3] = useState(false)
 
   const [busca, setBusca] = useState<Cliente[]>()
-
   const [clienta, setClienta] = useState<Cliente[]>()
-
   const [delita, setDelita] = useState<Delito[]>()
-
   const [remica, setRemica] = useState<Remicao[]>()
-
   const [estabuscando, setEstabuscando] = useState(false)
 
+  const [mostra, setMostra] = useState(false)
+
   var id = firebase.auth().currentUser?.uid
+
+  function inicio() {
+    setStatus(!status)
+    setMostra(true)
+  }
+
+  useEffect(() => {
+    db.collection("usuario/" + id + "/clientes/").get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var x = doc.data()
+          clientes.push(x)
+        });
+        setClienta(clientes)
+        clientes = []
+      }
+      )
+  }, [])
 
   useEffect(() => {
     db.collection("usuario/" + id + "/clientes/").get()
@@ -159,18 +177,6 @@ export default function Home() {
     }
   }, [status3])
 
-  useEffect(() => {
-    db.collection("usuario/" + id + "/clientes/").get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var x = doc.data()
-          clientes.push(x)
-        });
-        setClienta(clientes)
-        clientes = []
-      }
-      )
-  }, [])
 
   function buscar(event: FormEvent) {
     const palavra = event.target.value
@@ -431,6 +437,42 @@ export default function Home() {
     setAtualizando3(!atualizando3)
   }
 
+  function formatDate(Ref: Date) {
+    var d = new Date(Ref),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  function calculardatas() {
+    var dataf = new Date(xdataprisao)
+    delita?.map(deli => {
+      if (parseInt(deli.anosPena) > 0) {
+        dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
+      }
+      if (parseInt(deli.mesesPena) > 0) {
+        dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
+      }
+      if (parseInt(deli.diasPena) > 0) {
+        dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
+      }
+    })
+    dataf.setDate(dataf.getDate() + 1)
+    var x = formatDate(dataf)
+    x = x.toString()
+    setDatafim(x)
+    db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+      datafim: x
+    })
+    setStatus(!status)
+  }
 
   return (
 
@@ -440,7 +482,7 @@ export default function Home() {
         <form className="mr-1 w-full flex border-2 rounded">
           <div className="w-3/6 p-1 flex flex-col">
             <div className="flex flex-col justify-between items-left">
-              <input type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Buscar" onChange={buscar} />
+              <input onClick={inicio} type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Clique para carregar/buscar clientes" onChange={buscar} />
             </div>
             <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
               {estabuscando ?
@@ -460,7 +502,7 @@ export default function Home() {
                 :
                 clienta?.map(cli => {
                   return (
-                    <div className="flex justify-start text-base pl-1 pt-1 items-center">
+                    <div className="flex justify-start text-sm pl-1 pt-1 items-center">
                       <a className="cursor-pointer mr-1 text-green-400" onClick={() => editar(cli)}>
                         <TbSelect />
                       </a>
@@ -509,16 +551,24 @@ export default function Home() {
         </form>
       </main>
       {atualizando ?
-        <button className="cursor-pointer w-32 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
+        <div className="flex justify-end">
+          <button className="cursor-pointer w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
+          <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
+        </div>
         :
-        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravar}>GRAVAR</button>
+        <>
+          <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravar}>GRAVAR</button>
+        </>
       }
+
+      {mostra ?
+        <>
       <h1>Cadastro de Delitos</h1>
       <form className="border-2 text-sm flex rounded">
         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
           {delita?.map(deli => {
             return (
-              <div className="flex justify-start text-base pl-1 pt-1 items-center">
+              <div className="flex justify-start text-sm pl-1 pt-1 items-center">
                 <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editardelito(deli)}>
                   <TbSelect />
                 </a>
@@ -584,7 +634,7 @@ export default function Home() {
         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-2/5">
           {remica?.map(remi => {
             return (
-              <div className="flex justify-start text-base pl-1 pt-1 items-center">
+              <div className="flex justify-start text-sm pl-1 pt-1 items-center">
                 <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editarremicao(remi)}>
                   <TbSelect />
                 </a>
@@ -626,6 +676,11 @@ export default function Home() {
         <button className="cursor-pointer w-232 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
         :
         <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
+      }
+        </>
+        :
+        <>
+        </>
       }
     </Layout>
   )
