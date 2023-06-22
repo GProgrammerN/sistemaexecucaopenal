@@ -3,7 +3,7 @@ import Link from "next/link"
 interface MenuItemProps {
     url?: string
     texto: string
-    icone: any
+    icone?: any
     className?: string
     onClick?: (evento: any) => void
 }
