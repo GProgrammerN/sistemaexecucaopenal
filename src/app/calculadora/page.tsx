@@ -794,8 +794,8 @@ export default function Home() {
                             {estabuscando ?
                                 busca?.map(cli => {
                                     return (
-                                        <div key={cli.nome} className="flex justify-start text-base pl-1 pt-1 items-center">
-                                            <a className="cursor-pointer text-green-400" onClick={() => editar(cli)}>
+                                        <div key={cli.nome} className="flex justify-start text-base font-bold pl-1 pt-1 items-center">
+                                            <a className="cursor-pointer text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
                                             <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
@@ -809,7 +809,7 @@ export default function Home() {
                                 clienta?.map(cli => {
                                     return (
                                         <div className="flex justify-start text-sm pl-1 pt-1 items-center">
-                                            <a className="cursor-pointer mr-1 text-green-400" onClick={() => editar(cli)}>
+                                            <a className="cursor-pointer mr-1 text-green-800 font-bold" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
@@ -877,7 +877,7 @@ export default function Home() {
                             {delita?.map(deli => {
                                 return (
                                     <div className="flex justify-start text-sm pl-1 pt-1 items-center">
-                                        <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editardelito(deli)}>
+                                        <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editardelito(deli)}>
                                             <TbSelect />
                                         </a>
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
@@ -943,7 +943,7 @@ export default function Home() {
                             {remica?.map(remi => {
                                 return (
                                     <div className="flex justify-start text-sm pl-1 pt-1 items-center">
-                                        <a className="text-right mr-1 cursor-pointer text-green-400" onClick={() => editarremicao(remi)}>
+                                        <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editarremicao(remi)}>
                                             <TbSelect />
                                         </a>
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletarremicao(remi.descricao)}>
