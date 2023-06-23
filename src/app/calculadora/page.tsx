@@ -35,13 +35,17 @@ type Delito = {
     diasPena: string,
     mesesPena: string,
     anosPena: string
+    percentual: string,
+    fracao: string
 }
 
 type Remicao = {
     descricao: string,
     tipoRemicao: string,
     qtdI: string,
-    qtdC: string
+    qtdC: string,
+    percentual: string,
+    fracao: string
 }
 
 export default function Home() {
@@ -99,7 +103,7 @@ export default function Home() {
                     var x = doc.data()
                     clientes.push(x)
                 });
-                
+
                 setClienta(clientes)
                 clientes = []
             }
@@ -253,7 +257,7 @@ export default function Home() {
         setAtualizando2(true)
         setTipocrime(ref.tipocrime)
         setPrirei(ref.prirei)
-        setDescriD(ref.descriD) 
+        setDescriD(ref.descriD)
         setDiasPena(ref.diasPena)
         setMesesPena(ref.mesesPena)
         setAnosPena(ref.anosPena)
@@ -336,13 +340,86 @@ export default function Home() {
     }
 
     function gravardelito() {
+        var xpercentual = ''
+        var xfracao = ''
+        if (xtipocrime == '1') {
+            if (xprirei == '1') {
+                xpercentual = '16%'
+                xfracao = '1/3'
+            } else {
+                xpercentual ='20%'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '2') {
+            if (xprirei == '1') {
+                xpercentual = '25%'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '30%'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '3') {
+            if (xprirei == '1') {
+                xpercentual = '40%'
+                xfracao = '2/3'
+            } else {
+                xpercentual = '60%'
+            }
+        }
+        if (xtipocrime == '4') {
+            if (xprirei == '1') {
+                xpercentual = '50%'
+            } else {
+                xpercentual = '70%'
+            }
+        }
+        if (xtipocrime == '5') {
+            if (xprirei == '1') {
+                xpercentual = '1/6'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '1/6'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '6') {
+            if (xprirei == '1') {
+                xpercentual = '2/5'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '3/5'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '7') {
+            xpercentual = '1/6'
+            xfracao = '1/3'
+        }
+        if (xtipocrime == '8' || xtipocrime=='9') {
+            xpercentual = '50%'
+            if (xprirei == '1') {
+                xfracao = '2/3'
+            }
+        }
+        if (xtipocrime == '10') {
+            xpercentual = '1/8'
+            if (xprirei == '1') {
+                xfracao = '1/3'
+            } else {
+                xfracao = '1/2'
+            }
+        }
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).set({
             descriD: xdescriD,
             tipocrime: xtipocrime,
             prirei: xprirei,
             diasPena: xdiasPena,
             mesesPena: xmesesPena,
-            anosPena: xanosPena
+            anosPena: xanosPena,
+            percentual: xpercentual,
+            fracao: xfracao
         })
         alert("Delito cadastrado com sucesso!")
         setDescriD('')
@@ -384,13 +461,89 @@ export default function Home() {
     }
 
     function atualizardelito() {
+        var xpercentual = ''
+        var xfracao = ''
+        alert(xtipocrime)
+        if (xtipocrime == '1') {
+            if (xprirei == '1') {
+                xpercentual = '16%'
+                xfracao = '1/3'
+                alert(xpercentual+" "+xfracao)
+            } else {
+                xpercentual ='20%'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '2') {
+            if (xprirei == '1') {
+                xpercentual = '25%'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '30%'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '3') {
+            if (xprirei == '1') {
+                xpercentual = '40%'
+                xfracao = '2/3'
+            } else {
+                xpercentual = '60%'
+            }
+        }
+        if (xtipocrime == '4') {
+            if (xprirei == '1') {
+                xpercentual = '50%'
+            } else {
+                xpercentual = '70%'
+            }
+        }
+        if (xtipocrime == '5') {
+            if (xprirei == '1') {
+                xpercentual = '1/6'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '1/6'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '6') {
+            if (xprirei == '1') {
+                xpercentual = '2/5'
+                xfracao = '1/3'
+            } else {
+                xpercentual = '3/5'
+                xfracao = '1/2'
+            }
+        }
+        if (xtipocrime == '7') {
+            xpercentual = '1/6'
+            xfracao = '1/3'
+        }
+        if (xtipocrime == '8' || xtipocrime=='9') {
+            xpercentual = '50%'
+            if (xprirei == '1') {
+                xfracao = '2/3'
+            }
+        }
+        if (xtipocrime == '10') {
+            xpercentual = '1/8'
+            if (xprirei == '1') {
+                xfracao = '1/3'
+            } else {
+                xfracao = '1/2'
+            }
+        }
+        alert(xpercentual+" "+xfracao)
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
             descriD: xdescriD,
             tipocrime: xtipocrime,
             prirei: xprirei,
             diasPena: xdiasPena,
             mesesPena: xmesesPena,
-            anosPena: xanosPena
+            anosPena: xanosPena,
+            percentual: xpercentual,
+            fracao: xfracao
         })
         alert("Delito atualizado com sucesso!")
         setDescriD('')
@@ -474,132 +627,136 @@ export default function Home() {
             datafim: x
         })
 
+        var condicional = true
+
         var umdia = (1000 * 60 * 60 * 24)
         var xdatap = new Date(xdataprisao)
         var xdataf = new Date(xdatafim)
         var xdatal = new Date(xdataprisao)
         const c = Math.abs(xdataf.getTime() - xdatap.getTime())
         var d = Math.ceil(c / (1000 * 3600 * 24))
-
         delita?.map(deli => {
             if (deli.tipocrime == "1") {
                 if (deli.prirei == "1") {
-//                    setpercentual("16%")
+                    //                    setpercentual("16%")
                     var calculap = (d * 16 / 100)
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/3')
+                    //                    setfracao('1/3')
                     var calculal = (d / 3 * 1) + 1
                     xdatal.setDate(xdatap.getDate() + calculal)
                 } else {
-//                    setpercentual("20%")
+                    //                    setpercentual("20%")
                     calculap = (d * 20 / 100)
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/2')
+                    //                    setfracao('1/2')
                     calculal = (d / 2 * 1) + 1
                     xdatal.setDate(xdatap.getDate() + calculal)
                 }
             }
             if (deli.tipocrime == "2") {
                 if (deli.prirei == "1") {
-//                    setpercentual("25%")
+                    //                    setpercentual("25%")
                     calculap = d * 25 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/3')
+                    //                    setfracao('1/3')
                     calculal = (d / 3 * 1) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 } else {
-//                    setpercentual("30%")
+                    //                    setpercentual("30%")
                     calculap = d * 30 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/2')
+                    //                    setfracao('1/2')
                     calculal = (d / 2 * 1) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 }
             }
             if (deli.tipocrime == "3") {
                 if (deli.prirei == "1") {
-//                    setpercentual("40%")
+                    //                    setpercentual("40%")
                     calculap = d * 40 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('2/3')
+                    //                    setfracao('2/3')
                     calculal = (d * 2 / 3) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 } else {
-//                    setpercentual("60%")
+                    //                    setpercentual("60%")
                     calculap = d * 60 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
+                    condicional = false
                 }
             }
             if (deli.tipocrime == "4") {
+                condicional = false
                 if (deli.prirei == "1") {
-//                    setpercentual("50%")
+                    //                    setpercentual("50%")
                     calculap = d * 50 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
                 } else {
-//                    setpercentual("70%")
+                    //                    setpercentual("70%")
                     calculap = d * 70 / 100
                     xdatap.setDate(xdatap.getDate() + calculap)
                 }
             }
             if (deli.tipocrime == "5") {
-//                setpercentual("1/6")
+                //                setpercentual("1/6")
                 calculap = (d * 1 / 6)
                 xdatap.setDate(xdatap.getDate() + calculap)
                 if (deli.prirei == "1") {
-//                    setfracao('1/3')
+                    //                    setfracao('1/3')
                     calculal = (d / 3 * 1) + 1
                 } else {
-//                    setfracao = ('1/2')
+                    //                    setfracao = ('1/2')
                     calculal = (d / 2 * 1) + 1
                 }
                 xdatal.setDate(xdatal.getDate() + calculal)
             }
             if (deli.tipocrime == "6") {
                 if (deli.prirei == "1") {
-//                    setpercentual("2/5")
+                    //                    setpercentual("2/5")
                     calculap = (d * 2 / 5)
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/3')
+                    //                    setfracao('1/3')
                     calculal = (d / 3 * 1) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 } else {
-//                    setpercentual("3/5")
+                    //                    setpercentual("3/5")
                     calculap = (d * 3 / 5)
                     xdatap.setDate(xdatap.getDate() + calculap)
-//                    setfracao('1/2')
+                    //                    setfracao('1/2')
                     calculal = (d / 2 * 1) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 }
             }
             if (deli.tipocrime == "7") {
-//                setpercentual("1/6")
+                //                setpercentual("1/6")
                 calculap = (d * 1 / 6)
                 xdatap.setDate(xdatap.getDate() + calculap)
-//                setfracao('1/3')
+                //                setfracao('1/3')
                 calculal = (d / 3 * 2) + 1
                 xdatal.setDate(xdatal.getDate() + calculal)
             }
             if (deli.tipocrime == "8" || deli.tipocrime == "9") {
-//                setpercentual("50%")
+                //                setpercentual("50%")
                 calculap = (d * 50 / 100)
                 xdatap.setDate(xdatap.getDate() + calculap)
                 if (deli.prirei == "1") {
-//                    setfracao('2/3')
+                    //                    setfracao('2/3')
                     calculal = (d / 3 * 2) + 1
                     xdatal.setDate(xdatal.getDate() + calculal)
                 } else {
-//                    setfracao('')
+                    condicional = false
+                    //                    setfracao('')
                 }
             }
             if (deli.tipocrime == "10") {
-//                setpercentual("1/8")
+                //                setpercentual("1/8")
                 calculap = (d * 1 / 8)
                 xdatap.setDate(xdatap.getDate() + calculap)
                 if (deli.prirei == "1") {
-//                    setfracao('1/3')
+                    //                    setfracao('1/3')
                     calculal = (d / 3 * 1) + 1
                 } else {
-//                    setfracao('1/2')
+                    //                    setfracao('1/2')
                     calculal = (d / 2 * 1) + 1
                 }
                 xdatal.setDate(xdatal.getDate() + calculal)
@@ -607,11 +764,15 @@ export default function Home() {
         })
         var y = formatDate(xdatap)
         y = y.toString()
-        setDataprisao(y)
+        setDataprogressao(y)
 
-        var z = formatDate(xdatal)
-        z = z.toString()
-        setDatacondicional(z)
+        if(condicional){
+            var z = formatDate(xdatal)
+            z = z.toString()
+            setDatacondicional(z)
+        }else{
+            z = '//'
+        }
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             dataprogressao: y,
@@ -702,7 +863,9 @@ export default function Home() {
                 </div>
                 :
                 <>
-                    <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravar}>GRAVAR</button>
+                    <div className="flex justify-end">
+                        <button className="cursor-pointer w-24 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravar}>GRAVAR</button>
+                    </div>
                 </>
             }
 
@@ -720,7 +883,7 @@ export default function Home() {
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
                                             <TbTrashOff />
                                         </a>
-                                        <p className="text-left">{deli.descriD + " " + deli.anosPena + " ANOS " + deli.mesesPena + " MESES " + deli.diasPena + " DIAS"}</p>
+                                        <p className="text-left">{deli.descriD + " % Prog. "+deli.percentual + " % Cond. " + deli.fracao+" Pena " + deli.anosPena + " A " + deli.mesesPena + " M " + deli.diasPena + " D"}</p>
                                     </div>
                                 )
                             })}
@@ -769,9 +932,9 @@ export default function Home() {
                         </div>
                     </form>
                     {atualizando2 ?
-                        <button className="cursor-pointer w-32 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizardelito}>ATUALIZAR</button>
+                        <button className="cursor-pointer w-32 self-end mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizardelito}>ATUALIZAR</button>
                         :
-                        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
+                        <button className="cursor-pointer w-24 self-end mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
                     }
 
                     <h1>Cadastro de Detração e Remições</h1>
@@ -818,9 +981,9 @@ export default function Home() {
                         </div>
                     </form>
                     {atualizando3 ?
-                        <button className="cursor-pointer w-232 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
+                        <button className="cursor-pointer w-232 self-end mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
                         :
-                        <button className="cursor-pointer w-24 self-center mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
+                        <button className="cursor-pointer w-24 self-end mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
                     }
                 </>
                 :
