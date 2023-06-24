@@ -19,7 +19,7 @@ export default function Layout(props: LayoutProps) {
         <ForcarAutenticacao>
         <div className={` ${xtema} flex h-screen w-screen`}>
             <MenuLateral />
-            <div className={`flex flex-col w-full p-7
+            <div className={`flex flex-col w-full p-3
              bg-gray-300    dark:bg-gray-800`}>
                 <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo}/>
                 <Conteudo>

@@ -801,7 +801,7 @@ export default function Home() {
                                             <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome}</p>
+                                            <p className="">{cli.nome+" Pr. "+cli.dataprogressao+" Cond. "+cli.datacondicional}</p>
                                         </div>
                                     )
                                 })
@@ -815,7 +815,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome}</p>
+                                            <p className="">{cli.nome+" Pr. "+cli.dataprogressao+" Cond. "+cli.datacondicional}</p>
                                         </div>
                                     )
                                 })
@@ -883,7 +883,7 @@ export default function Home() {
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
                                             <TbTrashOff />
                                         </a>
-                                        <p className="text-left">{deli.descriD + " % Prog. "+deli.percentual + " % Cond. " + deli.fracao+" Pena " + deli.anosPena + " A " + deli.mesesPena + " M " + deli.diasPena + " D"}</p>
+                                        <p className="text-left">{deli.descriD + " Prog. "+deli.percentual + " Cond. " + deli.fracao+" Pena " + deli.anosPena + " A " + deli.mesesPena + " M " + deli.diasPena + " D"}</p>
                                     </div>
                                 )
                             })}
