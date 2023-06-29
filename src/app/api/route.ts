@@ -11,8 +11,8 @@ export async function POST(request: Request) {
       }
     ],
     mode: 'subscription',
-    success_url: `http://localhost:3000/sucesso/?success=true`,
-    cancel_url: `http://localhost:3000/cancela/?canceled=true`,
+    success_url: '',//`http://localhost:3000/sucesso/?success=true`,
+    cancel_url:  ''//`http://localhost:3000/cancela/?canceled=true`,
   })
   return NextResponse.json(session.url)
 }
