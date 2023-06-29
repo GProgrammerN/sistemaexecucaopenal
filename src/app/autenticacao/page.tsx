@@ -52,9 +52,9 @@ export default function Autenticacao() {
                 exibirErro('O domínio do e-mail informado é inválido.')
             } else if (e.code == 'auth/wrong-password') {
                 exibirErro('A senha informada está incorreta.')
-            } else {
+            } /*else {
                 exibirErro('Erro desconhecido')
-            }
+            }*/
 
 
         }

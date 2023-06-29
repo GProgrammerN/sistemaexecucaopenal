@@ -31,7 +31,7 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User){
 function gerenciarCookie(logado: boolean) {
     if(logado){
         Cookies.set('sistemaexecucaopenal-auth', logado, {
-            expires: 7
+            expires: 1
         })
     } else {
         Cookies.remove('sistemaexecucaopenal-auth')

@@ -24,6 +24,7 @@ type Cliente = {
     presidio: string,
     dataprisao: string,
     dataprogressao: string,
+    dataprogressao2: string,
     datacondicional: string,
     datafim: string
 }
@@ -59,6 +60,7 @@ export default function Home() {
     const [xpresidio, setPresidio] = useState('')
     const [xdataprisao, setDataprisao] = useState('//')
     const [xdataprogressao, setDataprogressao] = useState('//')
+    const [xdataprogressao2, setDataprogressao2] = useState('//')
     const [xdatacondicional, setDatacondicional] = useState('//')
     const [xdatafim, setDatafim] = useState('//')
     const db = firebase.firestore()
@@ -280,6 +282,7 @@ export default function Home() {
         setProcesso(ref.processo)
         setDataprisao(ref.dataprisao)
         setDataprogressao(ref.dataprogressao)
+        setDataprogressao2(ref.dataprogressao2)
         setDatacondicional(ref.datacondicional)
         setDatafim(ref.datafim)
         setStatus2(!status2)
@@ -296,6 +299,7 @@ export default function Home() {
             presidio: xpresidio,
             dataprisao: xdataprisao,
             dataprogressao: xdataprogressao,
+            dataprogressao2: xdataprogressao2,
             datacondicional: xdatacondicional,
             datafim: xdatafim
         })
@@ -306,6 +310,7 @@ export default function Home() {
         setProcesso('')
         setDataprisao('')
         setDataprogressao('')
+        setDataprogressao2('')
         setDatacondicional('')
         setDatafim('')
         setAtualizando(false)
@@ -321,6 +326,7 @@ export default function Home() {
                 presidio: xpresidio,
                 dataprisao: xdataprisao,
                 dataprogressao: xdataprogressao,
+                dataprogressao2: xdataprogressao2,
                 datacondicional: xdatacondicional,
                 datafim: xdatafim
             })
@@ -331,6 +337,7 @@ export default function Home() {
             setProcesso('')
             setDataprisao('')
             setDataprogressao('')
+            setDataprogressao2('')
             setDatacondicional('')
             setDatafim('')
             setStatus(!status)
@@ -629,8 +636,6 @@ export default function Home() {
             datafim: x
         })
 
-        var condicional = true
-
         var dataf       = new Date(xdataprisao)
         var xdatal      = new Date(xdataprisao)
         var xdataini    = new Date(xdataprisao)
@@ -676,12 +681,12 @@ export default function Home() {
                     calculal = (d1 * 2 / 3)
                 } else {
                     calculap = d1 * 60 / 100
-                    condicional = false
+                    calculal = d1
                 }
             }
             if (deli.tipocrime == "4") {
-                condicional = false
-                if (deli.prirei == "1") {
+                calculal = d1
+            if (deli.prirei == "1") {
                     calculap = d1 * 50 / 100
                 } else {
                     calculap = d1 * 70 / 100
@@ -713,7 +718,7 @@ export default function Home() {
                 if (deli.prirei == "1") {
                     calculal = (d1 / 3 * 2)
                 } else {
-                    condicional = false
+                    calculal = d1
                 }
             }
             if (deli.tipocrime == "10") {
@@ -737,18 +742,98 @@ export default function Home() {
         y = y.toString()
         setDataprogressao(y)
 
-        if(condicional){
-            var z = formatDate(xdatal)
-            z = z.toString()
-            setDatacondicional(z)
-        }else{
-            z = '//'
-        }
+        var z = formatDate(xdatal)
+        z = z.toString()
+        setDatacondicional(z)
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             dataprogressao: y,
             datacondicional: z
         })
+
+        var dataf       = new Date(xdataprisao)
+        var xdataini    = new Date(xdataprisao)
+        var xdatap      = new Date(xdataprogressao)
+        var c1 = 0 
+        var d1 = 0 
+        var calculap = 0
+        var calculal = 0
+        delita?.map(deli => {
+            dataf = new Date(xdataprisao)
+            if (parseInt(deli.anosPena) > 0) {
+                dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
+            }
+            if (parseInt(deli.mesesPena) > 0) {
+                dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
+            }
+            if (parseInt(deli.diasPena) > 0) {
+                dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
+            }
+            c1 = Math.abs(dataf.getTime() - xdataini.getTime())
+            d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+            if (deli.tipocrime == "1") {
+                if (deli.prirei == "1") {
+                    calculap = (d1 - (d1 * 16 / 100)) * 16 / 100
+                } else {
+                    calculap = (d1 - (d1 * 20 / 100)) * 20 / 100
+                }
+            }
+            if (deli.tipocrime == "2") {
+                if (deli.prirei == "1") {
+                    calculap = (d1 - (d1 * 25 / 100)) * 25 / 100
+                } else {
+                    calculap = (d1 - (d1 * 30 / 100)) * 30 / 100
+                }
+            }
+            if (deli.tipocrime == "3") {
+                if (deli.prirei == "1") {
+                    calculap = (d1 - (d1 * 40 / 100)) * 40 / 100
+                } else {
+                    calculap = (d1 - (d1 * 60 / 100)) * 60 / 100
+                }
+            }
+            if (deli.tipocrime == "4") {
+            if (deli.prirei == "1") {
+                    calculap = (d1 - (d1 * 50 / 100)) * 50 / 100
+                } else {
+                    calculap = (d1 - (d1 * 70 / 100)) * 70 / 100
+                }
+            }
+            if (deli.tipocrime == "5") {
+                calculap = (d1 - (d1 * 1 / 6)) * 1 / 6
+            }
+            if (deli.tipocrime == "6") {
+                if (deli.prirei == "1") {
+                    calculap = (d1 - (d1 * 2 / 5)) * 2 / 5
+                } else {
+                    calculap = (d1 - (d1 * 3 / 5)) * 3 / 5
+                }
+            }
+            if (deli.tipocrime == "7") {
+                calculap = (d1 - (d1 * 1 / 6)) * 1 / 6
+            }
+            if (deli.tipocrime == "8" || deli.tipocrime == "9") {
+                calculap = (d1 - (d1 * 50 / 100)) * 50 / 100
+            }
+            if (deli.tipocrime == "10") {
+                calculap = (d1 - (d1 * 1 / 8)) * 1 / 8
+            }
+            xdatap.setDate(xdatap.getDate() + calculap )
+            c1 = 0
+            d1 = 0
+        })
+        // bug de datas acrescentar 1 dia
+        xdatap.setDate(xdatap.getDate() + 1 )
+
+        var y = formatDate(xdatap)
+        y = y.toString()
+        setDataprogressao2(y)
+
+        db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+            dataprogressao2: y,
+        })
+
+
         setStatus(!status)
     }
 
@@ -804,7 +889,7 @@ export default function Home() {
                             </label>
                         }
                         <label>MATRICULA:
-                            <input required className='block  dark:bg-gray-400 dark:placeholder-white' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
+                            <input required className='block  dark:bg-gray-400 dark:placeholder-white w-28' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
                         </label>
                         <label>PRESIDIO:
                             <input className="block  dark:bg-gray-400 dark:placeholder-white" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
@@ -817,6 +902,9 @@ export default function Home() {
                         </label>
                         <label>PROGRESSÃO:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+                        </label>
+                        <label>PROGRESSÃO2:
+                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
                         </label>
                         <label>CONDICIONAL:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
@@ -831,6 +919,7 @@ export default function Home() {
                 <div className="flex justify-end">
                     <button className="cursor-pointer w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>FALTA GRAVE</button>
                 </div>
                 :
                 <>
