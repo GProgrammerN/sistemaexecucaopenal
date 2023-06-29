@@ -6,13 +6,13 @@ export async function POST(request: Request) {
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        price: 'price_1NMeUDDJ0RG7mjZbVxS6I010',
+        price: 'price_1NMsTgDJ0RG7mjZbvVe1MyWL',
         quantity: 1,
       }
     ],
     mode: 'subscription',
-    success_url: '',//`http://localhost:3000/sucesso/?success=true`,
-    cancel_url:  ''//`http://localhost:3000/cancela/?canceled=true`,
+    success_url: `http://localhost:3000/sucesso/?success=true`,
+    cancel_url: `http://localhost:3000/cancela/?canceled=true`,
   })
   return NextResponse.json(session.url)
 }

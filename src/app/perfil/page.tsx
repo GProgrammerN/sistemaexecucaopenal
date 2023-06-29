@@ -67,7 +67,7 @@ export default function Perfil() {
   }
 
   function atualizaSenha() {
-    
+
     user?.updatePassword(senha).then(() => {
       //
       exibirErro('Alterado com sucesso', 3, false)
@@ -97,9 +97,9 @@ export default function Perfil() {
       subtitulo="Administre suas informações de usuário.">
       <Conteudo />
       <form className="flex flex-col justify-center items-center m-2" method='post' autoComplete='off'>
-        <CampoPerfil campo='Nome' placeholder='Coloque seu Nome' id='inputNome' type='text' botaovalor={true} funcao={atualizaUsuario} funcaoInput={event => setNome(event.target.value)}/>
-        <CampoPerfil campo='Email' placeholder='exemplo@gmail.com' id='inputEmail' type='email' botaovalor={false}/>
-        <CampoPerfil campo='Senha' placeholder='Senha 6 caracteres ou mais' id='inputSenha' type='password' botaovalor={false} funcao={atualizaSenha} funcaoInput={event => setSenha(event.target.value)}/>
+        <CampoPerfil campo='Nome' placeholder='Coloque seu Nome' id='inputNome' type='text' botaovalor={true} funcao={atualizaUsuario} funcaoInput={event => setNome(event.target.value)} />
+        <CampoPerfil campo='Email' placeholder='exemplo@gmail.com' id='inputEmail' type='email' botaovalor={false} />
+        <CampoPerfil campo='Senha' placeholder='Senha 6 caracteres ou mais' id='inputSenha' type='password' botaovalor={false} funcao={atualizaSenha} funcaoInput={event => setSenha(event.target.value)} />
         <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
           <label htmlFor="inputAvatar" className="dark:text-white text-black pr-4">Foto    </label>
           <input ref={inputAvatarRef} className="
