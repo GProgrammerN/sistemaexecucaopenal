@@ -851,10 +851,10 @@ export default function Home() {
                                 busca?.map(cli => {
                                     return (
                                         <div key={cli.nome} className="flex justify-start text-sm pl-1 pt-1 items-center">
-                                            <a className="cursor-pointer text-green-800" onClick={() => editar(cli)}>
+                                            <a className="cursor-pointer mr-1 text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
-                                            <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
+                                            <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
                                             <p className="">{cli.nome + " Pr. " + cli.dataprogressao}</p>
@@ -865,7 +865,7 @@ export default function Home() {
                                 clienta?.map(cli => {
                                     return (
                                         <div className="flex justify-start text-sm pl-1 pt-1 items-center">
-                                            <a className="cursor-pointer mr-1 text-green-800 font-bold" onClick={() => editar(cli)}>
+                                            <a className="cursor-pointer mr-1 text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>

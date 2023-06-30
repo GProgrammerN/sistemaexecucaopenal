@@ -23,7 +23,7 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User){
         nome: usuarioFirebase.displayName,
         email: usuarioFirebase.email,
         token,
-        provedor: usuarioFirebase.providerData[0].providerId,
+        provedor: usuarioFirebase.providerData[0]?.providerId,
         imageUrl: usuarioFirebase.photoURL
     }
 }
