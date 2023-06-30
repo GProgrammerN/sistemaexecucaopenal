@@ -354,7 +354,7 @@ export default function Home() {
                 xpercentual = '16%'
                 xfracao = '1/3'
             } else {
-                xpercentual ='20%'
+                xpercentual = '20%'
                 xfracao = '1/2'
             }
         }
@@ -404,7 +404,7 @@ export default function Home() {
             xpercentual = '1/6'
             xfracao = '1/3'
         }
-        if (xtipocrime == '8' || xtipocrime=='9') {
+        if (xtipocrime == '8' || xtipocrime == '9') {
             xpercentual = '50%'
             if (xprirei == '1') {
                 xfracao = '2/3'
@@ -475,9 +475,9 @@ export default function Home() {
             if (xprirei == '1') {
                 xpercentual = '16%'
                 xfracao = '1/3'
-                alert(xpercentual+" "+xfracao)
+                alert(xpercentual + " " + xfracao)
             } else {
-                xpercentual ='20%'
+                xpercentual = '20%'
                 xfracao = '1/2'
             }
         }
@@ -527,7 +527,7 @@ export default function Home() {
             xpercentual = '1/6'
             xfracao = '1/3'
         }
-        if (xtipocrime == '8' || xtipocrime=='9') {
+        if (xtipocrime == '8' || xtipocrime == '9') {
             xpercentual = '50%'
             if (xprirei == '1') {
                 xfracao = '2/3'
@@ -541,7 +541,7 @@ export default function Home() {
                 xfracao = '1/2'
             }
         }
-        alert(xpercentual+" "+xfracao)
+        alert(xpercentual + " " + xfracao)
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
             descriD: xdescriD,
             tipocrime: xtipocrime,
@@ -636,16 +636,16 @@ export default function Home() {
             datafim: x
         })
 
-        var dataf       = new Date(xdataprisao)
-        var xdatal      = new Date(xdataprisao)
-        var xdataini    = new Date(xdataprisao)
-        var xdatap      = new Date(xdataprisao)
-        var c1 = 0 
-        var d1 = 0 
+        var dataf = new Date(xdataprisao)
+        var xdatal = new Date(xdataprisao)
+        var xdataini = new Date(xdataprisao)
+        var xdatap = new Date(xdataprisao)
+        var c1 = 0
+        var d1 = 0
         var calculap = 0
         var calculal = 0
         delita?.map(deli => {
-            dataf       = new Date(xdataprisao)
+            dataf = new Date(xdataprisao)
             if (parseInt(deli.anosPena) > 0) {
                 dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
             }
@@ -686,7 +686,7 @@ export default function Home() {
             }
             if (deli.tipocrime == "4") {
                 calculal = d1
-            if (deli.prirei == "1") {
+                if (deli.prirei == "1") {
                     calculap = d1 * 50 / 100
                 } else {
                     calculap = d1 * 70 / 100
@@ -729,14 +729,14 @@ export default function Home() {
                     calculal = (d1 / 2 * 1)
                 }
             }
-            xdatap.setDate(xdatap.getDate() + calculap )
-            xdatal.setDate(xdatal.getDate() + calculal )
+            xdatap.setDate(xdatap.getDate() + calculap)
+            xdatal.setDate(xdatal.getDate() + calculal)
             c1 = 0
             d1 = 0
         })
         // bug de datas acrescentar 1 dia
-        xdatap.setDate(xdatap.getDate() + 1 )
-        xdatal.setDate(xdatal.getDate() + 1 )
+        xdatap.setDate(xdatap.getDate() + 1)
+        xdatal.setDate(xdatal.getDate() + 1)
 
         var y = formatDate(xdatap)
         y = y.toString()
@@ -751,11 +751,11 @@ export default function Home() {
             datacondicional: z
         })
 
-        var dataf       = new Date(xdataprisao)
-        var xdataini    = new Date(xdataprisao)
-        var xdatap      = new Date(xdataprogressao)
-        var c1 = 0 
-        var d1 = 0 
+        var dataf = new Date(xdataprisao)
+        var xdataini = new Date(xdataprisao)
+        var xdatap = new Date(xdataprogressao)
+        var c1 = 0
+        var d1 = 0
         var calculap = 0
         var calculal = 0
         delita?.map(deli => {
@@ -793,7 +793,7 @@ export default function Home() {
                 }
             }
             if (deli.tipocrime == "4") {
-            if (deli.prirei == "1") {
+                if (deli.prirei == "1") {
                     calculap = (d1 - (d1 * 50 / 100)) * 50 / 100
                 } else {
                     calculap = (d1 - (d1 * 70 / 100)) * 70 / 100
@@ -818,12 +818,12 @@ export default function Home() {
             if (deli.tipocrime == "10") {
                 calculap = (d1 - (d1 * 1 / 8)) * 1 / 8
             }
-            xdatap.setDate(xdatap.getDate() + calculap )
+            xdatap.setDate(xdatap.getDate() + calculap)
             c1 = 0
             d1 = 0
         })
         // bug de datas acrescentar 1 dia
-        xdatap.setDate(xdatap.getDate() + 1 )
+        xdatap.setDate(xdatap.getDate() + 1)
 
         var y = formatDate(xdatap)
         y = y.toString()
@@ -850,14 +850,14 @@ export default function Home() {
                             {estabuscando ?
                                 busca?.map(cli => {
                                     return (
-                                        <div key={cli.nome} className="flex justify-start text-base font-bold pl-1 pt-1 items-center">
+                                        <div key={cli.nome} className="flex justify-start text-sm pl-1 pt-1 items-center">
                                             <a className="cursor-pointer text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
                                             <a className="cursor-pointer text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome+" Pr. "+cli.dataprogressao}</p>
+                                            <p className="">{cli.nome + " Pr. " + cli.dataprogressao}</p>
                                         </div>
                                     )
                                 })
@@ -871,7 +871,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome+" Pr. "+cli.dataprogressao}</p>
+                                            <p className="">{cli.nome + " Pr. " + cli.dataprogressao}</p>
                                         </div>
                                     )
                                 })
@@ -943,7 +943,7 @@ export default function Home() {
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletardelito(deli.descriD)}>
                                             <TbTrashOff />
                                         </a>
-                                        <p className="text-left">{deli.descriD + " Prog. "+deli.percentual + " Cond. " + deli.fracao+" Pena " + deli.anosPena + " A " + deli.mesesPena + " M " + deli.diasPena + " D"}</p>
+                                        <p className="text-left">{deli.descriD + " Prog. " + deli.percentual + " Cond. " + deli.fracao + " Pena " + deli.anosPena + " A " + deli.mesesPena + " M " + deli.diasPena + " D"}</p>
                                     </div>
                                 )
                             })}
