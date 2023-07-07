@@ -12,8 +12,8 @@ export async function POST(req: NextApiRequest) {
       }
     ],
     mode: 'subscription',
-    success_url: `http://localhost:3000/assinatura/?success=true`,
-    cancel_url:  `http://localhost:3000/assinatura/?canceled=true`,
+    success_url: `https://sistemaexecucaopenal.vercel.app/assinatura/?success=true`,
+    cancel_url:  `https://sistemaexecucaopenal.vercel.app/assinatura/?canceled=true`,
   })
 
   return NextResponse.json(session.url)
