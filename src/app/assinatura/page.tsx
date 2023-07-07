@@ -6,13 +6,15 @@ import cookies from "js-cookie"
 
 export default function PreviewPage() {
 
-  const query = new URLSearchParams(window.location.search);
-  if (query.get('success')) {
-    if (!cookies.get('assinatura')) {
-      let xid = cookies.set('assinatura', 'true')
-    }
-    if (cookies.get('bloqueio')) {
-      cookies.remove('bloqueio')
+  if (typeof window !== "undefined") {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get('success')) {
+      if (!cookies.get('assinatura')) {
+        let xid = cookies.set('assinatura', 'true')
+      }
+      if (cookies.get('bloqueio')) {
+        cookies.remove('bloqueio')
+      }
     }
   }
 
