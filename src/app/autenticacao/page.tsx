@@ -8,6 +8,7 @@ import { IconeAtencao } from "@/components/icons";
 import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
 import firebase from '../../firebase/config'
+import Cookies from "js-cookie";
 
 export default function Autenticacao() {
 
@@ -70,12 +71,13 @@ export default function Autenticacao() {
                 if (!doc.exists) {
                     var dataAtual = new Date();
                     var dia = dataAtual.getDate();
-                    var mes = (dataAtual.getMonth() + 1);
+                    var mes = (dataAtual.getMonth() + 2);
                     var ano = dataAtual.getFullYear();
                     var validade = new Date(ano, mes, dia).toString()
                     db.collection('usuario/').doc(id).set({
                         email: xemail,
-                        expira: validade
+                        expira: validade,
+                        assinatura: ''
                     })
                 } else {
                     const dados = doc.data()
@@ -83,13 +85,19 @@ export default function Autenticacao() {
                     var datae = obj.expira
                     var datar = new Date(datae)
                     var dataAtual = new Date()
-                    if (datar <= dataAtual) {
+                    var xassinatura = obj.assinatura
+                    if (datar <= dataAtual && xassinatura !== 'true') {
                         alert("Validade do sistema expirada! Renove a assinatura.")
+                        if(!Cookies.get('bloqueio')){
+                            Cookies.set('bloqueio', 'true')
+                        }
+                        window.location.assign('/assinatura')
+/*                        useRouter().push('/assinatura')
                         firebase.auth().signOut().then(() => {
                             //logout
                         }).catch(() => {
                             //{logout}
-                        })
+                        })*/
                     }
                 }
             })

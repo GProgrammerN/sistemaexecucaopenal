@@ -1,6 +1,4 @@
-'use client';
 import { useAuth } from "@/data/context/AuthContext"
-import Link from "next/link"
 
 export default function AvatarUsuario() {
     const { usuario } = useAuth()
@@ -12,6 +10,7 @@ export default function AvatarUsuario() {
                 alt="Avatar do usuário"
                 className="h-10 w-10 rounded-full"
             />
+            {usuario?.assinatura}
             <p className="dark:text-white text-black text-sm">
                 {usuario?.nome?.slice(0, 40) ?? 'Sem Apelido'}
             </p>

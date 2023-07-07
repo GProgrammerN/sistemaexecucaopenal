@@ -1,24 +1,20 @@
 "use client";
 import React from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 import axios from "axios"
 import Layout from '@/components/template/Layout';
+import cookies from "js-cookie"
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 export default function PreviewPage() {
-  React.useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('success')) {
-      console.log('Order placed! You will receive an email confirmation.');
-    }
 
-    if (query.get('canceled')) {
-      console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
+  const query = new URLSearchParams(window.location.search);
+  if (query.get('success')) {
+    if(!cookies.get('assinatura')){
+      let xid = cookies.set('assinatura', 'true')
     }
-  }, []);
+    if(cookies.get('bloqueio')){
+      cookies.remove('bloqueio')
+    }
+  }
 
   const handleSubscription = async (e) => {
     e.preventDefault();
@@ -32,7 +28,7 @@ export default function PreviewPage() {
         },
       }
     );
-    window.location.assign(data)
+     location.assign(data)
   }
 
   const handleSubscriptionSemestral = async (e) => {
@@ -65,6 +61,10 @@ export default function PreviewPage() {
     window.location.assign(data)
   }
 
+  function cancelar() {
+    window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
+  }
+
   return (
     <Layout titulo='Gerenciar suas Assinaturas' subtitulo='Gerencie seu plano.'>
       <form method="POST">
@@ -92,7 +92,7 @@ export default function PreviewPage() {
           </div>
         </section>
         <button className="flex-shrink-1 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-          type="button" onClick={() => { window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII') }}>Gerenciar Assinatura</button>
+          type="button" onClick={cancelar}>Gerenciar Assinatura</button>
       </form>
     </Layout>
   );

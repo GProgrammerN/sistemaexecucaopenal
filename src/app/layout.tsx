@@ -2,13 +2,17 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { GlobalContextProvider } from '@/data/context/AppContext';
 import { AuthProvider } from '@/data/context/AuthContext';
+import firebase from '../firebase/config'
+import cookies from "js-cookie"
 
 const inter = Inter({ subsets: ['latin'] })
+
 
 export const metadata = {
   title: 'Sistema de Execução Penal',
   description: 'Gerenciamento de Execução Penal',
 }
+
 
 export default function RootLayout({
   children,

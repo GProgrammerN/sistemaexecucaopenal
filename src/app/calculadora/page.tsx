@@ -2,7 +2,7 @@
 import Layout from "@/components/template/Layout"
 import { FormEvent, useEffect, useState } from "react"
 import firebase from '../../firebase/config'
-
+import Cookies from "js-cookie";
 import { TbSelect } from "react-icons/tb"
 import { TbTrashOff } from "react-icons/tb"
 
@@ -97,6 +97,10 @@ export default function Home() {
     const [mostra, setMostra] = useState(false)
 
     var id = firebase.auth().currentUser?.uid
+
+    if(Cookies.get('bloqueio')){
+        window.location.assign('/assinatura')
+    }
 
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
