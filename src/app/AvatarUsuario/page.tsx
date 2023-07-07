@@ -1,6 +1,4 @@
-'use client';
 import { useAuth } from "@/data/context/AuthContext"
-import Link from "next/link"
 
 export default function AvatarUsuario() {
     const { usuario } = useAuth()

@@ -5,20 +5,20 @@ import Usuario from '@/app/model/Usuario'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 
-interface AuthContextProps{
+interface AuthContextProps {
     usuario?: Usuario
     carregando?: boolean
-    login: (email:string, senha:string) => Promise<void>
-    cadastrar: (email:string, senha:string) => Promise<void>    
+    login: (email: string, senha: string) => Promise<void>
+    cadastrar: (email: string, senha: string) => Promise<void>
     loginGoogle?: () => Promise<void>
     logout?: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextProps>({})
 
-async function usuarioNormalizado(usuarioFirebase: firebase.User){
+async function usuarioNormalizado(usuarioFirebase: firebase.User) {
     const token = await usuarioFirebase.getIdToken()
-    return{
+    return {
         uid: usuarioFirebase.uid,
         nome: usuarioFirebase.displayName,
         email: usuarioFirebase.email,
@@ -29,22 +29,30 @@ async function usuarioNormalizado(usuarioFirebase: firebase.User){
 }
 
 function gerenciarCookie(logado: boolean) {
-    if(logado){
-        Cookies.set('sistemaexecucaopenal-auth', logado, {
+    if (logado) {
+        Cookies.set('sistemaexecucaopenal-auth', logado as any, {
             expires: 1
         })
     } else {
         Cookies.remove('sistemaexecucaopenal-auth')
     }
 
+    if (Cookies.get('assinatura')) {
+        const db = firebase.firestore()
+        const id = firebase.auth().currentUser?.uid
+        Cookies.remove('assinatura')
+        db.collection('usuario').doc(id).update({
+            assinatura: 'true'
+        })
+    }
 }
 
-export function AuthProvider(props:any){
+export function AuthProvider(props: any) {
     const [carregando, setCarregando] = useState(true)
     const [usuario, setUsuario] = useState<Usuario>(null)
 
-    async function configurarSessao(usuarioFirebase:any) {
-        if(usuarioFirebase?.email) {
+    async function configurarSessao(usuarioFirebase: any) {
+        if (usuarioFirebase?.email) {
             const usuario = await usuarioNormalizado(usuarioFirebase)
             setUsuario(usuario)
             gerenciarCookie(true)
@@ -58,22 +66,10 @@ export function AuthProvider(props:any){
         }
     }
 
-    async function login(email:string, senha:string){
+    async function login(email: string, senha: string) {
         try {
             const resp = await firebase.auth().
-            signInWithEmailAndPassword(email, senha)
-
-                await configurarSessao(resp.user)
-                useRouter().push('/')
-        } finally {
-            setCarregando(false)
-        }
-    }
-
-    async function cadastrar(email:string, senha:string){
-        try {
-            const resp = await firebase.auth().
-            createUserWithEmailAndPassword(email, senha)
+                signInWithEmailAndPassword(email, senha)
 
             await configurarSessao(resp.user)
             useRouter().push('/')
@@ -82,21 +78,33 @@ export function AuthProvider(props:any){
         }
     }
 
-    async function loginGoogle(){
+    async function cadastrar(email: string, senha: string) {
+        try {
+            const resp = await firebase.auth().
+                createUserWithEmailAndPassword(email, senha)
+
+            await configurarSessao(resp.user)
+            useRouter().push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    async function loginGoogle() {
         try {
             const resp = await firebase.auth().signInWithPopup(
                 new firebase.auth.GoogleAuthProvider()
             )
-                await configurarSessao(resp.user)
-//                useRouter().push('/')
-            
+            await configurarSessao(resp.user)
+            //                useRouter().push('/')
+
         } finally {
             setCarregando(false)
         }
     }
 
     async function logout() {
-        try{
+        try {
             setCarregando(true)
             await firebase.auth().signOut()
             await configurarSessao(null)
@@ -106,7 +114,7 @@ export function AuthProvider(props:any){
     }
 
     useEffect(() => {
-        if(Cookies.get('sistemaexecucaopenal-auth')){
+        if (Cookies.get('sistemaexecucaopenal-auth')) {
             const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
             return () => cancelar()
         } else {
@@ -114,7 +122,7 @@ export function AuthProvider(props:any){
         }
     })
 
-    return(
+    return (
         <AuthContext.Provider value={{
             usuario,
             carregando,
