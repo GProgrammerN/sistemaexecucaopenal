@@ -11,8 +11,8 @@ export async function POST(request: Request) {
       }
     ],
     mode: 'subscription',
-    success_url: `http://sistemaexecucaopenal.vercel.app/sucesso/?success=true`,
-    cancel_url: `http://sistemaexecucaopenal.vercel.app/cancela/?canceled=true`,
+    success_url: `http://sistemaexecucaopenal.vercel.app/assinatura/?success=true`,
+    cancel_url: `http://sistemaexecucaopenal.vercel.app/assinatura/?canceled=true`,
   })
   return NextResponse.json(session.url)
 }
