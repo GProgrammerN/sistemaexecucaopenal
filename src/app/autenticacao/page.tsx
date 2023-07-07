@@ -8,6 +8,7 @@ import { IconeAtencao } from "@/components/icons";
 import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
 import firebase from '../../firebase/config'
+import Cookies from "js-cookie";
 
 export default function Autenticacao() {
 
@@ -87,11 +88,16 @@ export default function Autenticacao() {
                     var xassinatura = obj.assinatura
                     if (datar <= dataAtual && xassinatura !== 'true') {
                         alert("Validade do sistema expirada! Renove a assinatura.")
+                        if(!Cookies.get('bloqueio')){
+                            Cookies.set('bloqueio', 'true')
+                        }
+                        window.location.assign('/assinatura')
+/*                        useRouter().push('/assinatura')
                         firebase.auth().signOut().then(() => {
                             //logout
                         }).catch(() => {
                             //{logout}
-                        })
+                        })*/
                     }
                 }
             })

@@ -11,6 +11,9 @@ export default function PreviewPage() {
     if(!cookies.get('assinatura')){
       let xid = cookies.set('assinatura', 'true')
     }
+    if(cookies.get('bloqueio')){
+      cookies.remove('bloqueio')
+    }
   }
 
   const handleSubscription = async (e) => {
@@ -25,9 +28,7 @@ export default function PreviewPage() {
         },
       }
     );
-    //window.open(data,'_blank')
-
-    location.assign(data)
+     location.assign(data)
   }
 
   const handleSubscriptionSemestral = async (e) => {
@@ -60,26 +61,8 @@ export default function PreviewPage() {
     window.location.assign(data)
   }
 
-
-
-  const handleSubscriptionemail = async (e) => {
-    e.preventDefault();
-    const { data } = await axios.post('/api/emails',
-      {
-        clientId: email
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    window.location.assign(data)
-  }
-
   function cancelar() {
-    handleSubscriptionemail
-    //window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
+    window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
   }
 
   return (
