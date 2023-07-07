@@ -2,7 +2,6 @@
 import React from 'react';
 import axios from "axios"
 import Layout from '@/components/template/Layout';
-import firebase from '../../firebase/config'
 import cookies from "js-cookie"
 
 export default function PreviewPage() {
