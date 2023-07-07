@@ -8,10 +8,10 @@ export default function PreviewPage() {
 
   const query = new URLSearchParams(window.location.search);
   if (query.get('success')) {
-    if(!cookies.get('assinatura')){
+    if (!cookies.get('assinatura')) {
       let xid = cookies.set('assinatura', 'true')
     }
-    if(cookies.get('bloqueio')){
+    if (cookies.get('bloqueio')) {
       cookies.remove('bloqueio')
     }
   }
@@ -28,7 +28,7 @@ export default function PreviewPage() {
         },
       }
     );
-     location.assign(data)
+    location.assign(data)
   }
 
   const handleSubscriptionSemestral = async (e) => {
@@ -58,11 +58,16 @@ export default function PreviewPage() {
         },
       }
     );
-    window.location.assign(data)
+
+    if (typeof window !== "undefined") {
+      window.location.assign(data)
+    }
   }
 
   function cancelar() {
-    window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
+    if (typeof window !== "undefined") {
+      window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
+    }
   }
 
   return (
