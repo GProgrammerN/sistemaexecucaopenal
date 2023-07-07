@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useAuth } from "@/data/context/AuthContext"
 
 export default function AvatarUsuario() {
