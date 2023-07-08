@@ -107,7 +107,7 @@ export default function PreviewPage() {
                       done
                     </span>
                     <span className="pl-2">
-                      <span className="text-black">Acesso a Calculadora de Execução Penal</span>
+                      <span className="text-black">Acesso ao Sistema de Execução Penal</span>
                     </span>
                   </p>
                   <p className="font-semibold text-gray-400 text-left pt-5">
@@ -145,7 +145,7 @@ export default function PreviewPage() {
                       done
                     </span>
                     <span className="pl-2">
-                      <span className="text-white">Acesso a Calculadora de Execução Penal</span>
+                      <span className="text-white">Acesso ao Sistema de Execução Penal</span>
                     </span>
                   </p>
                   <p className="font-semibold text-gray-400 text-left pt-5">
@@ -188,7 +188,7 @@ export default function PreviewPage() {
                         done
                       </span>
                       <span className="pl-2">
-                        <span className="text-black">Acesso a Calculadora de Execução Penal</span>
+                        <span className="text-black">Acesso ao Sistema de Execução Penal</span>
                       </span>
                     </p>
                     <p className="font-semibold text-gray-400 text-left pt-5">
