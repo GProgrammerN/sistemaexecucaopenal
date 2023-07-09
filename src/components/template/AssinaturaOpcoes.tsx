@@ -4,7 +4,7 @@ export default function AssinaturaOpcoes() {
             <head>
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
             </head>
-            <div className="min-h-screen flex justify-center items-center">
+            <div className="flex justify-center items-center">
                 <div className="">
                     <div className="text-center font-semibold">
                         <h1 className="text-5xl">

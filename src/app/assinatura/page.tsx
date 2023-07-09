@@ -81,7 +81,7 @@ export default function PreviewPage() {
       <form method="POST">
         <button className="flex-shrink-1 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
           type="button" onClick={cancelar}>Gerenciar Assinatura</button>
-        <div className="min-h-screen flex justify-center items-center">
+        <div className="flex justify-center items-center">
           <div className="">
             <div className="text-center font-semibold">
               <h1 className="text-5xl">

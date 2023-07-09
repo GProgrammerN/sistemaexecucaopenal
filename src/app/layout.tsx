@@ -25,10 +25,9 @@ export default function RootLayout({
         <AuthProvider>
           <GlobalContextProvider>
             {children}
-           </GlobalContextProvider>
+          </GlobalContextProvider>
         </AuthProvider>
       </body>
-
     </html>
   )
 }

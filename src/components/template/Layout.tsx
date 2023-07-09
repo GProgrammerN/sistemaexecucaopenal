@@ -13,20 +13,20 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
-    const {xtema, setXtema } = useGlobalContext();
+    const { xtema, setXtema } = useGlobalContext();
 
-    return(
+    return (
         <ForcarAutenticacao>
-        <div className={` ${xtema} flex h-screen w-screen`}>
-            <MenuLateral />
-            <div className={`flex flex-col w-full p-3
+            <div className={`${xtema} h-screen flex overflow-auto`}>
+                <MenuLateral />
+                <div className={`flex flex-col h-full w-full p-3
              bg-gray-300    dark:bg-gray-800`}>
-                <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo}/>
-                <Conteudo>
-                    {props.children}
-                </Conteudo>
+                    <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo} />
+                    <Conteudo>
+                        {props.children}
+                    </Conteudo>
+                </div>
             </div>
-        </div>
         </ForcarAutenticacao>
     )
 }

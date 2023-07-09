@@ -95,7 +95,6 @@ export default function Perfil() {
   return (
     <Layout titulo="Perfil do Usuário"
       subtitulo="Administre suas informações de usuário.">
-      <Conteudo />
       <form className="flex flex-col justify-center items-center m-2" method='post' autoComplete='off'>
         <CampoPerfil campo='Nome' placeholder='Coloque seu Nome' id='inputNome' type='text' botaovalor={true} funcao={atualizaUsuario} funcaoInput={event => setNome(event.target.value)} />
         <CampoPerfil campo='Email' placeholder='exemplo@gmail.com' id='inputEmail' type='email' botaovalor={false} />
@@ -120,7 +119,6 @@ export default function Perfil() {
           </div>
         ) : false}
       </form>
-
     </Layout>
 
   )
