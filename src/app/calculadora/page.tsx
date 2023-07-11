@@ -860,8 +860,12 @@ export default function Home() {
 
     function faltagrave() {
         if (confirm('Confirma a inclusão da falta grave? (lembrar de descontar dias remidos se houver desconto)')) {
-            let falta = prompt('Digite a data no seguinte formato MM/DD/AAAA')
-            let xfalta = formatDate(falta)
+            let falta = prompt('Digite a data no formato DD/MM/AAAA')
+            let xdiaf = falta?.substring(0,2)
+            let xmesf = falta?.substring(3,5)
+            let xanof = falta?.substring(6,10)
+            let xf    = xmesf+"-"+xdiaf+"-"+xanof
+            let xfalta = formatDate(xf)
             setDatafalta(xfalta)
             var remissao = 0
             remica?.map(remi => {
