@@ -5,6 +5,7 @@ import firebase from '../../firebase/config'
 import Cookies from "js-cookie";
 import { TbSelect } from "react-icons/tb"
 import { TbTrashOff } from "react-icons/tb"
+import { StripeExpressCheckoutElementClickEvent } from "@stripe/stripe-js";
 
 var clientes = [{}]
 clientes.shift()
@@ -26,7 +27,8 @@ type Cliente = {
     dataprogressao: string,
     dataprogressao2: string,
     datacondicional: string,
-    datafim: string
+    datafim: string,
+    datafalta: string
 }
 
 type Delito = {
@@ -63,6 +65,7 @@ export default function Home() {
     const [xdataprogressao2, setDataprogressao2] = useState('//')
     const [xdatacondicional, setDatacondicional] = useState('//')
     const [xdatafim, setDatafim] = useState('//')
+    const [xdatafalta, setDatafalta] = useState('//')
     const db = firebase.firestore()
 
     // Delitos
@@ -98,7 +101,7 @@ export default function Home() {
 
     var id = firebase.auth().currentUser?.uid
 
-    if(Cookies.get('bloqueio')){
+    if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
 
@@ -289,6 +292,7 @@ export default function Home() {
         setDataprogressao2(ref.dataprogressao2)
         setDatacondicional(ref.datacondicional)
         setDatafim(ref.datafim)
+        setDatafalta(ref.datafalta)
         setStatus2(!status2)
         setStatus3(!status3)
         setMostra(true)
@@ -305,7 +309,8 @@ export default function Home() {
             dataprogressao: xdataprogressao,
             dataprogressao2: xdataprogressao2,
             datacondicional: xdatacondicional,
-            datafim: xdatafim
+            datafim: xdatafim,
+            datafalta: xdatafalta
         })
         alert("Cliente atualizado com sucesso!")
         setNome('')
@@ -317,6 +322,7 @@ export default function Home() {
         setDataprogressao2('')
         setDatacondicional('')
         setDatafim('')
+        setDatafalta('')
         setAtualizando(false)
         setStatus(!status)
     }
@@ -332,7 +338,8 @@ export default function Home() {
                 dataprogressao: xdataprogressao,
                 dataprogressao2: xdataprogressao2,
                 datacondicional: xdatacondicional,
-                datafim: xdatafim
+                datafim: xdatafim,
+                datafalta: xdatafalta
             })
             alert("Cliente cadastrado com sucesso!")
             setNome('')
@@ -344,6 +351,7 @@ export default function Home() {
             setDataprogressao2('')
             setDatacondicional('')
             setDatafim('')
+            setDatafalta('')
             setStatus(!status)
         } else {
             alert("Não é possivel gravar clientes sem preencher o nome!")
@@ -740,7 +748,7 @@ export default function Home() {
         })
         // bug de datas acrescentar 1 dia
         xdatap.setDate(xdatap.getDate() + 1)
-        xdatal.setDate(xdatal.getDate() + 1)
+        xdatal.setDate(xdatal.getDate() + 1 - remissao)
 
         var y = formatDate(xdatap)
         y = y.toString()
@@ -760,8 +768,11 @@ export default function Home() {
         var xdatap = new Date(xdataprogressao)
         var c1 = 0
         var d1 = 0
+        var c2 = 0
+        var d2 = 0 
         var calculap = 0
         var calculal = 0
+        var vez = 1
         delita?.map(deli => {
             dataf = new Date(xdataprisao)
             if (parseInt(deli.anosPena) > 0) {
@@ -775,59 +786,67 @@ export default function Home() {
             }
             c1 = Math.abs(dataf.getTime() - xdataini.getTime())
             d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+            if( vez === 1){
+                var xx = new Date(xdataprogressao)
+                var yy = new Date(xdataprisao)
+                c2 = Math.abs(xx.getTime() - yy.getTime())
+                d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+                d1 = d1 - d2
+                vez = 2
+            }
             if (deli.tipocrime == "1") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 - (d1 * 16 / 100)) * 16 / 100
+                    calculap = (d1 * 16 / 100)
                 } else {
-                    calculap = (d1 - (d1 * 20 / 100)) * 20 / 100
+                    calculap = (d1 * 20 / 100)
                 }
             }
             if (deli.tipocrime == "2") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 - (d1 * 25 / 100)) * 25 / 100
+                    calculap = (d1 * 25 / 100)
                 } else {
-                    calculap = (d1 - (d1 * 30 / 100)) * 30 / 100
+                    calculap = (d1 * 30 / 100)
                 }
             }
             if (deli.tipocrime == "3") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 - (d1 * 40 / 100)) * 40 / 100
+                    calculap = (d1 * 40 / 100)
                 } else {
-                    calculap = (d1 - (d1 * 60 / 100)) * 60 / 100
+                    calculap = (d1 * 60 / 100)
                 }
             }
             if (deli.tipocrime == "4") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 - (d1 * 50 / 100)) * 50 / 100
+                    calculap = (d1 * 50 / 100)
                 } else {
-                    calculap = (d1 - (d1 * 70 / 100)) * 70 / 100
+                    calculap = (d1 * 70 / 100)
                 }
             }
             if (deli.tipocrime == "5") {
-                calculap = (d1 - (d1 * 1 / 6)) * 1 / 6
+                calculap = (d1 * 1 / 6)
             }
             if (deli.tipocrime == "6") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 - (d1 * 2 / 5)) * 2 / 5
+                    calculap = (d1 * 2 / 5)
                 } else {
-                    calculap = (d1 - (d1 * 3 / 5)) * 3 / 5
+                    calculap = (d1 * 3 / 5)
                 }
             }
             if (deli.tipocrime == "7") {
-                calculap = (d1 - (d1 * 1 / 6)) * 1 / 6
+                calculap = (d1 * 1 / 6)
             }
             if (deli.tipocrime == "8" || deli.tipocrime == "9") {
-                calculap = (d1 - (d1 * 50 / 100)) * 50 / 100
+                calculap = (d1 * 50 / 100)
             }
             if (deli.tipocrime == "10") {
-                calculap = (d1 - (d1 * 1 / 8)) * 1 / 8
+                calculap = (d1 * 1 / 8)
             }
             xdatap.setDate(xdatap.getDate() + calculap)
             c1 = 0
             d1 = 0
         })
         // bug de datas acrescentar 1 dia
-        xdatap.setDate(xdatap.getDate() + 1)
+        xdatap.setDate(xdatap.getDate() + 1 - remissao)
 
         var y = formatDate(xdatap)
         y = y.toString()
@@ -836,9 +855,118 @@ export default function Home() {
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             dataprogressao2: y,
         })
-
-
         setStatus(!status)
+    }
+
+    function faltagrave() {
+        if (confirm('Confirma a inclusão da falta grave?')) {
+            let falta = prompt('Digite a data no seguinte formato MM/DD/AAAA')
+            setDatafalta(formatDate(falta))
+            var remissao = 0
+            remica?.map(remi => {
+                if (parseInt(remi.qtdC) > 0) {
+                    remissao = remissao + parseInt(remi.qtdC)
+                }
+            })
+
+
+
+
+            var dataf       = new Date(xdataprisao)
+            var xdataini    = new Date(xdataprisao)
+            var xdatap      = new Date(xdatafalta)
+            alert(xdatap + " " + xdatafalta)
+
+            var c1 = 0
+            var d1 = 0
+            var c2 = 0
+            var d2 = 0 
+            var calculap = 0
+            var vez = 1
+            delita?.map(deli => {
+                dataf = new Date(xdataprisao)
+                if (parseInt(deli.anosPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
+                }
+                if (parseInt(deli.mesesPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
+                }
+                if (parseInt(deli.diasPena) > 0) {
+                    dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
+                }
+                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
+                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+                if( vez === 1){
+                    var xx = new Date(xdatafalta)
+                    var yy = new Date(xdataprisao)
+                    c2 = Math.abs(xx.getTime() - yy.getTime())
+                    d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+                    d1 = d1 - d2
+                    vez = 2
+                }
+                if (deli.tipocrime == "1") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 16 / 100)
+                    } else {
+                        calculap = (d1 * 20 / 100)
+                    }
+                }
+                if (deli.tipocrime == "2") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 25 / 100)
+                    } else {
+                        calculap = (d1 * 30 / 100)
+                    }
+                }
+                if (deli.tipocrime == "3") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 40 / 100)
+                    } else {
+                        calculap = (d1 * 60 / 100)
+                    }
+                }
+                if (deli.tipocrime == "4") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 50 / 100)
+                    } else {
+                        calculap = (d1 * 70 / 100)
+                    }
+                }
+                if (deli.tipocrime == "5") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "6") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 2 / 5)
+                    } else {
+                        calculap = (d1 * 3 / 5)
+                    }
+                }
+                if (deli.tipocrime == "7") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "8" || deli.tipocrime == "9") {
+                    calculap = (d1 * 50 / 100)
+                }
+                if (deli.tipocrime == "10") {
+                    calculap = (d1 * 1 / 8)
+                }
+                xdatap.setDate(xdatap.getDate() + calculap)
+                c1 = 0
+                d1 = 0
+            })
+            // bug de datas acrescentar 1 dia
+            xdatap.setDate(xdatap.getDate() + 1 - remissao)
+    
+            var y = formatDate(xdatap)
+            y = y.toString()
+            setDataprogressao(y)
+    
+            db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+                dataprogressao: y,
+                setDataprogressao2: ''
+            })
+        }
     }
 
     return (
@@ -884,37 +1012,40 @@ export default function Home() {
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center p-1 dark:text-white text-black" >
                         {atualizando ?
-                            <label >NOME:
+                            <label >Nome:
                                 <input readOnly className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
                             </label>
                             :
-                            <label >NOME:
+                            <label >Nome:
                                 <input className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
                             </label>
                         }
-                        <label>MATRICULA:
+                        <label>Matrícula:
                             <input required className='block  dark:bg-gray-400 dark:placeholder-white w-28' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
                         </label>
-                        <label>PRESIDIO:
+                        <label>Presídio:
                             <input className="block  dark:bg-gray-400 dark:placeholder-white" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
                         </label>
-                        <label>PROCESSO EXECUÇÃO:
+                        <label>Processo Execução:
                             <input className='block dark:bg-gray-400 dark:placeholder-white' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
                         </label>
-                        <label>DT PRISÃO:
+                        <label>Dt.Prisão:
                             <input className="block dark:bg-gray-400" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
                         </label>
-                        <label>PROGRESSÃO:
+                        <label>Progressão:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
                         </label>
-                        <label>PROGRESSÃO2:
+                        <label>Progressão2:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
                         </label>
-                        <label>CONDICIONAL:
+                        <label>Condicional:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
                         </label>
-                        <label>TÉRMINO:
+                        <label>Término:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+                        </label>
+                        <label>Falta Grave:
+                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
                         </label>
                     </div>
                 </form>
@@ -923,7 +1054,7 @@ export default function Home() {
                 <div className="flex justify-end">
                     <button className="cursor-pointer w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
-                    <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>FALTA GRAVE</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-4 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
                 </div>
                 :
                 <>
@@ -1013,7 +1144,7 @@ export default function Home() {
                                         <a className="text-right mr-1 cursor-pointer text-red-500" onClick={() => deletarremicao(remi.descricao)}>
                                             <TbTrashOff />
                                         </a>
-                                        <p className="text-left">{remi.descricao + " QT.INF. " + remi.qtdI + " QT.CALC. " + remi.qtdC}</p>
+                                        <p className="text-left">{remi.descricao + " Inf. " + remi.qtdI + " Calc. " + remi.qtdC}</p>
                                     </div>
                                 )
                             })}
