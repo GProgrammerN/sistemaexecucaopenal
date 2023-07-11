@@ -859,28 +859,24 @@ export default function Home() {
     }
 
     function faltagrave() {
-        if (confirm('Confirma a inclusão da falta grave?')) {
+        if (confirm('Confirma a inclusão da falta grave? (lembrar de descontar dias remidos se houver desconto)')) {
             let falta = prompt('Digite a data no seguinte formato MM/DD/AAAA')
-            setDatafalta(formatDate(falta))
+            let xfalta = formatDate(falta)
+            setDatafalta(xfalta)
             var remissao = 0
             remica?.map(remi => {
                 if (parseInt(remi.qtdC) > 0) {
                     remissao = remissao + parseInt(remi.qtdC)
                 }
             })
-
-
-
-
             var dataf       = new Date(xdataprisao)
             var xdataini    = new Date(xdataprisao)
             var xdatap      = new Date(xdatafalta)
-            alert(xdatap + " " + xdatafalta)
-
             var c1 = 0
             var d1 = 0
             var c2 = 0
             var d2 = 0 
+            var d3 = 0
             var calculap = 0
             var vez = 1
             delita?.map(deli => {
@@ -951,20 +947,117 @@ export default function Home() {
                 if (deli.tipocrime == "10") {
                     calculap = (d1 * 1 / 8)
                 }
-                xdatap.setDate(xdatap.getDate() + calculap)
+                d3 = d3 + calculap
                 c1 = 0
                 d1 = 0
             })
             // bug de datas acrescentar 1 dia
-            xdatap.setDate(xdatap.getDate() + 1 - remissao)
-    
+            xdatap.setDate(xdatap.getDate() + d3 + 1 - remissao)
             var y = formatDate(xdatap)
             y = y.toString()
             setDataprogressao(y)
     
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
                 dataprogressao: y,
-                setDataprogressao2: ''
+                datafalta: xdatafalta,
+            })
+//--------------------------------------> PROGRESSÃO 2
+            var remissao = 0
+            remica?.map(remi => {
+                if (parseInt(remi.qtdC) > 0) {
+                    remissao = remissao + parseInt(remi.qtdC)
+                }
+            })
+            var dataf       = new Date(xdataprisao)
+            var xdataini    = new Date(xdataprisao)
+            var xdatap      = new Date(xdataprogressao)
+            var c1 = 0
+            var d1 = 0
+            var c2 = 0
+            var d2 = 0 
+            var d3 = 0
+            var calculap = 0
+            var vez = 1
+            delita?.map(deli => {
+                dataf = new Date(xdataprisao)
+                if (parseInt(deli.anosPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
+                }
+                if (parseInt(deli.mesesPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
+                }
+                if (parseInt(deli.diasPena) > 0) {
+                    dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
+                }
+                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
+                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+                if( vez === 1){
+                    var xx = new Date(xdataprogressao)
+                    var yy = new Date(xdataprisao)
+                    c2 = Math.abs(xx.getTime() - yy.getTime())
+                    d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+                    d1 = d1 - d2
+                    vez = 2
+                }
+                if (deli.tipocrime == "1") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 16 / 100)
+                    } else {
+                        calculap = (d1 * 20 / 100)
+                    }
+                }
+                if (deli.tipocrime == "2") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 25 / 100)
+                    } else {
+                        calculap = (d1 * 30 / 100)
+                    }
+                }
+                if (deli.tipocrime == "3") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 40 / 100)
+                    } else {
+                        calculap = (d1 * 60 / 100)
+                    }
+                }
+                if (deli.tipocrime == "4") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 50 / 100)
+                    } else {
+                        calculap = (d1 * 70 / 100)
+                    }
+                }
+                if (deli.tipocrime == "5") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "6") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 2 / 5)
+                    } else {
+                        calculap = (d1 * 3 / 5)
+                    }
+                }
+                if (deli.tipocrime == "7") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "8" || deli.tipocrime == "9") {
+                    calculap = (d1 * 50 / 100)
+                }
+                if (deli.tipocrime == "10") {
+                    calculap = (d1 * 1 / 8)
+                }
+                d3 = d3 + calculap
+                c1 = 0
+                d1 = 0
+            })
+            // bug de datas acrescentar 1 dia
+            xdatap.setDate(xdatap.getDate() + d3 + 1 - remissao)
+            var y = formatDate(xdatap)
+            y = y.toString()
+            setDataprogressao2(y)
+    
+            db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+                dataprogressao2: y,
             })
         }
     }
