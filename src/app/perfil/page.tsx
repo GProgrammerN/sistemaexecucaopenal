@@ -95,10 +95,12 @@ export default function Perfil() {
   return (
     <Layout titulo="Perfil do Usuário"
       subtitulo="Administre suas informações de usuário.">
-      <form className="flex flex-col justify-center items-center m-2" method='post' autoComplete='off'>
+      <form className="flex flex-col m-2" method='post' autoComplete='off'>
         <CampoPerfil campo='Nome' placeholder='Coloque seu Nome' id='inputNome' type='text' botaovalor={true} funcao={atualizaUsuario} funcaoInput={event => setNome(event.target.value)} />
+        {/*
         <CampoPerfil campo='Email' placeholder='exemplo@gmail.com' id='inputEmail' type='email' botaovalor={false} />
         <CampoPerfil campo='Senha' placeholder='Senha 6 caracteres ou mais' id='inputSenha' type='password' botaovalor={false} funcao={atualizaSenha} funcaoInput={event => setSenha(event.target.value)} />
+
         <div className="items-center border-b w-100 mb-2 border-teal-500 py-2">
           <label htmlFor="inputAvatar" className="dark:text-white text-black pr-4">Foto    </label>
           <input ref={inputAvatarRef} className="
@@ -110,6 +112,7 @@ export default function Perfil() {
             Salvar
           </button>
         </div>
+*/}
         {erro ? (
           <div className={`flex items-center text-white py-3 px-5 my-2 border-2 rounded-lg
             ${muda ? 'bg-red-400 border-red-700' : 'bg-blue-400  border-blue-700'}

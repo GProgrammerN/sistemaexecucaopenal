@@ -11,7 +11,7 @@ interface CampoProps {
 export default function CampoPerfil(props: CampoProps) {
 
     return (
-        <div className="flex items-center border-b w-100 mb-2 border-teal-500 py-2" >
+        <div className="sm:flex sm:items-center border-b w-80 mb-2 border-teal-500 py-2" >
             <label htmlFor={props.id} className="dark:text-white text-black pr-4" >
                 {props.campo}
                 <input autoComplete="false" className="appearance-none bg-transparent border-none text-gray-300 py-1 px-2 leading-tight focus:outline-none"
