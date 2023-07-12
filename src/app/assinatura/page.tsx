@@ -74,16 +74,15 @@ export default function PreviewPage() {
   }
 
   return (
-    <Layout titulo='Gerenciar suas Assinaturas' subtitulo='Gerencie seu plano.'>
+    <Layout titulo='Gerenciamento de Assinatura' subtitulo='Assinatura / Cancelamento'>
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
       <form method="POST">
-        <button className="flex-shrink-1 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-          type="button" onClick={cancelar}>Gerenciar Assinatura</button>
         <div className="flex justify-center items-center">
           <div className="">
             <div className="text-center font-semibold">
+              {/*
               <h1 className="text-5xl">
                 <span className="text-blue-700 tracking-wide">Assinaturas </span>
                 <span>Recorrentes</span>
@@ -91,8 +90,9 @@ export default function PreviewPage() {
               <p className="pt-6 text-xl text-gray-400 font-normal w-full px-8 md:w-full">
                 Escolha a assinatura que mais se adequar<br /> a você.
               </p>
+                */}
             </div>
-            <div className="pt-24 flex flex-row">
+            <div className="pt-12 flex flex-row">
               <div className="w-96 p-8 bg-white text-center rounded-3xl pr-16 shadow-xl">
                 <h1 className="text-black font-semibold text-2xl">Mensal</h1>
                 <p className="pt-2 tracking-wide">
@@ -216,6 +216,10 @@ export default function PreviewPage() {
             </div>
           </div>
         </div >
+        <div className='flex justify-center align-center'>
+          <button className="flex-shrink-1 bg-yellow-500 hover:bg-yellow-700 border-yellow-500 hover:border-yellow-700 w-auto sm:w-96 text-sm border-4 text-white py-1 px-2 mt-16 rounded"
+            type="button" onClick={cancelar}>Gerencie sua Assinatura</button>
+        </div>
       </form>
     </Layout>
   );

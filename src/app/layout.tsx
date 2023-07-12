@@ -2,8 +2,6 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { GlobalContextProvider } from '@/data/context/AppContext';
 import { AuthProvider } from '@/data/context/AuthContext';
-import firebase from '../firebase/config'
-import cookies from "js-cookie"
 
 const inter = Inter({ subsets: ['latin'] })
 
