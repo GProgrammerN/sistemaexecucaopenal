@@ -122,7 +122,7 @@ export default function Autenticacao() {
             <div className="m-20 w-full md:w-1/2 lg:w-1/3" >
                 <div className='flex flex-col items-center'>
                     <img src='./images/LOGO 2.png' className='w-60'></img>
-                    <h1 className={`text-2xl font-bold mb-5 text-green-800 text-center`}>
+                    <h1 className={`text-2xl font-bold mt-3 mb-3 text-green-800 text-center`}>
                         Seja Bem Vindo ao Sistema de Execução Penal.
                     </h1>
                 </div>
@@ -142,6 +142,9 @@ export default function Autenticacao() {
                     <img src='./images/google.png'></img>
                     Login com o Google
                 </button>
+                <h2 className='text-xl text-center text-green-600 font-bold mt-1'>
+                    2 meses de uso grátis para Teste!
+                </h2>
             </div>
         </div>
     )
