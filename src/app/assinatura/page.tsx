@@ -92,7 +92,7 @@ export default function PreviewPage() {
               </p>
                 */}
             </div>
-            <div className="pt-12 flex flex-row">
+            <div className="pt-2 flex flex-row">
               <div className="w-96 p-8 bg-white text-center rounded-3xl pr-16 shadow-xl">
                 <h1 className="text-black font-semibold text-2xl">Mensal</h1>
                 <p className="pt-2 tracking-wide">

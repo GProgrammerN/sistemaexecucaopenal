@@ -769,7 +769,7 @@ export default function Home() {
         var c1 = 0
         var d1 = 0
         var c2 = 0
-        var d2 = 0 
+        var d2 = 0
         var calculap = 0
         var calculal = 0
         var vez = 1
@@ -786,7 +786,7 @@ export default function Home() {
             }
             c1 = Math.abs(dataf.getTime() - xdataini.getTime())
             d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-            if( vez === 1){
+            if (vez === 1) {
                 var xx = new Date(xdataprogressao)
                 var yy = new Date(xdataprisao)
                 c2 = Math.abs(xx.getTime() - yy.getTime())
@@ -861,10 +861,10 @@ export default function Home() {
     function faltagrave() {
         if (confirm('Confirma a inclusão da falta grave? (lembrar de descontar dias remidos se houver desconto)')) {
             let falta = prompt('Digite a data no formato DD/MM/AAAA')
-            let xdiaf = falta?.substring(0,2)
-            let xmesf = falta?.substring(3,5)
-            let xanof = falta?.substring(6,10)
-            let xf    = xmesf+"-"+xdiaf+"-"+xanof
+            let xdiaf = falta?.substring(0, 2)
+            let xmesf = falta?.substring(3, 5)
+            let xanof = falta?.substring(6, 10)
+            let xf = xmesf + "-" + xdiaf + "-" + xanof
             let xfalta = formatDate(xf)
             setDatafalta(xfalta)
             var remissao = 0
@@ -873,13 +873,13 @@ export default function Home() {
                     remissao = remissao + parseInt(remi.qtdC)
                 }
             })
-            var dataf       = new Date(xdataprisao)
-            var xdataini    = new Date(xdataprisao)
-            var xdatap      = new Date(xdatafalta)
+            var dataf = new Date(xdataprisao)
+            var xdataini = new Date(xdataprisao)
+            var xdatap = new Date(xdatafalta)
             var c1 = 0
             var d1 = 0
             var c2 = 0
-            var d2 = 0 
+            var d2 = 0
             var d3 = 0
             var calculap = 0
             var vez = 1
@@ -896,7 +896,7 @@ export default function Home() {
                 }
                 c1 = Math.abs(dataf.getTime() - xdataini.getTime())
                 d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-                if( vez === 1){
+                if (vez === 1) {
                     var xx = new Date(xdatafalta)
                     var yy = new Date(xdataprisao)
                     c2 = Math.abs(xx.getTime() - yy.getTime())
@@ -960,25 +960,25 @@ export default function Home() {
             var y = formatDate(xdatap)
             y = y.toString()
             setDataprogressao(y)
-    
+
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
                 dataprogressao: y,
                 datafalta: xdatafalta,
             })
-//--------------------------------------> PROGRESSÃO 2
+            //--------------------------------------> PROGRESSÃO 2
             var remissao = 0
             remica?.map(remi => {
                 if (parseInt(remi.qtdC) > 0) {
                     remissao = remissao + parseInt(remi.qtdC)
                 }
             })
-            var dataf       = new Date(xdataprisao)
-            var xdataini    = new Date(xdataprisao)
-            var xdatap      = new Date(xdataprogressao)
+            var dataf = new Date(xdataprisao)
+            var xdataini = new Date(xdataprisao)
+            var xdatap = new Date(xdataprogressao)
             var c1 = 0
             var d1 = 0
             var c2 = 0
-            var d2 = 0 
+            var d2 = 0
             var d3 = 0
             var calculap = 0
             var vez = 1
@@ -995,7 +995,7 @@ export default function Home() {
                 }
                 c1 = Math.abs(dataf.getTime() - xdataini.getTime())
                 d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-                if( vez === 1){
+                if (vez === 1) {
                     var xx = new Date(xdataprogressao)
                     var yy = new Date(xdataprisao)
                     c2 = Math.abs(xx.getTime() - yy.getTime())
@@ -1059,16 +1059,15 @@ export default function Home() {
             var y = formatDate(xdatap)
             y = y.toString()
             setDataprogressao2(y)
-    
+
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
                 dataprogressao2: y,
             })
         }
     }
-
     return (
         <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
-            <h1 className="">Cadastro de Clientes</h1>
+            <h3>Cadastro de Clientes</h3>
             <main className="flex justify-center items-center">
                 <form className="mr-1 w-full flex border-2 rounded">
                     <div className="w-3/6 p-1 flex flex-col">
