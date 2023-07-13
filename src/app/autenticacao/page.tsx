@@ -143,7 +143,7 @@ export default function Autenticacao() {
                     Login com o Google
                 </button>
                 <h2 className='text-xl text-center text-green-600 font-bold mt-1'>
-                    2 meses de uso grátis para Teste!
+                    60 dias grátis para avaliação
                 </h2>
             </div>
         </div>
