@@ -1069,9 +1069,10 @@ export default function Home() {
         <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
             <h3>Cadastro de Clientes</h3>
             <main className="flex justify-center items-center">
-                <form className="mr-1 w-full flex flex-col border-2 rounded">
+                <form className="mr-1 w-full flex flex-col border-2 rounded
+                lg:flex-row">
                     <div className="flex flex-col w-full p-1 
-                    lg:w-3/6 lg:flex-initial">
+                    lg:w-3/6">
                         <div className="flex flex-col justify-between items-left">
                             <input type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Buscar" onChange={buscar} />
                         </div>
