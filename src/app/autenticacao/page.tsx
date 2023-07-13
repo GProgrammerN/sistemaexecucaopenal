@@ -120,28 +120,25 @@ export default function Autenticacao() {
                 <Image src={fundo} alt='Fundo Padrão' className="h-screen w-full object-cover" />
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3" >
-                <h1 className={`text-2xl font-bold mb-5`}>
-                    Sistema de Execução Penal
+                <h1 className={`text-2xl font-bold mb-5 text-green-800`}>
+                    Seja Bem Vindo ao Sistema de Execução Penal.
                 </h1>
-
                 {erro ? (
-
                     <div className={`
-            flex items-center
-            bg-red-400 text-white py-3 px-5 my-2
-            border-2 border-red-700 rounded-lg`}>
+                        flex items-center
+                        bg-red-400 text-white py-3 px-5 my-2
+                        border-2 border-red-700 rounded-lg`}>
                         {IconeAtencao}
                         <span className={`ml-3`}>{erro}</span>
                     </div>
                 ) : false}
-
-                <button onClick={loginGoogle} className={`
-                w-full bg-red-500 hover:bg-red-400
-                text-white rounded-lg px-4 py-3
-            `}>
+                <button onClick={loginGoogle} className={`flex flex-row justify-center items-center
+                     w-full bg-blue-400 hover:bg-blue-600
+                      text-white rounded-lg px-4 py-3
+                     `}>
+                        <img src='./images/google.png'></img>
                     Login com o Google
                 </button>
-
             </div>
         </div>
     )
