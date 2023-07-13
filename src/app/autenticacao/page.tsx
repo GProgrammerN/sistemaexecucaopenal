@@ -137,7 +137,7 @@ export default function Autenticacao() {
                 ) : false}
                 <button onClick={loginGoogle} className={`flex flex-row justify-center items-center
                      w-full bg-blue-400 hover:bg-blue-600
-                      text-white rounded-lg px-4 py-3
+                      text-white rounded-lg px-4 py-3 font-bold
                      `}>
                     <img src='./images/google.png'></img>
                     Login com o Google

@@ -329,30 +329,40 @@ export default function Home() {
 
     function gravar() {
         if (xnome != '') {
-            db.collection('usuario/' + id + '/clientes/').doc(xnome).set({
-                nome: xnome,
-                matricula: xmatricula,
-                processo: xprocesso,
-                presidio: xpresidio,
-                dataprisao: xdataprisao,
-                dataprogressao: xdataprogressao,
-                dataprogressao2: xdataprogressao2,
-                datacondicional: xdatacondicional,
-                datafim: xdatafim,
-                datafalta: xdatafalta
-            })
-            alert("Cliente cadastrado com sucesso!")
-            setNome('')
-            setMatricula('')
-            setPresidio('')
-            setProcesso('')
-            setDataprisao('')
-            setDataprogressao('')
-            setDataprogressao2('')
-            setDatacondicional('')
-            setDatafim('')
-            setDatafalta('')
-            setStatus(!status)
+            db.collection('usuario/' + id + '/clientes/').doc(xnome).get()
+                .then((test) => {
+                    if (test.exists) {
+                        alert("Não é possível criar dois clientes com mesmo nome. Acrescente um diferencial.")
+                    } else {
+                        db.collection('usuario/' + id + '/clientes/').doc(xnome).set({
+                            nome: xnome,
+                            matricula: xmatricula,
+                            processo: xprocesso,
+                            presidio: xpresidio,
+                            dataprisao: xdataprisao,
+                            dataprogressao: xdataprogressao,
+                            dataprogressao2: xdataprogressao2,
+                            datacondicional: xdatacondicional,
+                            datafim: xdatafim,
+                            datafalta: xdatafalta
+                        })
+                        alert("Cliente cadastrado com sucesso!")
+                        setNome('')
+                        setMatricula('')
+                        setPresidio('')
+                        setProcesso('')
+                        setDataprisao('')
+                        setDataprogressao('')
+                        setDataprogressao2('')
+                        setDatacondicional('')
+                        setDatafim('')
+                        setDatafalta('')
+                        setStatus(!status)
+                    }
+                }).catch(() => {
+
+                })
+
         } else {
             alert("Não é possivel gravar clientes sem preencher o nome!")
         }
