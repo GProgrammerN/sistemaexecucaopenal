@@ -329,30 +329,40 @@ export default function Home() {
 
     function gravar() {
         if (xnome != '') {
-            db.collection('usuario/' + id + '/clientes/').doc(xnome).set({
-                nome: xnome,
-                matricula: xmatricula,
-                processo: xprocesso,
-                presidio: xpresidio,
-                dataprisao: xdataprisao,
-                dataprogressao: xdataprogressao,
-                dataprogressao2: xdataprogressao2,
-                datacondicional: xdatacondicional,
-                datafim: xdatafim,
-                datafalta: xdatafalta
-            })
-            alert("Cliente cadastrado com sucesso!")
-            setNome('')
-            setMatricula('')
-            setPresidio('')
-            setProcesso('')
-            setDataprisao('')
-            setDataprogressao('')
-            setDataprogressao2('')
-            setDatacondicional('')
-            setDatafim('')
-            setDatafalta('')
-            setStatus(!status)
+            db.collection('usuario/' + id + '/clientes/').doc(xnome).get()
+                .then((test) => {
+                    if (test.exists) {
+                        alert("Não é possível criar dois clientes com mesmo nome. Acrescente um diferencial.")
+                    } else {
+                        db.collection('usuario/' + id + '/clientes/').doc(xnome).set({
+                            nome: xnome,
+                            matricula: xmatricula,
+                            processo: xprocesso,
+                            presidio: xpresidio,
+                            dataprisao: xdataprisao,
+                            dataprogressao: xdataprogressao,
+                            dataprogressao2: xdataprogressao2,
+                            datacondicional: xdatacondicional,
+                            datafim: xdatafim,
+                            datafalta: xdatafalta
+                        })
+                        alert("Cliente cadastrado com sucesso!")
+                        setNome('')
+                        setMatricula('')
+                        setPresidio('')
+                        setProcesso('')
+                        setDataprisao('')
+                        setDataprogressao('')
+                        setDataprogressao2('')
+                        setDatacondicional('')
+                        setDatafim('')
+                        setDatafalta('')
+                        setStatus(!status)
+                    }
+                }).catch(() => {
+
+                })
+
         } else {
             alert("Não é possivel gravar clientes sem preencher o nome!")
         }
@@ -1069,8 +1079,10 @@ export default function Home() {
         <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
             <h3>Cadastro de Clientes</h3>
             <main className="flex justify-center items-center">
-                <form className="mr-1 w-full flex border-2 rounded">
-                    <div className="w-3/6 p-1 flex flex-col">
+                <form className="mr-1 w-full flex flex-col border-2 rounded
+                lg:flex-row">
+                    <div className="flex flex-col w-full p-1 
+                    lg:w-3/6">
                         <div className="flex flex-col justify-between items-left">
                             <input type="text" className=" dark:bg-gray-400 dark:placeholder-white" placeholder="Buscar" onChange={buscar} />
                         </div>
@@ -1106,6 +1118,7 @@ export default function Home() {
                             }
                         </div>
                     </div>
+
                     <div className="flex flex-row flex-wrap justify-between items-center p-1 dark:text-white text-black" >
                         {atualizando ?
                             <label >Nome:

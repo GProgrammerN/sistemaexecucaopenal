@@ -119,10 +119,13 @@ export default function Autenticacao() {
             <div className="hidden md:block md:w-1/2 lg:w-2/3">
                 <Image src={fundo} alt='Fundo Padrão' className="h-screen w-full object-cover" />
             </div>
-            <div className="m-10 w-full md:w-1/2 lg:w-1/3" >
-                <h1 className={`text-2xl font-bold mb-5 text-green-800`}>
-                    Seja Bem Vindo ao Sistema de Execução Penal.
-                </h1>
+            <div className="m-20 w-full md:w-1/2 lg:w-1/3" >
+                <div className='flex flex-col items-center'>
+                    <img src='./images/LOGO 2.png' className='w-60'></img>
+                    <h1 className={`text-2xl font-bold mt-3 mb-3 text-green-800 text-center`}>
+                        Seja Bem Vindo ao Sistema de Execução Penal.
+                    </h1>
+                </div>
                 {erro ? (
                     <div className={`
                         flex items-center
@@ -134,11 +137,14 @@ export default function Autenticacao() {
                 ) : false}
                 <button onClick={loginGoogle} className={`flex flex-row justify-center items-center
                      w-full bg-blue-400 hover:bg-blue-600
-                      text-white rounded-lg px-4 py-3
+                      text-white rounded-lg px-4 py-3 font-bold
                      `}>
-                        <img src='./images/google.png'></img>
+                    <img src='./images/google.png'></img>
                     Login com o Google
                 </button>
+                <h2 className='text-xl text-center text-green-600 font-bold mt-1'>
+                    60 dias grátis para avaliação
+                </h2>
             </div>
         </div>
     )
