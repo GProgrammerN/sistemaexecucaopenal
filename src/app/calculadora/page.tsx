@@ -5,7 +5,8 @@ import firebase from '../../firebase/config'
 import Cookies from "js-cookie";
 import { TbSelect } from "react-icons/tb"
 import { TbTrashOff } from "react-icons/tb"
-import { StripeExpressCheckoutElementClickEvent } from "@stripe/stripe-js";
+import pdfMake from "pdfmake/build/pdfmake"
+import pdfFonts from "pdfmake/build/vfs_fonts"
 
 var clientes = [{}]
 clientes.shift()
@@ -629,6 +630,21 @@ export default function Home() {
         return [year, month, day].join('-');
     }
 
+    function formatDate2(Ref: String) {
+        var d = new Date(Ref),
+            month = '' + (d.getMonth() + 1),
+            day = '' + (d.getDate() + 1),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
+
+
     function calculardatas() {
         var remissao = 0
         var dataf = new Date(xdataprisao)
@@ -1075,6 +1091,121 @@ export default function Home() {
             })
         }
     }
+
+    function gerarPDF() {
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+        const reportTitle = [
+            {
+                text: [
+                    'SISTEMA DE CONTROLE DE EXECUÇÃO PENAL \n\n'+
+                    'Relatório de Progressão de Regime.'
+                ],
+                fontSize: 14,
+                alignment: 'center',
+                bold: true,
+                margin: [15, 20, 0, 45]
+            }
+        ];
+
+        const dados = delita?.map((deli) => {
+            return [
+                {text: deli.descriD, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.prirei , fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.percentual, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.fracao, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.anosPena, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.mesesPena, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: deli.diasPena, fontSize: 9, margin: [0, 2, 0, 2]}
+            ]
+        })
+
+        const dados2 = remica?.map((remi) => {
+            return [
+                {text: remi.descricao, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: remi.tipoRemicao , fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: remi.qtdI, fontSize: 9, margin: [0, 2, 0, 2]},
+                {text: remi.qtdC, fontSize: 9, margin: [0, 2, 0, 2]},
+            ]
+        })
+
+
+        const details = [
+            {
+                text:[
+                'Nome do Cliente: '+ xnome +'  Nº da Matricula: '+xmatricula + '\n\n',
+                ' Presídio: '+ xpresidio +' Nº do Processo de Execução: '+ xprocesso + '\n\n',
+                ' Data da Prisão: '+formatDate2(xdataprisao) + ' Data do fim da pena: '+xdatafim + '\n\n',
+                ' Data da 1ª Progressão: '+xdataprogressao + ' Data da 2ª Progressão: '+xdataprogressao2 +'\n\n', 
+                ' Data da Liberdade Condicional: '+xdatacondicional+ ' Data da FALTA GRAVE: '+xdatafalta +'\n',
+                ],
+                alignment: 'justify',
+                fontSize: 14,
+                bold: false,
+                margin: [15, 20, 0, 45],
+            },
+            {   table:{
+                    headerRows: 1,
+                    widths: [100,'*','*','*','*','*','*'],
+                    body:[
+                        [
+                            {text: 'Descricao', style: 'tableHeader', fontSize: 8},
+                            {text: 'Pr/Rei', style: 'tableHeader', fontSize: 8},
+                            {text: 'Progressão', style: 'tableHeader', fontSize: 8},
+                            {text: 'Condicional', style: 'tableHeader', fontSize: 8},
+                            {text: 'Anos', style: 'tableHeader', fontSize: 8},
+                            {text: 'Meses', style: 'tableHeader', fontSize: 8},
+                            {text: 'Dias', style: 'tableHeader', fontSize: 8}
+                        ],
+                        ...dados
+                    ]
+                },
+                layout: 'headerLineOnly'
+            },
+            {text: '\n\n'},
+            {   table:{
+                headerRows: 1,
+                widths: [100,'*','*','*','*','*','*'],
+                body:[
+                    [
+                        {text: 'Descricao', style: 'tableHeader', fontSize: 8},
+                        {text: 'Tipo', style: 'tableHeader', fontSize: 8},
+                        {text: 'Qtd. Informada', style: 'tableHeader', fontSize: 8},
+                        {text: 'Qtd. Calculada', style: 'tableHeader', fontSize: 8},
+                    ],
+                    ...dados2
+                ]
+            },
+            layout: 'headerLineOnly'
+        },
+
+        ];
+
+        function Rodape(currentPage, pageCount){
+            return [
+                {
+                    text: currentPage + ' / '+pageCount,
+                    alignment: 'right',
+                    fontSize: 9,
+                    margin: [0, 10, 20, 0]
+                }
+            ]
+
+        }
+
+        const docDefinitions = {
+            pageSize: 'A4',
+            pageMargins: [15, 50, 15, 40],
+
+            header: [reportTitle],
+            content: [details],
+            footer: Rodape,
+        }
+
+        pdfMake.createPdf(docDefinitions).open();
+
+    }
+
     return (
         <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
             <h3>Cadastro de Clientes</h3>
@@ -1164,7 +1295,7 @@ export default function Home() {
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
-                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>RELATÓRIO</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gerarPDF}>Gerar PDF</button>
                 </div>
                 :
                 <>
