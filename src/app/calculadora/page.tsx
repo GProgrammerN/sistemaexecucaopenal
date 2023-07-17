@@ -1151,6 +1151,7 @@ export default function Home() {
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>RELATÓRIO</button>
                 </div>
                 :
                 <>
