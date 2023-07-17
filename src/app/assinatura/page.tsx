@@ -80,7 +80,7 @@ export default function PreviewPage() {
       </head>
       <form method="POST">
         <div className="flex justify-center items-center">
-          <div className="hidden mt-8
+          <div className="hidden mt-4
             lg:flex flex-row">
             <div className="w-96 p-8 bg-white text-center rounded-3xl pr-16 shadow-xl">
               <h1 className="text-black font-semibold text-2xl">Mensal</h1>
