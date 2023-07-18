@@ -226,6 +226,16 @@ export default function Home() {
             })
             const referencia = db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
                 .then(() => {
+                    setNome('')
+                    setMatricula('')
+                    setPresidio('')
+                    setProcesso('')
+                    setDataprisao('')
+                    setDataprogressao('')
+                    setDataprogressao2('')
+                    setDatacondicional('')
+                    setDatafim('')
+                    setDatafalta('')
                     setStatus(!status)
                     setStatus2(!status2)
                     setStatus3(!status3)
@@ -241,7 +251,6 @@ export default function Home() {
         if (confirm("Confirma exclusão do Delito?") == true) {
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(ref).delete()
                 .then(() => {
-                    //          alert("Delito excluido com sucesso!")
                     setStatus2(!status2)
                 }).catch((error) => {
                     console.error("Erro ao excluir Delito: ", error);
@@ -254,7 +263,6 @@ export default function Home() {
         if (confirm("Confirma exclusão da Remição/Detração?") == true) {
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(ref).delete()
                 .then(() => {
-                    //          alert("Remição/Detração excluida com sucesso!")
                     setStatus3(!status3)
                 }).catch((error) => {
                     console.error("Erro ao excluir Remição/Detração: ", error);
@@ -312,20 +320,23 @@ export default function Home() {
             datacondicional: xdatacondicional,
             datafim: xdatafim,
             datafalta: xdatafalta
+        }).then(() => {
+            alert("Cliente atualizado com sucesso!")
+            setNome('')
+            setMatricula('')
+            setPresidio('')
+            setProcesso('')
+            setDataprisao('')
+            setDataprogressao('')
+            setDataprogressao2('')
+            setDatacondicional('')
+            setDatafim('')
+            setDatafalta('')
+            setAtualizando(false)
+            setStatus(!status)
+        }).catch((erro) => {
+            alert('Erro ao atualizar cliente' + erro.message)
         })
-        alert("Cliente atualizado com sucesso!")
-        setNome('')
-        setMatricula('')
-        setPresidio('')
-        setProcesso('')
-        setDataprisao('')
-        setDataprogressao('')
-        setDataprogressao2('')
-        setDatacondicional('')
-        setDatafim('')
-        setDatafalta('')
-        setAtualizando(false)
-        setStatus(!status)
     }
 
     function gravar() {
@@ -346,19 +357,22 @@ export default function Home() {
                             datacondicional: xdatacondicional,
                             datafim: xdatafim,
                             datafalta: xdatafalta
+                        }).then(() => {
+                            alert("Cliente cadastrado com sucesso!")
+                            setNome('')
+                            setMatricula('')
+                            setPresidio('')
+                            setProcesso('')
+                            setDataprisao('')
+                            setDataprogressao('')
+                            setDataprogressao2('')
+                            setDatacondicional('')
+                            setDatafim('')
+                            setDatafalta('')
+                            setStatus(!status)
+                        }).catch((erro) => {
+                            alert('Erro ao cadastrar cliente' + erro.message)
                         })
-                        alert("Cliente cadastrado com sucesso!")
-                        setNome('')
-                        setMatricula('')
-                        setPresidio('')
-                        setProcesso('')
-                        setDataprisao('')
-                        setDataprogressao('')
-                        setDataprogressao2('')
-                        setDatacondicional('')
-                        setDatafim('')
-                        setDatafalta('')
-                        setStatus(!status)
                     }
                 }).catch(() => {
 
@@ -450,15 +464,18 @@ export default function Home() {
             anosPena: xanosPena,
             percentual: xpercentual,
             fracao: xfracao
+        }).then(() => {
+            alert("Delito cadastrado com sucesso!")
+            setDescriD('')
+            setTipocrime('')
+            setPrirei('')
+            setDiasPena('')
+            setMesesPena('')
+            setAnosPena('')
+            setStatus2(!status2)
+        }).catch((error) => {
+            alert('Erro ao cadastrar delito ' + error.message)
         })
-        alert("Delito cadastrado com sucesso!")
-        setDescriD('')
-        setTipocrime('')
-        setPrirei('')
-        setDiasPena('')
-        setMesesPena('')
-        setAnosPena('')
-        setStatus2(!status2)
     }
 
     function gravarremicao() {
@@ -481,24 +498,25 @@ export default function Home() {
             tipoRemicao: xtipoRemicao,
             qtdI: xqtdI,
             qtdC: convertido,
+        }).then(() => {
+            alert("Remição/Detração cadastrado com sucesso!")
+            setDescricao('')
+            setTiporemicao('')
+            setQtdI('')
+            setQtdC('')
+            setStatus3(!status3)
+        }).catch((error) => {
+            alert('Erro ao cadastrar Remição/Detração ' + error.message)
         })
-        alert("Remição/Detração cadastrado com sucesso!")
-        setDescricao('')
-        setTiporemicao('')
-        setQtdI('')
-        setQtdC('')
-        setStatus3(!status3)
     }
 
     function atualizardelito() {
         var xpercentual = ''
         var xfracao = ''
-        alert(xtipocrime)
         if (xtipocrime == '1') {
             if (xprirei == '1') {
                 xpercentual = '16%'
                 xfracao = '1/3'
-                alert(xpercentual + " " + xfracao)
             } else {
                 xpercentual = '20%'
                 xfracao = '1/2'
@@ -564,7 +582,6 @@ export default function Home() {
                 xfracao = '1/2'
             }
         }
-        alert(xpercentual + " " + xfracao)
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).update({
             descriD: xdescriD,
             tipocrime: xtipocrime,
@@ -574,16 +591,19 @@ export default function Home() {
             anosPena: xanosPena,
             percentual: xpercentual,
             fracao: xfracao
+        }).then(() => {
+            alert("Delito atualizado com sucesso!")
+            setDescriD('')
+            setTipocrime('')
+            setPrirei('')
+            setDiasPena('')
+            setMesesPena('')
+            setAnosPena('')
+            setStatus2(!status2)
+            setAtualizando2(!atualizando2)
+        }).catch((error) => {
+            alert('Erro ao atualizar Delito ' + error.message)
         })
-        alert("Delito atualizado com sucesso!")
-        setDescriD('')
-        setTipocrime('')
-        setPrirei('')
-        setDiasPena('')
-        setMesesPena('')
-        setAnosPena('')
-        setStatus2(!status2)
-        setAtualizando2(!atualizando2)
     }
 
     function atualizarremicao() {
@@ -606,14 +626,17 @@ export default function Home() {
             tiporemicao: xtipoRemicao,
             qtdI: xqtdI,
             qtdC: convertido
+        }).then(() => {
+            alert("Remição/Detração atualizado com sucesso!")
+            setDescricao('')
+            setTiporemicao('')
+            setQtdI('')
+            setQtdC('')
+            setStatus3(!status3)
+            setAtualizando3(!atualizando3)
+        }).catch((error) => {
+            alert('Erro ao atualizar Remição/Detração ' + error.message)
         })
-        alert("Remição/Detração atualizado com sucesso!")
-        setDescricao('')
-        setTiporemicao('')
-        setQtdI('')
-        setQtdC('')
-        setStatus3(!status3)
-        setAtualizando3(!atualizando3)
     }
 
     function formatDate(Ref: Date) {
@@ -666,14 +689,18 @@ export default function Home() {
             }
         })
         dataf.setDate(dataf.getDate() + 1)
-
         var x = formatDate(dataf)
         x = x.toString()
         setDatafim(x)
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             datafim: x
+        }).then(() => {
+
+        }).catch((error) => {
+            alert('Erro inesperado ao gravar datafim ' + error.message)
         })
 
+        // -----------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA FIM DA PENA 
         var dataf = new Date(xdataprisao)
         var xdatal = new Date(xdataprisao)
         var xdataini = new Date(xdataprisao)
@@ -697,41 +724,29 @@ export default function Home() {
             d1 = Math.ceil(c1 / (1000 * 3600 * 24))
             if (deli.tipocrime == "1") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 * 16 / 100)
                     calculal = (d1 / 3 * 1)
                 } else {
-                    calculap = (d1 * 20 / 100)
                     calculal = (d1 / 2 * 1)
                 }
             }
             if (deli.tipocrime == "2") {
                 if (deli.prirei == "1") {
-                    calculap = d1 * 25 / 100
                     calculal = (d1 / 3 * 1)
                 } else {
-                    calculap = d1 * 30 / 100
                     calculal = (d1 / 2 * 1)
                 }
             }
             if (deli.tipocrime == "3") {
                 if (deli.prirei == "1") {
-                    calculap = d1 * 40 / 100
                     calculal = (d1 * 2 / 3)
                 } else {
-                    calculap = d1 * 60 / 100
                     calculal = d1
                 }
             }
             if (deli.tipocrime == "4") {
                 calculal = d1
-                if (deli.prirei == "1") {
-                    calculap = d1 * 50 / 100
-                } else {
-                    calculap = d1 * 70 / 100
-                }
             }
             if (deli.tipocrime == "5") {
-                calculap = (d1 * 1 / 6)
                 if (deli.prirei == "1") {
                     calculal = (d1 / 3 * 1)
                 } else {
@@ -740,19 +755,15 @@ export default function Home() {
             }
             if (deli.tipocrime == "6") {
                 if (deli.prirei == "1") {
-                    calculap = (d1 * 2 / 5)
                     calculal = (d1 / 3 * 1)
                 } else {
-                    calculap = (d1 * 3 / 5)
                     calculal = (d1 / 2 * 1)
                 }
             }
             if (deli.tipocrime == "7") {
-                calculap = (d1 * 1 / 6)
                 calculal = (d1 / 3 * 2)
             }
             if (deli.tipocrime == "8" || deli.tipocrime == "9") {
-                calculap = (d1 * 50 / 100)
                 if (deli.prirei == "1") {
                     calculal = (d1 / 3 * 2)
                 } else {
@@ -760,38 +771,126 @@ export default function Home() {
                 }
             }
             if (deli.tipocrime == "10") {
-                calculap = (d1 * 1 / 8)
                 if (deli.prirei == "1") {
                     calculal = (d1 / 3 * 1)
                 } else {
                     calculal = (d1 / 2 * 1)
                 }
             }
-            xdatap.setDate(xdatap.getDate() + calculap)
             xdatal.setDate(xdatal.getDate() + calculal)
             c1 = 0
             d1 = 0
         })
         // bug de datas acrescentar 1 dia
-        xdatap.setDate(xdatap.getDate() + 1)
         xdatal.setDate(xdatal.getDate() + 1 - remissao)
-
-        var y = formatDate(xdatap)
-        y = y.toString()
-        setDataprogressao(y)
-
         var z = formatDate(xdatal)
         z = z.toString()
         setDatacondicional(z)
-
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
-            dataprogressao: y,
             datacondicional: z
-        })
+        }).then(() => {
 
+        }).catch((error) => {
+            alert('Erro inesperado ao gravar condicional ' + error.message)
+        })
+//----------------------------------------------> ATÉ AQUI CALCULOU E GRAVOU CONDICIONAL
+
+        const xpro = new Date(xdataprogressao)
+        const dataatual = new Date()
+        if (xpro > dataatual) {
+            var dataf = new Date(xdataprisao)
+            var xdatal = new Date(xdataprisao)
+            var xdataini = new Date(xdataprisao)
+            var xdatap = new Date(xdataprisao)
+            var c1 = 0
+            var d1 = 0
+            var calculap = 0
+            var calculal = 0
+            delita?.map(deli => {
+                dataf = new Date(xdataprisao)
+                if (parseInt(deli.anosPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
+                }
+                if (parseInt(deli.mesesPena) > 0) {
+                    dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
+                }
+                if (parseInt(deli.diasPena) > 0) {
+                    dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
+                }
+                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
+                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+                if (deli.tipocrime == "1") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 16 / 100)
+                    } else {
+                        calculap = (d1 * 20 / 100)
+                    }
+                }
+                if (deli.tipocrime == "2") {
+                    if (deli.prirei == "1") {
+                        calculap = d1 * 25 / 100
+                    } else {
+                        calculap = d1 * 30 / 100
+                    }
+                }
+                if (deli.tipocrime == "3") {
+                    if (deli.prirei == "1") {
+                        calculap = d1 * 40 / 100
+                    } else {
+                        calculap = d1 * 60 / 100
+                    }
+                }
+                if (deli.tipocrime == "4") {
+                    if (deli.prirei == "1") {
+                        calculap = d1 * 50 / 100
+                    } else {
+                        calculap = d1 * 70 / 100
+                    }
+                }
+                if (deli.tipocrime == "5") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "6") {
+                    if (deli.prirei == "1") {
+                        calculap = (d1 * 2 / 5)
+                    } else {
+                        calculap = (d1 * 3 / 5)
+                    }
+                }
+                if (deli.tipocrime == "7") {
+                    calculap = (d1 * 1 / 6)
+                }
+                if (deli.tipocrime == "8" || deli.tipocrime == "9") {
+                    calculap = (d1 * 50 / 100)
+                }
+                if (deli.tipocrime == "10") {
+                    calculap = (d1 * 1 / 8)
+                }
+                xdatap.setDate(xdatap.getDate() + calculap)
+                c1 = 0
+                d1 = 0
+            })
+            // bug de datas acrescentar 1 dia
+            xdatap.setDate(xdatap.getDate() + 1 - remissao)
+            var y = formatDate(xdatap)
+            y = y.toString()
+            setDataprogressao(y)
+            db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
+                dataprogressao: y,
+            }).then(() => {
+
+            }).catch((error) => {
+                alert('Erro inesperado ao gravar dataprogressao ' + error.message)
+            })
+        } else {
+            y = xdataprogressao
+        }
+//--------------------> ATÉ AQUI SE A DATA DA PROGRESSÃO FOSSE MENOR QUE DATA ATUAL NÃO CALCULA POIS JÁ FOI A PROGRESSAO
+
+        y = formatDate(y)
         var dataf = new Date(xdataprisao)
         var xdataini = new Date(xdataprisao)
-        var xdatap = new Date(xdataprogressao)
+        var xdatap = new Date(y)
         var c1 = 0
         var d1 = 0
         var c2 = 0
@@ -812,12 +911,13 @@ export default function Home() {
             }
             c1 = Math.abs(dataf.getTime() - xdataini.getTime())
             d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+
             if (vez === 1) {
-                var xx = new Date(xdataprogressao)
+                var xx = new Date(y)
                 var yy = new Date(xdataprisao)
                 c2 = Math.abs(xx.getTime() - yy.getTime())
                 d2 = Math.ceil(c2 / (1000 * 3600 * 24))
-                d1 = d1 - d2
+                d1 = (d1 - d2)
                 vez = 2
             }
             if (deli.tipocrime == "1") {
@@ -874,18 +974,23 @@ export default function Home() {
         // bug de datas acrescentar 1 dia
         xdatap.setDate(xdatap.getDate() + 1 - remissao)
 
-        var y = formatDate(xdatap)
-        y = y.toString()
-        setDataprogressao2(y)
+        var w = formatDate(xdatap)
+        w = w.toString()
+        setDataprogressao2(w)
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             dataprogressao2: y,
+        }).then(() => {
+
+        }).catch((error) => {
+            alert('Erro inesperado ao gravar dataprogressao2 ' + error.message)
         })
         setStatus(!status)
     }
+//---------------------------> CALCULA E GRAVA PROGRESSAO2
 
     function faltagrave() {
-        if (confirm('Confirma a inclusão da falta grave? (lembrar de descontar dias remidos se houver desconto)')) {
+        if (confirm('Confirma a inclusão da FALTA GRAVE? Lembre-se de descontar a perda dos dias remidos se determinado pelo juízo. Ressaltando que falta grave implica em regressão de regime.')) {
             let falta = prompt('Digite a data no formato DD/MM/AAAA')
             let xdiaf = falta?.substring(0, 2)
             let xmesf = falta?.substring(3, 5)
@@ -990,8 +1095,12 @@ export default function Home() {
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
                 dataprogressao: y,
                 datafalta: xdatafalta,
+            }).then(() => {
+
+            }).catch((error) => {
+                alert('Erro inesperado ao gravar progressao e datafalta ' + error.message)
             })
-            //--------------------------------------> PROGRESSÃO 2
+//-------------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA DA PROGRESSÃO COM BASE NA DATA DA FALTA GRAVE
             var remissao = 0
             remica?.map(remi => {
                 if (parseInt(remi.qtdC) > 0) {
@@ -1088,9 +1197,14 @@ export default function Home() {
 
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
                 dataprogressao2: y,
+            }).then(() => {
+
+            }).catch((error) => {
+                alert('Erro inesperado ao gravar dataprogressão2 ' + error.message)
             })
         }
     }
+// -----------ATÉ AQUI CALCULOU E GRAVOU A PROGRESSÃO2 COM BASE NA PROGRESSÃO 1 DA FALTA GRAVE
 
     function gerarPDF() {
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -1098,8 +1212,8 @@ export default function Home() {
         const reportTitle = [
             {
                 text: [
-                    'SISTEMA DE CONTROLE DE EXECUÇÃO PENAL \n\n'+
-                    'Relatório de Progressão de Regime.'
+                    'SISTEMA DE CONTROLE DE EXECUÇÃO PENAL' + '\n\n',
+                    'Relatório de Progressão de Regime',
                 ],
                 fontSize: 14,
                 alignment: 'center',
@@ -1110,81 +1224,113 @@ export default function Home() {
 
         const dados = delita?.map((deli) => {
             return [
-                {text: deli.descriD, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.prirei , fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.percentual, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.fracao, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.anosPena, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.mesesPena, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: deli.diasPena, fontSize: 9, margin: [0, 2, 0, 2]}
+                { text: deli.descriD, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.prirei, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.percentual, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.fracao, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.anosPena, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.mesesPena, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: deli.diasPena, fontSize: 9, margin: [0, 2, 0, 2] }
             ]
         })
 
         const dados2 = remica?.map((remi) => {
             return [
-                {text: remi.descricao, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: remi.tipoRemicao , fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: remi.qtdI, fontSize: 9, margin: [0, 2, 0, 2]},
-                {text: remi.qtdC, fontSize: 9, margin: [0, 2, 0, 2]},
+                { text: remi.descricao, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: remi.tipoRemicao, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: remi.qtdI, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: remi.qtdC, fontSize: 9, margin: [0, 2, 0, 2] },
             ]
         })
 
+        const xdata = '//'
+        if (xdatafalta != '//') {
+            let xdata = formatDate2(xdatafalta)
+        }
 
         const details = [
             {
-                text:[
-                'Nome do Cliente: '+ xnome +'  Nº da Matricula: '+xmatricula + '\n\n',
-                ' Presídio: '+ xpresidio +' Nº do Processo de Execução: '+ xprocesso + '\n\n',
-                ' Data da Prisão: '+formatDate2(xdataprisao) + ' Data do fim da pena: '+xdatafim + '\n\n',
-                ' Data da 1ª Progressão: '+xdataprogressao + ' Data da 2ª Progressão: '+xdataprogressao2 +'\n\n', 
-                ' Data da Liberdade Condicional: '+xdatacondicional+ ' Data da FALTA GRAVE: '+xdatafalta +'\n',
+                text: ['Relatório de Progressão de Regime' + '\n'],
+                fontSize: 14,
+                alignment: 'center',
+                bold: true,
+            },
+            {
+                text: [
+                    'Nome: ' + xnome + '     Nº de Matricula: ' + xmatricula + '\n\n',
+                    ' Presídio: ' + xpresidio + '     Processo Execução: ' + xprocesso + '\n\n',
+                    ' Data da Prisão..............: ' + formatDate2(xdataprisao) + '\n',
+                    ' Data do fim da pena.....: ' + formatDate2(xdatafim) + '\n',
                 ],
+                color: 'blue',
                 alignment: 'justify',
                 fontSize: 14,
                 bold: false,
-                margin: [15, 20, 0, 45],
+                margin: [15, 20, 0, 0],
             },
-            {   table:{
+            {
+                text: [
+                    ' Data da 1ª Progressão.: ' + formatDate2(xdataprogressao) + '\n',
+                    ' Data da 2ª Progressão.: ' + formatDate2(xdataprogressao2) + '\n',
+                    ' Data da Condicional.....: ' + formatDate2(xdatacondicional) + '\n',
+                ],
+                color: 'green',
+                alignment: 'justify',
+                fontSize: 14,
+                bold: false,
+                margin: [15, 0, 0, 0],
+            },
+            {
+                text: [' Data da FALTA GRAVE..: ' + xdata + '\n\n',],
+                color: 'red',
+                alignment: 'justify',
+                fontSize: 14,
+                bold: false,
+                margin: [15, 0, 0, 0],
+            },
+            {
+                table: {
                     headerRows: 1,
-                    widths: [100,'*','*','*','*','*','*'],
-                    body:[
+                    widths: [100, '*', '*', '*', '*', '*', '*'],
+                    body: [
                         [
-                            {text: 'Descricao', style: 'tableHeader', fontSize: 8},
-                            {text: 'Pr/Rei', style: 'tableHeader', fontSize: 8},
-                            {text: 'Progressão', style: 'tableHeader', fontSize: 8},
-                            {text: 'Condicional', style: 'tableHeader', fontSize: 8},
-                            {text: 'Anos', style: 'tableHeader', fontSize: 8},
-                            {text: 'Meses', style: 'tableHeader', fontSize: 8},
-                            {text: 'Dias', style: 'tableHeader', fontSize: 8}
+                            { text: 'Descricao', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Pr/Rei', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Progressão', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Condicional', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Anos', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Meses', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Dias', style: 'tableHeader', fontSize: 8 }
                         ],
                         ...dados
                     ]
                 },
                 layout: 'headerLineOnly'
             },
-            {text: '\n\n'},
-            {   table:{
-                headerRows: 1,
-                widths: [100,'*','*','*','*','*','*'],
-                body:[
-                    [
-                        {text: 'Descricao', style: 'tableHeader', fontSize: 8},
-                        {text: 'Tipo', style: 'tableHeader', fontSize: 8},
-                        {text: 'Qtd. Informada', style: 'tableHeader', fontSize: 8},
-                        {text: 'Qtd. Calculada', style: 'tableHeader', fontSize: 8},
-                    ],
-                    ...dados2
-                ]
+            { text: '\n\n' },
+            {
+                table: {
+                    headerRows: 1,
+                    widths: [100, '*', '*', '*', '*', '*', '*'],
+                    body: [
+                        [
+                            { text: 'Descricao', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Tipo', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Qtd. Informada', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Qtd. Calculada', style: 'tableHeader', fontSize: 8 },
+                        ],
+                        ...dados2
+                    ]
+                },
+                layout: 'headerLineOnly'
             },
-            layout: 'headerLineOnly'
-        },
 
         ];
 
-        function Rodape(currentPage, pageCount){
+        function Rodape(currentPage, pageCount) {
             return [
                 {
-                    text: currentPage + ' / '+pageCount,
+                    text: currentPage + ' / ' + pageCount,
                     alignment: 'right',
                     fontSize: 9,
                     margin: [0, 10, 20, 0]
@@ -1228,7 +1374,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome + " Pr. " + cli.dataprogressao}</p>
+                                            <p className="">{cli.nome}</p>
                                         </div>
                                     )
                                 })
@@ -1242,7 +1388,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome + " Pr. " + cli.dataprogressao}</p>
+                                            <p className="">{cli.nome}</p>
                                         </div>
                                     )
                                 })
@@ -1273,7 +1419,7 @@ export default function Home() {
                             <input className="block dark:bg-gray-400" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
                         </label>
                         <label>Progressão:
-                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+                            <input className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
                         </label>
                         <label>Progressão2:
                             <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
