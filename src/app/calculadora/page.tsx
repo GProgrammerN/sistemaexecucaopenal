@@ -1418,22 +1418,22 @@ export default function Home() {
                             <input className='block dark:bg-gray-400 dark:placeholder-white' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
                         </label>
                         <label className="mt-4 lg:mt-0">Data da Prisão:
-                            <input className="block dark:bg-gray-400 w-52" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
+                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Progressão:
-                            <input className="block dark:bg-gray-400 w-52" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Progressão2:
-                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
+                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Condicional:
-                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
+                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Término:
-                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Falta Grave:
-                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
+                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
                         </label>
                     </div>
                 </form>
