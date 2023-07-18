@@ -13,7 +13,7 @@ export default function AvatarUsuario() {
             />
             {usuario?.assinatura}
             <p className="dark:text-white text-black text-sm">
-                {usuario?.nome?.slice(0, 40) ?? 'Sem Apelido'}
+                {usuario?.nome?.slice(0, 10) ?? 'Sem Apelido'}
             </p>
 
         </div>

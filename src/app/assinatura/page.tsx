@@ -74,7 +74,10 @@ export default function PreviewPage() {
   }
 
   return (
-    <Layout titulo='Gerenciamento de Assinatura' subtitulo='Assinatura / Cancelamento'>
+    <Layout titulo='Gerenciamento de Assinatura'
+    subtitulo='Assinatura / Cancelamento'
+    tipoHeight='h-screen'
+    >
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>

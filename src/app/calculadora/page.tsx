@@ -793,7 +793,7 @@ export default function Home() {
         }).catch((error) => {
             alert('Erro inesperado ao gravar condicional ' + error.message)
         })
-//----------------------------------------------> ATÉ AQUI CALCULOU E GRAVOU CONDICIONAL
+        //----------------------------------------------> ATÉ AQUI CALCULOU E GRAVOU CONDICIONAL
 
         const xpro = new Date(xdataprogressao)
         const dataatual = new Date()
@@ -885,7 +885,7 @@ export default function Home() {
         } else {
             y = xdataprogressao
         }
-//--------------------> ATÉ AQUI SE A DATA DA PROGRESSÃO FOSSE MENOR QUE DATA ATUAL NÃO CALCULA POIS JÁ FOI A PROGRESSAO
+        //--------------------> ATÉ AQUI SE A DATA DA PROGRESSÃO FOSSE MENOR QUE DATA ATUAL NÃO CALCULA POIS JÁ FOI A PROGRESSAO
 
         y = formatDate(y)
         var dataf = new Date(xdataprisao)
@@ -987,7 +987,7 @@ export default function Home() {
         })
         setStatus(!status)
     }
-//---------------------------> CALCULA E GRAVA PROGRESSAO2
+    //---------------------------> CALCULA E GRAVA PROGRESSAO2
 
     function faltagrave() {
         if (confirm('Confirma a inclusão da FALTA GRAVE? Lembre-se de descontar a perda dos dias remidos se determinado pelo juízo. Ressaltando que falta grave implica em regressão de regime.')) {
@@ -1100,7 +1100,7 @@ export default function Home() {
             }).catch((error) => {
                 alert('Erro inesperado ao gravar progressao e datafalta ' + error.message)
             })
-//-------------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA DA PROGRESSÃO COM BASE NA DATA DA FALTA GRAVE
+            //-------------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA DA PROGRESSÃO COM BASE NA DATA DA FALTA GRAVE
             var remissao = 0
             remica?.map(remi => {
                 if (parseInt(remi.qtdC) > 0) {
@@ -1204,7 +1204,7 @@ export default function Home() {
             })
         }
     }
-// -----------ATÉ AQUI CALCULOU E GRAVOU A PROGRESSÃO2 COM BASE NA PROGRESSÃO 1 DA FALTA GRAVE
+    // -----------ATÉ AQUI CALCULOU E GRAVOU A PROGRESSÃO2 COM BASE NA PROGRESSÃO 1 DA FALTA GRAVE
 
     function gerarPDF() {
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -1353,7 +1353,9 @@ export default function Home() {
     }
 
     return (
-        <Layout titulo="Sistema de Controle de Execução Penal" subtitulo="Cadastros de Clientes/Delitos/Remição e Detração">
+        <Layout titulo="Sistema de Controle de Execução Penal"
+            subtitulo="Cadastros de Clientes/Delitos/Remição e Detração"
+            tipoHeight="h-full sm:h-screen">
             <h3>Cadastro de Clientes</h3>
             <main className="flex justify-center items-center">
                 <form className="mr-1 w-full flex flex-col border-2 rounded
@@ -1396,7 +1398,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="flex flex-row flex-wrap justify-between items-center p-1 dark:text-white text-black" >
+                    <div className="flex flex-row flex-wrap items-center p-1 dark:text-white text-black justify-between" >
                         {atualizando ?
                             <label >Nome:
                                 <input readOnly className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
@@ -1406,41 +1408,41 @@ export default function Home() {
                                 <input className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
                             </label>
                         }
-                        <label>Matrícula:
-                            <input required className='block  dark:bg-gray-400 dark:placeholder-white w-28' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
+                        <label className="mt-2 lg:mt-0">Matrícula:
+                            <input required className='block  dark:bg-gray-400 dark:placeholder-white' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
                         </label>
-                        <label>Presídio:
+                        <label className="mt-2 lg:mt-0">Presídio:
                             <input className="block  dark:bg-gray-400 dark:placeholder-white" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
                         </label>
-                        <label>Processo Execução:
+                        <label className="mt-2 lg:mt-0">Processo Execução:
                             <input className='block dark:bg-gray-400 dark:placeholder-white' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
                         </label>
-                        <label>Dt.Prisão:
-                            <input className="block dark:bg-gray-400" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
+                        <label className="mt-4 lg:mt-0">Data da Prisão:
+                            <input className="block dark:bg-gray-400 w-52" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
                         </label>
-                        <label>Progressão:
-                            <input className="block dark:bg-gray-400" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+                        <label className="mt-1 lg:mt-0">Progressão:
+                            <input className="block dark:bg-gray-400 w-52" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
                         </label>
-                        <label>Progressão2:
-                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
+                        <label className="mt-1 lg:mt-0">Progressão2:
+                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
                         </label>
-                        <label>Condicional:
-                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
+                        <label className="mt-1 lg:mt-0">Condicional:
+                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
                         </label>
-                        <label>Término:
-                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+                        <label className="mt-1 lg:mt-0">Término:
+                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
                         </label>
-                        <label>Falta Grave:
-                            <input readOnly className="block dark:bg-gray-400" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
+                        <label className="mt-1 lg:mt-0">Falta Grave:
+                            <input readOnly className="block dark:bg-gray-400 w-52" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
                         </label>
                     </div>
                 </form>
             </main>
             {atualizando ?
-                <div className="flex justify-end">
+                <div className="flex justify-center lg:justify-end flex-wrap">
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
-                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
+                    <button className="cursor-pointer lg:ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gerarPDF}>Gerar PDF</button>
                 </div>
                 :
@@ -1453,8 +1455,9 @@ export default function Home() {
 
             {mostra ?
                 <>
-                    <h1>Cadastro de Delitos</h1>
-                    <form className="border-2 text-sm flex rounded">
+                    <h1 className="mt-4 lg:mt-0">Cadastro de Delitos</h1>
+                    <form className="border-2 flex flex-col rounded
+                    lg:flex-row lg:text-sm">
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
                             {delita?.map(deli => {
                                 return (
@@ -1472,7 +1475,7 @@ export default function Home() {
                         </div>
                         <div className="flex flex-row flex-wrap justify-between items-center">
                             <label>Tipo de Crime
-                                <select className='block  dark:bg-gray-400' value={xtipocrime} name="crimes" id="crimes" onChange={event => setTipocrime(event.target.value)}>
+                                <select className='block  dark:bg-gray-400 w-full' value={xtipocrime} name="crimes" id="crimes" onChange={event => setTipocrime(event.target.value)}>
                                     <option value="0">Selecione o tipo de crime</option>
                                     <option value="1">Crime não hediondo posterior a Lei 13.964, sem violencia ou grave ameaça a pessoa. 1</option>
                                     <option value="2">Crime não hediondo posterior a Lei 13.964, com violencia ou grave ameaça a pessoa. 2</option>
@@ -1519,12 +1522,13 @@ export default function Home() {
                         <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
                     }
 
-                    <h1>Cadastro de Detração e Remições</h1>
-                    <form className="border-2 flex rounded">
-                        <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-2/5">
+                    <h1 className="mt-4 lg:mt-0">Cadastro de Detração e Remições</h1>
+                    <form className="border-2 flex flex-col rounded
+                    lg:flex-row">
+                        <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full lg:w-2/5">
                             {remica?.map(remi => {
                                 return (
-                                    <div className="flex justify-start text-sm pl-1 pt-1 items-center">
+                                    <div className="flex justify-start lg:text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editarremicao(remi)}>
                                             <TbSelect />
                                         </a>
@@ -1563,7 +1567,7 @@ export default function Home() {
                         </div>
                     </form>
                     {atualizando3 ?
-                        <button className="cursor-pointer w-232 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
+                        <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
                         :
                         <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
                     }

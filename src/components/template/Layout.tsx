@@ -9,6 +9,7 @@ import ForcarAutenticacao from "../auth/ForcarAutenticacao";
 interface LayoutProps {
     titulo: string
     subtitulo: string
+    tipoHeight: string
     children?: any
 }
 
@@ -19,7 +20,7 @@ export default function Layout(props: LayoutProps) {
         <ForcarAutenticacao>
             <div className={`${xtema} flex overflow-auto`}>
                 <MenuLateral />
-                <div className={`flex flex-col p-3 h-screen w-full
+                <div className={`flex flex-col p-3 ${props.tipoHeight} w-full
              bg-gray-300    dark:bg-gray-800`}>
                     <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo} />
                     <Conteudo>
