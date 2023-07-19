@@ -1308,7 +1308,7 @@ export default function Home() {
                 },
                 layout: 'headerLineOnly'
             },
-            { text: 'REMISSÃO/DETRAÇÃO \n',
+            { text: 'REMIÇÃO/DETRAÇÃO \n',
             margin: [0, 15, 0, 0],
             },
             {
