@@ -1288,6 +1288,7 @@ export default function Home() {
                 bold: false,
                 margin: [15, 0, 0, 0],
             },
+            { text: 'DELITOS \n'},
             {
                 table: {
                     headerRows: 1,
@@ -1307,7 +1308,9 @@ export default function Home() {
                 },
                 layout: 'headerLineOnly'
             },
-            { text: '\n\n' },
+            { text: 'REMISSÃO/DETRAÇÃO \n',
+            margin: [0, 15, 0, 0],
+            },
             {
                 table: {
                     headerRows: 1,
@@ -1376,7 +1379,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome}</p>
+                                            <p>{cli.nome}</p>
                                         </div>
                                     )
                                 })
@@ -1390,7 +1393,7 @@ export default function Home() {
                                             <a className="cursor-pointer mr-1 text-red-500" onClick={() => deletar(cli.nome)}>
                                                 <TbTrashOff />
                                             </a>
-                                            <p className="">{cli.nome}</p>
+                                            <p>{cli.nome}</p>
                                         </div>
                                     )
                                 })
