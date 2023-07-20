@@ -9,7 +9,10 @@ export default function Notificacoes() {
     <Layout titulo="Notificações"
       subtitulo="Aqui você irá gerenciar as suas notificações!"
       tipoHeight="h-screen">
-      <Conteudo children='Aqui você verá o conteúdo!' />
+      <Conteudo children='O sistema encontra-se em sua primeira versão.' />
+      <Conteudo children='É totalmente funcional, porém está sempre em constante atualização.' />
+      <Conteudo children='Melhorias e aperfeiçoamentos que houverem serão abordados nesta tela.' />
+      <Conteudo children='Bem como eventuais manutenções e interrupções se houverem serão previamente informadas aqui.' />
     </Layout>
   )
 }

@@ -979,7 +979,7 @@ export default function Home() {
         setDataprogressao2(w)
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
-            dataprogressao2: y,
+            dataprogressao2: w,
         }).then(() => {
 
         }).catch((error) => {
@@ -1100,7 +1100,9 @@ export default function Home() {
             }).catch((error) => {
                 alert('Erro inesperado ao gravar progressao e datafalta ' + error.message)
             })
+            
             //-------------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA DA PROGRESSÃO COM BASE NA DATA DA FALTA GRAVE
+            
             var remissao = 0
             remica?.map(remi => {
                 if (parseInt(remi.qtdC) > 0) {
@@ -1109,7 +1111,7 @@ export default function Home() {
             })
             var dataf = new Date(xdataprisao)
             var xdataini = new Date(xdataprisao)
-            var xdatap = new Date(xdataprogressao)
+            var xdatap = new Date(y)
             var c1 = 0
             var d1 = 0
             var c2 = 0
@@ -1131,7 +1133,7 @@ export default function Home() {
                 c1 = Math.abs(dataf.getTime() - xdataini.getTime())
                 d1 = Math.ceil(c1 / (1000 * 3600 * 24))
                 if (vez === 1) {
-                    var xx = new Date(xdataprogressao)
+                    var xx = new Date(y)
                     var yy = new Date(xdataprisao)
                     c2 = Math.abs(xx.getTime() - yy.getTime())
                     d2 = Math.ceil(c2 / (1000 * 3600 * 24))
@@ -1191,12 +1193,12 @@ export default function Home() {
             })
             // bug de datas acrescentar 1 dia
             xdatap.setDate(xdatap.getDate() + d3 + 1 - remissao)
-            var y = formatDate(xdatap)
-            y = y.toString()
-            setDataprogressao2(y)
+            var q = formatDate(xdatap)
+            q = q.toString()
+            setDataprogressao2(q)
 
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
-                dataprogressao2: y,
+                dataprogressao2: q,
             }).then(() => {
 
             }).catch((error) => {
