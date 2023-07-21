@@ -306,6 +306,22 @@ export default function Home() {
         setStatus2(!status2)
         setStatus3(!status3)
         setMostra(true)
+        //-------------------------->delitos
+        setAtualizando2(false)
+        setDescriD('')
+        setTipocrime('')
+        setPrirei('')
+        setDiasPena('')
+        setMesesPena('')
+        setAnosPena('')
+        setStatus2(!status2)
+        //-------------------------->remições
+        setAtualizando3(false)
+        setDescricao('')
+        setTiporemicao('')
+        setQtdI('')
+        setQtdC('')
+        setStatus3(!status3)
     }
 
     function atualizar() {
@@ -385,130 +401,140 @@ export default function Home() {
     }
 
     function gravardelito() {
-        var xpercentual = ''
-        var xfracao = ''
-        if (xtipocrime == '1') {
-            if (xprirei == '1') {
-                xpercentual = '16%'
+        if(xdescriD !== ''){
+
+            var xpercentual = ''
+            var xfracao = ''
+            if (xtipocrime == '1') {
+                if (xprirei == '1') {
+                    xpercentual = '16%'
+                    xfracao = '1/3'
+                } else {
+                    xpercentual = '20%'
+                    xfracao = '1/2'
+                }
+            }
+            if (xtipocrime == '2') {
+                if (xprirei == '1') {
+                    xpercentual = '25%'
+                    xfracao = '1/3'
+                } else {
+                    xpercentual = '30%'
+                    xfracao = '1/2'
+                }
+            }
+            if (xtipocrime == '3') {
+                if (xprirei == '1') {
+                    xpercentual = '40%'
+                    xfracao = '2/3'
+                } else {
+                    xpercentual = '60%'
+                }
+            }
+            if (xtipocrime == '4') {
+                if (xprirei == '1') {
+                    xpercentual = '50%'
+                } else {
+                    xpercentual = '70%'
+                }
+            }
+            if (xtipocrime == '5') {
+                if (xprirei == '1') {
+                    xpercentual = '1/6'
+                    xfracao = '1/3'
+                } else {
+                    xpercentual = '1/6'
+                    xfracao = '1/2'
+                }
+            }
+            if (xtipocrime == '6') {
+                if (xprirei == '1') {
+                    xpercentual = '2/5'
+                    xfracao = '1/3'
+                } else {
+                    xpercentual = '3/5'
+                    xfracao = '1/2'
+                }
+            }
+            if (xtipocrime == '7') {
+                xpercentual = '1/6'
                 xfracao = '1/3'
-            } else {
-                xpercentual = '20%'
-                xfracao = '1/2'
             }
-        }
-        if (xtipocrime == '2') {
-            if (xprirei == '1') {
-                xpercentual = '25%'
-                xfracao = '1/3'
-            } else {
-                xpercentual = '30%'
-                xfracao = '1/2'
-            }
-        }
-        if (xtipocrime == '3') {
-            if (xprirei == '1') {
-                xpercentual = '40%'
-                xfracao = '2/3'
-            } else {
-                xpercentual = '60%'
-            }
-        }
-        if (xtipocrime == '4') {
-            if (xprirei == '1') {
+            if (xtipocrime == '8' || xtipocrime == '9') {
                 xpercentual = '50%'
-            } else {
-                xpercentual = '70%'
+                if (xprirei == '1') {
+                    xfracao = '2/3'
+                }
             }
-        }
-        if (xtipocrime == '5') {
-            if (xprirei == '1') {
-                xpercentual = '1/6'
-                xfracao = '1/3'
-            } else {
-                xpercentual = '1/6'
-                xfracao = '1/2'
+            if (xtipocrime == '10') {
+                xpercentual = '1/8'
+                if (xprirei == '1') {
+                    xfracao = '1/3'
+                } else {
+                    xfracao = '1/2'
+                }
             }
+            db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).set({
+                descriD: xdescriD,
+                tipocrime: xtipocrime,
+                prirei: xprirei,
+                diasPena: xdiasPena,
+                mesesPena: xmesesPena,
+                anosPena: xanosPena,
+                percentual: xpercentual,
+                fracao: xfracao
+            }).then(() => {
+                alert("Delito cadastrado com sucesso!")
+                setDescriD('')
+                setTipocrime('')
+                setPrirei('')
+                setDiasPena('')
+                setMesesPena('')
+                setAnosPena('')
+                setStatus2(!status2)
+            }).catch((error) => {
+                alert('Erro ao cadastrar delito ' + error.message)
+            })
+        } else {
+            alert("Não é possivel gravar delitos sem preencher a descriçao!")
         }
-        if (xtipocrime == '6') {
-            if (xprirei == '1') {
-                xpercentual = '2/5'
-                xfracao = '1/3'
-            } else {
-                xpercentual = '3/5'
-                xfracao = '1/2'
-            }
-        }
-        if (xtipocrime == '7') {
-            xpercentual = '1/6'
-            xfracao = '1/3'
-        }
-        if (xtipocrime == '8' || xtipocrime == '9') {
-            xpercentual = '50%'
-            if (xprirei == '1') {
-                xfracao = '2/3'
-            }
-        }
-        if (xtipocrime == '10') {
-            xpercentual = '1/8'
-            if (xprirei == '1') {
-                xfracao = '1/3'
-            } else {
-                xfracao = '1/2'
-            }
-        }
-        db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(xdescriD).set({
-            descriD: xdescriD,
-            tipocrime: xtipocrime,
-            prirei: xprirei,
-            diasPena: xdiasPena,
-            mesesPena: xmesesPena,
-            anosPena: xanosPena,
-            percentual: xpercentual,
-            fracao: xfracao
-        }).then(() => {
-            alert("Delito cadastrado com sucesso!")
-            setDescriD('')
-            setTipocrime('')
-            setPrirei('')
-            setDiasPena('')
-            setMesesPena('')
-            setAnosPena('')
-            setStatus2(!status2)
-        }).catch((error) => {
-            alert('Erro ao cadastrar delito ' + error.message)
-        })
     }
 
     function gravarremicao() {
-        var convertido = ''
-        if (xtipoRemicao == "1") {
-            convertido = (parseInt(xqtdI)).toString()
-            setQtdC(convertido)
-        }
-        if (xtipoRemicao == "2") {
-            convertido = (Math.trunc(parseInt(xqtdI) / 3)).toString()
-            setQtdC(convertido)
-        }
-        if (xtipoRemicao == "3") {
-            convertido = (Math.trunc(parseInt(xqtdI) / 12)).toString()
-            setQtdC(convertido)
-        }
+        if(xdescricao !== ''){
 
-        db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).set({
-            descricao: xdescricao,
-            tipoRemicao: xtipoRemicao,
-            qtdI: xqtdI,
-            qtdC: convertido,
-        }).then(() => {
-            alert("Remição/Detração cadastrado com sucesso!")
-            setDescricao('')
-            setTiporemicao('')
-            setQtdI('')
-            setQtdC('')
-            setStatus3(!status3)
-        }).catch((error) => {
-            alert('Erro ao cadastrar Remição/Detração ' + error.message)
-        })
+            var convertido = ''
+            if (xtipoRemicao == "1") {
+                convertido = (parseInt(xqtdI)).toString()
+                setQtdC(convertido)
+            }
+            if (xtipoRemicao == "2") {
+                convertido = (Math.trunc(parseInt(xqtdI) / 3)).toString()
+                setQtdC(convertido)
+            }
+            if (xtipoRemicao == "3") {
+                convertido = (Math.trunc(parseInt(xqtdI) / 12)).toString()
+                setQtdC(convertido)
+            }
+    
+            db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).set({
+                descricao: xdescricao,
+                tipoRemicao: xtipoRemicao,
+                qtdI: xqtdI,
+                qtdC: convertido,
+            }).then(() => {
+                alert("Remição/Detração cadastrado com sucesso!")
+                setDescricao('')
+                setTiporemicao('')
+                setQtdI('')
+                setQtdC('')
+                setStatus3(!status3)
+            }).catch((error) => {
+                alert('Erro ao cadastrar Remição/Detração ' + error.message)
+            })
+        } else {
+            alert("Não é possivel gravar remições ou detração sem preencher a descriçao!")
+        }
     }
 
     function atualizardelito() {
