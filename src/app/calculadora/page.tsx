@@ -253,6 +253,13 @@ export default function Home() {
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(ref).delete()
                 .then(() => {
                     setStatus2(!status2)
+                    setAtualizando2(false)
+                    setDescriD('')
+                    setTipocrime('')
+                    setPrirei('')
+                    setDiasPena('')
+                    setMesesPena('')
+                    setAnosPena('')
                 }).catch((error) => {
                     console.error("Erro ao excluir Delito: ", error);
                 }
@@ -265,6 +272,11 @@ export default function Home() {
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(ref).delete()
                 .then(() => {
                     setStatus3(!status3)
+                    setAtualizando3(false)
+                    setDescricao('')
+                    setTiporemicao('')
+                    setQtdI('')
+                    setQtdC('')
                 }).catch((error) => {
                     console.error("Erro ao excluir Remição/Detração: ", error);
                 }
