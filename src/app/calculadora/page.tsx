@@ -208,11 +208,10 @@ export default function Home() {
     function deletar(ref: string) {
         if (confirm("Confirma exclusão do cliente?") == true) {
             delita?.map(deli => {
-
                 db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("delitos").doc(deli.descriD).delete()
                     .then(() => {
                     }).catch((error) => {
-                        console.error("Erro ao excluir Delito: ", error);
+                        console.error("Erro ao excluir Delitos: ", error);
                     }
                     )
             })
@@ -220,11 +219,11 @@ export default function Home() {
                 db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(remi.descricao).delete()
                     .then(() => {
                     }).catch((error) => {
-                        console.error("Erro ao excluir Remição/Detração: ", error);
+                        console.error("Erro ao excluir Remições/Detração: ", error);
                     }
                     )
             })
-            const referencia = db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
+            db.collection("usuario/" + id + "/clientes/").doc(ref).delete()
                 .then(() => {
                     setNome('')
                     setMatricula('')
@@ -239,6 +238,8 @@ export default function Home() {
                     setStatus(!status)
                     setStatus2(!status2)
                     setStatus3(!status3)
+                    setAtualizando(!atualizando)
+                    setMostra(!mostra)
                 }).catch((error) => {
                     console.error("Erro ao excluir cliente: ", error);
                 }
