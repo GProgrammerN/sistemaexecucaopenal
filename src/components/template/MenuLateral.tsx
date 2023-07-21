@@ -1,6 +1,6 @@
 'use client';
 import { useAuth } from "@/data/context/AuthContext";
-import { IconeAjutes, IconeAssinatura, IconeCalculadora, IconeCasa, IconeSair, IconeSino } from "../icons"
+import { IconeAjutes, IconeAssinatura, IconeCalculadora, IconeCasa, IconeSair, IconeSino, IconeLua } from "../icons"
 import Logo from "./Logo"
 import MenuItem from "./MenuItem"
 

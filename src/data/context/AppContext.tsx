@@ -7,7 +7,7 @@ interface ContextProps{
 }
 
 const GlobalContext = createContext<ContextProps>({
-    xtema: '',
+    xtema: 'dark',
     setXtema: (): string => '',
 })
 

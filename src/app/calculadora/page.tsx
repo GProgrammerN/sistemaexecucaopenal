@@ -320,7 +320,7 @@ export default function Home() {
         setStatus2(!status2)
         setStatus3(!status3)
         setMostra(true)
-        if(xdatafalta !== '' && xdatafalta !== '//') {
+        if (xdatafalta !== '' && xdatafalta !== '//') {
             setxdata(formatDate2(ref.datafalta))
         }
         //-------------------------->delitos
@@ -418,7 +418,7 @@ export default function Home() {
     }
 
     function gravardelito() {
-        if(xdescriD !== ''){
+        if (xdescriD !== '') {
 
             var xpercentual = ''
             var xfracao = ''
@@ -518,7 +518,7 @@ export default function Home() {
     }
 
     function gravarremicao() {
-        if(xdescricao !== ''){
+        if (xdescricao !== '') {
 
             var convertido = ''
             if (xtipoRemicao == "1") {
@@ -533,7 +533,7 @@ export default function Home() {
                 convertido = (Math.trunc(parseInt(xqtdI) / 12)).toString()
                 setQtdC(convertido)
             }
-    
+
             db.collection("usuario").doc(id).collection("clientes").doc(xnome).collection("remicoes").doc(xdescricao).set({
                 descricao: xdescricao,
                 tipoRemicao: xtipoRemicao,
@@ -700,7 +700,7 @@ export default function Home() {
     function formatDate2(Ref: Date) {
         var d = new Date(Ref),
             month = '' + (d.getMonth() + 1),
-            day = '' + (d.getDate()+1),
+            day = '' + (d.getDate() + 1),
             year = d.getFullYear();
 
         if (month.length < 2)
@@ -842,9 +842,9 @@ export default function Home() {
         const xpro = new Date(xdataprogressao)
         const dataatual = new Date()
         if (xpro > dataatual || xdataprogressao === '//' || xdataprogressao === '') {
-            if(xdatafalta === '//' || xdatafalta === ''){
+            if (xdatafalta === '//' || xdatafalta === '') {
                 var dataf = new Date(xdataprisao)
-            }else{
+            } else {
                 var dataf = new Date(xdatafalta)
             }
             var xdataini = new Date(xdataprisao)
@@ -853,9 +853,9 @@ export default function Home() {
             var d1 = 0
             var calculap = 0
             delita?.map(deli => {
-                if(xdatafalta === '//' || xdatafalta === ''){
+                if (xdatafalta === '//' || xdatafalta === '') {
                     var dataf = new Date(xdataprisao)
-                }else{
+                } else {
                     var dataf = new Date(xdatafalta)
                 }
                 if (parseInt(deli.anosPena) > 0) {
@@ -1100,8 +1100,8 @@ export default function Home() {
             },
             {
                 text: [
-                    ' Data da 1ª Progressão.: '   + formatDate2(xdataprogressao) + '\n',
-                    ' Data da 2ª Progressão.: '   + formatDate2(xdataprogressao2) + '\n',
+                    ' Data da 1ª Progressão.: ' + formatDate2(xdataprogressao) + '\n',
+                    ' Data da 2ª Progressão.: ' + formatDate2(xdataprogressao2) + '\n',
                     ' Data da Condicional.....: ' + formatDate2(xdatacondicional) + '\n',
                 ],
                 color: 'green',
@@ -1118,7 +1118,7 @@ export default function Home() {
                 bold: false,
                 margin: [15, 0, 0, 0],
             },
-            { text: 'DELITOS \n'},
+            { text: 'DELITOS \n' },
             {
                 table: {
                     headerRows: 1,
@@ -1138,8 +1138,9 @@ export default function Home() {
                 },
                 layout: 'headerLineOnly'
             },
-            { text: 'REMIÇÃO/DETRAÇÃO \n',
-            margin: [0, 15, 0, 0],
+            {
+                text: 'REMIÇÃO/DETRAÇÃO \n',
+                margin: [0, 15, 0, 0],
             },
             {
                 table: {
@@ -1188,7 +1189,7 @@ export default function Home() {
     return (
         <Layout titulo="Sistema de Controle de Execução Penal"
             subtitulo="Cadastros de Clientes/Delitos/Remição e Detração"
-            tipoHeight="h-full sm:h-screen">
+            tipoHeight="h-full lg:h-screen">
             <h3>Cadastro de Clientes</h3>
             <main className="flex justify-center items-center">
                 <form className="mr-1 w-full flex flex-col border-2 rounded
@@ -1231,7 +1232,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="flex flex-row flex-wrap items-center p-1 dark:text-white text-black justify-between" >
+                    <div className="flex flex-row flex-wrap items-center p-1 dark:text-white text-black justify-between mt-10
+                    lg:mt-0" >
                         {atualizando ?
                             <label >Nome:
                                 <input readOnly className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
@@ -1241,38 +1243,38 @@ export default function Home() {
                                 <input className="block dark:bg-gray-400 dark:placeholder-white" type="text" value={xnome} placeholder="Nome do cliente" onChange={event => setNome(event.target.value)} />
                             </label>
                         }
-                        <label className="mt-2 lg:mt-0">Matrícula:
+                        <label className="mt-2 sm:mt-0">Matrícula:
                             <input required className='block  dark:bg-gray-400 dark:placeholder-white' type="text" value={xmatricula} placeholder="Número de Matricula" onChange={event => setMatricula(event.target.value)} />
                         </label>
-                        <label className="mt-2 lg:mt-0">Presídio:
+                        <label className="mt-2 sm:mt-0">Presídio:
                             <input className="block  dark:bg-gray-400 dark:placeholder-white" type="text" value={xpresidio} placeholder="Nome do Presídio" onChange={event => setPresidio(event.target.value)} />
                         </label>
-                        <label className="mt-2 lg:mt-0">Processo Execução:
+                        <label className="mt-2 sm:mt-0">Processo Execução:
                             <input className='block dark:bg-gray-400 dark:placeholder-white' type="text" value={xprocesso} placeholder="Número do Processo" onChange={event => setProcesso(event.target.value)} />
                         </label>
-                        <label className="mt-4 lg:mt-0">Data da Prisão:
-                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
+                        <label className="mt-4 sm:mt-0">Data da Prisão:
+                            <input className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdataprisao} placeholder="Data da prisão" onChange={event => setDataprisao(event.target.value)} />
                         </label>
-                        <label className="mt-1 lg:mt-0">Progressão:
-                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
+                        <label className="mt-1 sm:mt-0">Progressão:
+                            <input className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdataprogressao} placeholder="Data da progressão" onChange={event => setDataprogressao(event.target.value)} />
                         </label>
-                        <label className="mt-1 lg:mt-0">Progressão2:
-                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
+                        <label className="mt-1 sm:mt-0">Progressão2:
+                            <input readOnly className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdataprogressao2} placeholder="Data da 2ª progressão" onChange={event => setDataprogressao2(event.target.value)} />
                         </label>
-                        <label className="mt-1 lg:mt-0">Condicional:
-                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
+                        <label className="mt-1 sm:mt-0">Condicional:
+                            <input readOnly className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdatacondicional} placeholder="Data da condicional" onChange={event => setDatacondicional(event.target.value)} />
                         </label>
-                        <label className="mt-1 lg:mt-0">Término:
-                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
+                        <label className="mt-1 sm:mt-0">Término:
+                            <input readOnly className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
                         </label>
-                        <label className="mt-1 lg:mt-0">Falta Grave:
-                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafalta} placeholder="Data falta grave" onChange={event => setDatafalta(event.target.value)} />
+                        <label className="mt-1 sm:mt-0">Falta Grave:
+                            <input className="block dark:bg-gray-400 w-52 sm:w-auto" type="date" value={xdatafalta} placeholder="Data falta grave" onChange={event => setDatafalta(event.target.value)} />
                         </label>
                     </div>
                 </form>
             </main>
             {atualizando ?
-                <div className="flex justify-center lg:justify-end flex-wrap">
+                <div className="flex justify-center sm:justify-end flex-wrap">
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gerarPDF}>Gerar PDF</button>
@@ -1287,9 +1289,9 @@ export default function Home() {
 
             {mostra ?
                 <>
-                    <h1 className="mt-4 lg:mt-0">Cadastro de Delitos</h1>
+                    <h1 className="mt-4 sm:mt-0">Cadastro de Delitos</h1>
                     <form className="border-2 flex flex-col rounded
-                    lg:flex-row lg:text-sm">
+                    lg:flex-row sm:text-sm">
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
                             {delita?.map(deli => {
                                 return (
@@ -1354,13 +1356,13 @@ export default function Home() {
                         <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
                     }
 
-                    <h1 className="mt-4 lg:mt-0">Cadastro de Detração e Remições</h1>
+                    <h1 className="mt-4 sm:mt-0">Cadastro de Detração e Remições</h1>
                     <form className="border-2 flex flex-col rounded
                     lg:flex-row">
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full lg:w-2/5">
                             {remica?.map(remi => {
                                 return (
-                                    <div className="flex justify-start lg:text-sm pl-1 pt-1 items-center">
+                                    <div className="flex justify-start sm:text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editarremicao(remi)}>
                                             <TbSelect />
                                         </a>
@@ -1372,7 +1374,7 @@ export default function Home() {
                                 )
                             })}
                         </div>
-                        <div className="flex flex-row flex-wrap justify-between items-center w-3/5">
+                        <div className="flex flex-row flex-wrap justify-between items-center w-full lg:w-3/5">
                             <label>Remição / Detração
                                 <select className='block dark:bg-gray-400' value={xtipoRemicao} name="remicao" id="remicao" onChange={event => setTiporemicao(event.target.value)}>
                                     <option value="0" >Selecione</option>
@@ -1398,11 +1400,13 @@ export default function Home() {
                             </label>
                         </div>
                     </form>
-                    {atualizando3 ?
-                        <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
-                        :
-                        <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
-                    }
+                    <div className="flex justify-center sm:justify-end flex-wrap">
+                        {atualizando3 ?
+                            <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
+                            :
+                            <button className="cursor-pointer w-24 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravarremicao}>GRAVAR</button>
+                        }
+                    </div>
                 </>
                 :
                 <>

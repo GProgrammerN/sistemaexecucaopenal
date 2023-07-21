@@ -75,8 +75,8 @@ export default function PreviewPage() {
 
   return (
     <Layout titulo='Gerenciamento de Assinatura'
-    subtitulo='Assinatura / Cancelamento'
-    tipoHeight='h-screen'
+      subtitulo='Assinatura / Cancelamento'
+      tipoHeight='h-screen sm:h-full lg:h-screen'
     >
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -207,8 +207,38 @@ export default function PreviewPage() {
             </div>
           </div>
         </div>
-        <div className='flex align-center
-        lg:justify-center'>
+        <div className='flex flex-col align-center
+        lg:justify-center lg:flex-row'>
+          <div className='flex flex-col text-center mb-5 border-4 text-white
+          bg-purple-500 hover:bg-purple-700 border-purple-500 hover:border-purple-700 rounded-md
+          lg:hidden'>
+            <h1 className='font-bold'>Assinatura Mensal</h1>
+            <p>R$30,00/mês</p>
+            <button className="          
+          flex-shrink-1 w-40 self-center text-sm border-4 text-white py-1 px-2 rounded
+          my-2"
+              type="button" onClick={handleSubscription}>Assinar</button>
+          </div>
+          <div className='flex flex-col text-center mb-5 border-4 text-white
+          bg-green-500 hover:bg-green-700 border-green-500 hover:border-green-700 rounded-md
+          lg:hidden'>
+            <h1 className='font-bold'>Assinatura Semestral</h1>
+            <p>R$25,00/mês </p><p>150 por semestre</p>
+            <button className="          
+          flex-shrink-1 w-40 self-center text-sm border-4 text-white py-1 px-2 rounded
+          my-2"
+              type="button" onClick={handleSubscriptionSemestral}>Assinar</button>
+          </div>
+          <div className='flex flex-col text-center mb-5 border-4 text-white
+          bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 rounded-md
+          lg:hidden'>
+            <h1 className='font-bold'>Assinatura Anual</h1>
+            <p>R$20,00/mês </p><p>240 por ano</p>
+            <button className="         
+          flex-shrink-1 w-40 self-center text-sm border-4 text-white py-1 px-2 rounded
+          my-2"
+              type="button" onClick={handleSubscriptionAnual}>Assinar</button>
+          </div>
           <button className="
           bg-yellow-500 hover:bg-yellow-700 border-yellow-500 hover:border-yellow-700
           flex-shrink-1 w-auto text-sm border-4 text-white py-1 px-2 rounded
