@@ -67,7 +67,6 @@ export default function Home() {
     const [xdatacondicional, setDatacondicional] = useState('//')
     const [xdatafim, setDatafim] = useState('//')
     const [xdatafalta, setDatafalta] = useState('//')
-    const [xdata, setxdata] = useState('//')
 
     const db = firebase.firestore()
 
@@ -320,9 +319,6 @@ export default function Home() {
         setStatus2(!status2)
         setStatus3(!status3)
         setMostra(true)
-        if (xdatafalta !== '' && xdatafalta !== '//') {
-            setxdata(formatDate2(ref.datafalta))
-        }
         //-------------------------->delitos
         setAtualizando2(false)
         setDescriD('')
@@ -698,11 +694,12 @@ export default function Home() {
     }
 
     function formatDate2(Ref: Date) {
-        var d = new Date(Ref),
-            month = '' + (d.getMonth() + 1),
-            day = '' + (d.getDate() + 1),
-            year = d.getFullYear();
+        var d = new Date(Ref)
+        d.setDate(d.getDate() + 1)
 
+        var month = '' + (d.getMonth() + 1)
+        var day = '' + d.getDate()
+        var year = d.getFullYear()
         if (month.length < 2)
             month = '0' + month;
         if (day.length < 2)
@@ -1041,7 +1038,13 @@ export default function Home() {
     //---------------------------> CALCULA E GRAVA PROGRESSAO2
 
     function gerarPDF() {
+        var xdata = ''
+        if (xdatafalta !== '' && xdatafalta !== '//') {
+            xdata = formatDate2(xdatafalta)
+        }
+
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
         const reportTitle = [
             {
