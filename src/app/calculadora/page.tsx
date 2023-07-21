@@ -797,7 +797,7 @@ export default function Home() {
 
         const xpro = new Date(xdataprogressao)
         const dataatual = new Date()
-        if (xpro > dataatual) {
+        if (xpro > dataatual || xdataprogressao === '//' || xdataprogressao === '') {
             var dataf = new Date(xdataprisao)
             var xdatal = new Date(xdataprisao)
             var xdataini = new Date(xdataprisao)
