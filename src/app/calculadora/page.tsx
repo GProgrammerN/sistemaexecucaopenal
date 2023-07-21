@@ -67,6 +67,8 @@ export default function Home() {
     const [xdatacondicional, setDatacondicional] = useState('//')
     const [xdatafim, setDatafim] = useState('//')
     const [xdatafalta, setDatafalta] = useState('//')
+    const [xdata, setxdata] = useState('//')
+
     const db = firebase.firestore()
 
     // Delitos
@@ -318,6 +320,9 @@ export default function Home() {
         setStatus2(!status2)
         setStatus3(!status3)
         setMostra(true)
+        if(xdatafalta !== '' && xdatafalta !== '//') {
+            setxdata(formatDate2(ref.datafalta))
+        }
         //-------------------------->delitos
         setAtualizando2(false)
         setDescriD('')
@@ -692,10 +697,10 @@ export default function Home() {
         return [year, month, day].join('-');
     }
 
-    function formatDate2(Ref: String) {
+    function formatDate2(Ref: Date) {
         var d = new Date(Ref),
             month = '' + (d.getMonth() + 1),
-            day = '' + (d.getDate() + 1),
+            day = '' + (d.getDate()+1),
             year = d.getFullYear();
 
         if (month.length < 2)
@@ -837,16 +842,22 @@ export default function Home() {
         const xpro = new Date(xdataprogressao)
         const dataatual = new Date()
         if (xpro > dataatual || xdataprogressao === '//' || xdataprogressao === '') {
-            var dataf = new Date(xdataprisao)
-            var xdatal = new Date(xdataprisao)
+            if(xdatafalta === '//' || xdatafalta === ''){
+                var dataf = new Date(xdataprisao)
+            }else{
+                var dataf = new Date(xdatafalta)
+            }
             var xdataini = new Date(xdataprisao)
             var xdatap = new Date(xdataprisao)
             var c1 = 0
             var d1 = 0
             var calculap = 0
-            var calculal = 0
             delita?.map(deli => {
-                dataf = new Date(xdataprisao)
+                if(xdatafalta === '//' || xdatafalta === ''){
+                    var dataf = new Date(xdataprisao)
+                }else{
+                    var dataf = new Date(xdatafalta)
+                }
                 if (parseInt(deli.anosPena) > 0) {
                     dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
                 }
@@ -1019,6 +1030,7 @@ export default function Home() {
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
             dataprogressao2: w,
+            datafalta: xdatafalta,
         }).then(() => {
 
         }).catch((error) => {
@@ -1027,225 +1039,6 @@ export default function Home() {
         setStatus(!status)
     }
     //---------------------------> CALCULA E GRAVA PROGRESSAO2
-
-    function faltagrave() {
-        if (confirm('Confirma a inclusão da FALTA GRAVE? Lembre-se de descontar a perda dos dias remidos se determinado pelo juízo. Ressaltando que falta grave implica em regressão de regime.')) {
-            let falta = prompt('Digite a data no formato DD/MM/AAAA')
-            let xdiaf = falta?.substring(0, 2)
-            let xmesf = falta?.substring(3, 5)
-            let xanof = falta?.substring(6, 10)
-            let xf = xmesf + "-" + xdiaf + "-" + xanof
-            let xfalta = formatDate(xf)
-            setDatafalta(xfalta)
-            var remissao = 0
-            remica?.map(remi => {
-                if (parseInt(remi.qtdC) > 0) {
-                    remissao = remissao + parseInt(remi.qtdC)
-                }
-            })
-            var dataf = new Date(xdataprisao)
-            var xdataini = new Date(xdataprisao)
-            var xdatap = new Date(xdatafalta)
-            var c1 = 0
-            var d1 = 0
-            var c2 = 0
-            var d2 = 0
-            var d3 = 0
-            var calculap = 0
-            var vez = 1
-            delita?.map(deli => {
-                dataf = new Date(xdataprisao)
-                if (parseInt(deli.anosPena) > 0) {
-                    dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
-                }
-                if (parseInt(deli.mesesPena) > 0) {
-                    dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
-                }
-                if (parseInt(deli.diasPena) > 0) {
-                    dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
-                }
-                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
-                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-                if (vez === 1) {
-                    var xx = new Date(xdatafalta)
-                    var yy = new Date(xdataprisao)
-                    c2 = Math.abs(xx.getTime() - yy.getTime())
-                    d2 = Math.ceil(c2 / (1000 * 3600 * 24))
-                    d1 = d1 - d2
-                    vez = 2
-                }
-                if (deli.tipocrime == "1") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 16 / 100)
-                    } else {
-                        calculap = (d1 * 20 / 100)
-                    }
-                }
-                if (deli.tipocrime == "2") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 25 / 100)
-                    } else {
-                        calculap = (d1 * 30 / 100)
-                    }
-                }
-                if (deli.tipocrime == "3") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 40 / 100)
-                    } else {
-                        calculap = (d1 * 60 / 100)
-                    }
-                }
-                if (deli.tipocrime == "4") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 50 / 100)
-                    } else {
-                        calculap = (d1 * 70 / 100)
-                    }
-                }
-                if (deli.tipocrime == "5") {
-                    calculap = (d1 * 1 / 6)
-                }
-                if (deli.tipocrime == "6") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 2 / 5)
-                    } else {
-                        calculap = (d1 * 3 / 5)
-                    }
-                }
-                if (deli.tipocrime == "7") {
-                    calculap = (d1 * 1 / 6)
-                }
-                if (deli.tipocrime == "8" || deli.tipocrime == "9") {
-                    calculap = (d1 * 50 / 100)
-                }
-                if (deli.tipocrime == "10") {
-                    calculap = (d1 * 1 / 8)
-                }
-                d3 = d3 + calculap
-                c1 = 0
-                d1 = 0
-            })
-            // bug de datas acrescentar 1 dia
-            xdatap.setDate(xdatap.getDate() + d3 + 1 - remissao)
-            var y = formatDate(xdatap)
-            y = y.toString()
-            setDataprogressao(y)
-
-            db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
-                dataprogressao: y,
-                datafalta: xdatafalta,
-            }).then(() => {
-
-            }).catch((error) => {
-                alert('Erro inesperado ao gravar progressao e datafalta ' + error.message)
-            })
-            
-            //-------------------------> ATÉ AQUI CALCULOU E GRAVOU A DATA DA PROGRESSÃO COM BASE NA DATA DA FALTA GRAVE
-            
-            var remissao = 0
-            remica?.map(remi => {
-                if (parseInt(remi.qtdC) > 0) {
-                    remissao = remissao + parseInt(remi.qtdC)
-                }
-            })
-            var dataf = new Date(xdataprisao)
-            var xdataini = new Date(xdataprisao)
-            var xdatap = new Date(y)
-            var c1 = 0
-            var d1 = 0
-            var c2 = 0
-            var d2 = 0
-            var d3 = 0
-            var calculap = 0
-            var vez = 1
-            delita?.map(deli => {
-                dataf = new Date(xdataprisao)
-                if (parseInt(deli.anosPena) > 0) {
-                    dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
-                }
-                if (parseInt(deli.mesesPena) > 0) {
-                    dataf.setDate(dataf.getDate() + (parseInt(deli.mesesPena) * 30))
-                }
-                if (parseInt(deli.diasPena) > 0) {
-                    dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
-                }
-                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
-                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-                if (vez === 1) {
-                    var xx = new Date(y)
-                    var yy = new Date(xdataprisao)
-                    c2 = Math.abs(xx.getTime() - yy.getTime())
-                    d2 = Math.ceil(c2 / (1000 * 3600 * 24))
-                    d1 = d1 - d2
-                    vez = 2
-                }
-                if (deli.tipocrime == "1") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 16 / 100)
-                    } else {
-                        calculap = (d1 * 20 / 100)
-                    }
-                }
-                if (deli.tipocrime == "2") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 25 / 100)
-                    } else {
-                        calculap = (d1 * 30 / 100)
-                    }
-                }
-                if (deli.tipocrime == "3") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 40 / 100)
-                    } else {
-                        calculap = (d1 * 60 / 100)
-                    }
-                }
-                if (deli.tipocrime == "4") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 50 / 100)
-                    } else {
-                        calculap = (d1 * 70 / 100)
-                    }
-                }
-                if (deli.tipocrime == "5") {
-                    calculap = (d1 * 1 / 6)
-                }
-                if (deli.tipocrime == "6") {
-                    if (deli.prirei == "1") {
-                        calculap = (d1 * 2 / 5)
-                    } else {
-                        calculap = (d1 * 3 / 5)
-                    }
-                }
-                if (deli.tipocrime == "7") {
-                    calculap = (d1 * 1 / 6)
-                }
-                if (deli.tipocrime == "8" || deli.tipocrime == "9") {
-                    calculap = (d1 * 50 / 100)
-                }
-                if (deli.tipocrime == "10") {
-                    calculap = (d1 * 1 / 8)
-                }
-                d3 = d3 + calculap
-                c1 = 0
-                d1 = 0
-            })
-            // bug de datas acrescentar 1 dia
-            xdatap.setDate(xdatap.getDate() + d3 + 1 - remissao)
-            var q = formatDate(xdatap)
-            q = q.toString()
-            setDataprogressao2(q)
-
-            db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
-                dataprogressao2: q,
-            }).then(() => {
-
-            }).catch((error) => {
-                alert('Erro inesperado ao gravar dataprogressão2 ' + error.message)
-            })
-        }
-    }
-    // -----------ATÉ AQUI CALCULOU E GRAVOU A PROGRESSÃO2 COM BASE NA PROGRESSÃO 1 DA FALTA GRAVE
 
     function gerarPDF() {
         pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -1284,10 +1077,6 @@ export default function Home() {
             ]
         })
 
-        const xdata = '//'
-        if (xdatafalta != '//') {
-            let xdata = formatDate2(xdatafalta)
-        }
 
         const details = [
             {
@@ -1311,8 +1100,8 @@ export default function Home() {
             },
             {
                 text: [
-                    ' Data da 1ª Progressão.: ' + formatDate2(xdataprogressao) + '\n',
-                    ' Data da 2ª Progressão.: ' + formatDate2(xdataprogressao2) + '\n',
+                    ' Data da 1ª Progressão.: '   + formatDate2(xdataprogressao) + '\n',
+                    ' Data da 2ª Progressão.: '   + formatDate2(xdataprogressao2) + '\n',
                     ' Data da Condicional.....: ' + formatDate2(xdatacondicional) + '\n',
                 ],
                 color: 'green',
@@ -1477,7 +1266,7 @@ export default function Home() {
                             <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafim} placeholder="Data fim da pena" onChange={event => setDatafim(event.target.value)} />
                         </label>
                         <label className="mt-1 lg:mt-0">Falta Grave:
-                            <input readOnly className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafalta} placeholder="Data fim da pena" onChange={event => setDatafalta(event.target.value)} />
+                            <input className="block dark:bg-gray-400 w-52 lg:w-auto" type="date" value={xdatafalta} placeholder="Data falta grave" onChange={event => setDatafalta(event.target.value)} />
                         </label>
                     </div>
                 </form>
@@ -1486,7 +1275,6 @@ export default function Home() {
                 <div className="flex justify-center lg:justify-end flex-wrap">
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
-                    <button className="cursor-pointer lg:ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={faltagrave}>FALTA GRAVE</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gerarPDF}>Gerar PDF</button>
                 </div>
                 :
