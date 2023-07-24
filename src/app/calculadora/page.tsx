@@ -11,6 +11,9 @@ import pdfFonts from "pdfmake/build/vfs_fonts"
 var clientes = [{}]
 clientes.shift()
 
+var clientes2 = [{}]
+clientes2.shift()
+
 
 var delitos = [{}]
 delitos.shift()
@@ -95,6 +98,8 @@ export default function Home() {
 
     const [busca, setBusca] = useState<Cliente[]>()
     const [clienta, setClienta] = useState<Cliente[]>()
+    const [cliento, setCliento] = useState<Cliente[]>()
+
     const [delita, setDelita] = useState<Delito[]>()
     const [remica, setRemica] = useState<Remicao[]>()
     const [estabuscando, setEstabuscando] = useState(false)
@@ -106,6 +111,7 @@ export default function Home() {
     if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
+
 
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
@@ -119,6 +125,36 @@ export default function Home() {
                 clientes = []
             }
             )
+
+            db.collection("usuario/" + id + "/clientes/").get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    var x = doc.data()
+                    const obj = JSON.parse(JSON.stringify(x))
+                    var datap1 = obj.dataprogressao
+                    var datap2 = obj.dataprogressao2
+                    var datalc = obj.datacondicional
+                    var datar1 = new Date(datap1)
+                    var datar2 = new Date(datap2)
+                    var datarc = new Date(datalc)
+                    var dataAtual = new Date()
+    
+                    let c1 = Math.abs(dataAtual.getTime() - datar1.getTime())
+                    let d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+    
+                    let c2 = Math.abs(dataAtual.getTime() - datar2.getTime())
+                    let d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+    
+                    let c3 = Math.abs(dataAtual.getTime() - datarc.getTime())
+                    let d3 = Math.ceil(c3 / (1000 * 3600 * 24))
+                    if (d1 <= 60 || d2 <= 60 || d3 <= 60) {
+                        clientes2.push(x)
+                        console.log(x)
+                    }
+                });
+                setCliento(clientes2)
+                clientes2 = []
+            })
     }, [])
 
     useEffect(() => {
@@ -132,6 +168,36 @@ export default function Home() {
                 clientes = []
             }
             )
+            db.collection("usuario/" + id + "/clientes/").get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    var x = doc.data()
+                    const obj = JSON.parse(JSON.stringify(x))
+                    var datap1 = obj.dataprogressao
+                    var datap2 = obj.dataprogressao2
+                    var datalc = obj.datacondicional
+                    var datar1 = new Date(datap1)
+                    var datar2 = new Date(datap2)
+                    var datarc = new Date(datalc)
+                    var dataAtual = new Date()
+    
+                    let c1 = Math.abs(dataAtual.getTime() - datar1.getTime())
+                    let d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+    
+                    let c2 = Math.abs(dataAtual.getTime() - datar2.getTime())
+                    let d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+    
+                    let c3 = Math.abs(dataAtual.getTime() - datarc.getTime())
+                    let d3 = Math.ceil(c3 / (1000 * 3600 * 24))
+                    if (d1 <= 60 || d2 <= 60 || d3 <= 60) {
+                        clientes2.push(x)
+                    }
+                });
+                setCliento(clientes2)
+                clientes2 = []
+                console.log(cliento)
+            })
+
     }, [status])
 
 
@@ -695,17 +761,21 @@ export default function Home() {
 
     function formatDate2(Ref: Date) {
         var d = new Date(Ref)
-        d.setDate(d.getDate() + 1)
-
-        var month = '' + (d.getMonth() + 1)
-        var day = '' + d.getDate()
-        var year = d.getFullYear()
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [day, month, year].join('/');
+        if (!isNaN(d.getTime())){
+            d.setDate(d.getDate() + 1)
+    
+            var month = '' + (d.getMonth() + 1)
+            var day = '' + d.getDate()
+            var year = d.getFullYear()
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+    
+            return [day, month, year].join('/');
+        }else{
+            return['//']
+        }
     }
 
 
@@ -1189,6 +1259,94 @@ export default function Home() {
 
     }
 
+    function chamarelatorios() {
+        var tipo = prompt("(1) - Relatório de progressão / (2) - Relatório 60 dias ou menos")
+        if (tipo == '1'){
+            gerarPDF()
+        }else{
+            gerarPDF2()
+        }
+    }
+
+    function gerarPDF2() {
+
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+
+        const reportTitle = [
+            {
+                text: [
+                    'SISTEMA DE CONTROLE DE EXECUÇÃO PENAL' + '\n\n',
+                ],
+                fontSize: 14,
+                alignment: 'center',
+                bold: true,
+                margin: [15, 20, 0, 45]
+            }
+        ];
+
+        const dados = cliento?.map((cli) => {
+            return [
+                { text: cli.nome, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: cli.matricula, fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: formatDate2(cli.dataprogressao), fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: formatDate2(cli.dataprogressao2), fontSize: 9, margin: [0, 2, 0, 2] },
+                { text: formatDate2(cli.datacondicional), fontSize: 9, margin: [0, 2, 0, 2] },
+            ]
+        })
+
+        const details = [
+            {
+                text: ['Relatório de progressões ou condicionais próximos a 60 dias'+ '\n\n'],
+                fontSize: 14,
+                alignment: 'center',
+                bold: true,
+            },
+            {
+                table: {
+                    headerRows: 1,
+                    widths: [150, '*', '*', '*', '*'],
+                    body: [
+                        [
+                            { text: 'Nome', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Matricula', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Progressão1', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Progressão2', style: 'tableHeader', fontSize: 8 },
+                            { text: 'Condicional', style: 'tableHeader', fontSize: 8 },
+                        ],
+                        ...dados
+                    ]
+                },
+                layout: 'headerLineOnly'
+            },
+        ];
+
+        function Rodape(currentPage, pageCount) {
+            return [
+                {
+                    text: currentPage + ' / ' + pageCount,
+                    alignment: 'right',
+                    fontSize: 9,
+                    margin: [0, 10, 20, 0]
+                }
+            ]
+
+        }
+
+        const docDefinitions = {
+            pageSize: 'A4',
+            pageMargins: [15, 50, 15, 40],
+
+            header: [reportTitle],
+            content: [details],
+            footer: Rodape,
+        }
+
+        pdfMake.createPdf(docDefinitions).open();
+
+    }
+
+
     return (
         <Layout titulo="Sistema de Controle de Execução Penal"
             subtitulo="Cadastros de Clientes/Delitos/Remição e Detração"
@@ -1220,7 +1378,7 @@ export default function Home() {
                                 :
                                 clienta?.map(cli => {
                                     return (
-                                        <div className="flex justify-start text-sm pl-1 pt-1 items-center">
+                                        <div key='clienta' className="flex justify-start text-sm pl-1 pt-1 items-center">
                                             <a className="cursor-pointer mr-1 text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
@@ -1279,7 +1437,7 @@ export default function Home() {
                 <div className="flex justify-center sm:justify-end flex-wrap">
                     <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
-                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gerarPDF}>Gerar PDF</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={chamarelatorios}>Gerar PDF</button>
                 </div>
                 :
                 <>
@@ -1297,7 +1455,7 @@ export default function Home() {
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
                             {delita?.map(deli => {
                                 return (
-                                    <div className="flex justify-start text-sm pl-1 pt-1 items-center">
+                                    <div key='delita' className="flex justify-start text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editardelito(deli)}>
                                             <TbSelect />
                                         </a>
@@ -1364,7 +1522,7 @@ export default function Home() {
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full lg:w-2/5">
                             {remica?.map(remi => {
                                 return (
-                                    <div className="flex justify-start sm:text-sm pl-1 pt-1 items-center">
+                                    <div key='remica' className="flex justify-start sm:text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editarremicao(remi)}>
                                             <TbSelect />
                                         </a>

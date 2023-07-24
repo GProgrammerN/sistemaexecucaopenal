@@ -77,6 +77,7 @@ export default function Autenticacao() {
                     var ano = dataAtual.getFullYear();
                     var validade = new Date(ano, mes, dia).toString()
                     db.collection('usuario/').doc(id).set({
+                        user: id,
                         email: xemail,
                         expira: validade,
                         assinatura: ''
