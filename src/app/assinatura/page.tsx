@@ -110,16 +110,14 @@ export default function PreviewPage() {
                     <span className="text-black">Suporte Garantido</span>
                   </span>
                 </p>
-                <a href="#" className="">
-                  <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
-                    <button type="submit" className="font-medium" onClick={handleSubscription}>
-                      Assinar Plano
-                    </button>
-                    <span className="pl-2 material-icons align-middle text-sm">
-                      east
-                    </span>
-                  </p>
-                </a>
+                <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                  <button type="submit" className="font-medium" onClick={handleSubscription}>
+                    Assinar Plano
+                  </button>
+                  <span className="pl-2 material-icons align-middle text-sm">
+                    east
+                  </span>
+                </p>
               </div>
             </div>
 
@@ -148,16 +146,14 @@ export default function PreviewPage() {
                     <span className="text-white">Suporte Garantido</span>
                   </span>
                 </p>
-                <a href="#" className="">
-                  <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
-                    <button type="submit" className="font-medium" onClick={handleSubscriptionSemestral}>
-                      Assinar Plano
-                    </button>
-                    <span className="pl-2 material-icons align-middle text-sm">
-                      east
-                    </span>
-                  </p>
-                </a>
+                <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                  <button type="submit" className="font-medium" onClick={handleSubscriptionSemestral}>
+                    Assinar Plano
+                  </button>
+                  <span className="pl-2 material-icons align-middle text-sm">
+                    east
+                  </span>
+                </p>
               </div>
               <div className="relative top-4">
                 <p className="bg-green-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">17% de Desconto</p>
@@ -174,32 +170,30 @@ export default function PreviewPage() {
               </p>
               <hr className="mt-4 border-1" />
               <div className="pt-8">
-                <a href="#" className="">
-                  <p className="font-semibold text-gray-400 text-left">
-                    <span className="material-icons align-middle">
-                      done
-                    </span>
-                    <span className="pl-2">
-                      <span className="text-black">Acesso ao Sistema de Execução Penal</span>
-                    </span>
-                  </p>
-                  <p className="font-semibold text-gray-400 text-left pt-5">
-                    <span className="material-icons align-middle">
-                      done
-                    </span>
-                    <span className="pl-2">
-                      <span className="text-black">Suporte Garantido</span>
-                    </span>
-                  </p>
-                  <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
-                    <button type="submit" className="font-medium" onClick={handleSubscriptionAnual}>
-                      Assinar Plano
-                    </button>
-                    <span className="pl-2 material-icons align-middle text-sm">
-                      east
-                    </span>
-                  </p>
-                </a>
+                <p className="font-semibold text-gray-400 text-left">
+                  <span className="material-icons align-middle">
+                    done
+                  </span>
+                  <span className="pl-2">
+                    <span className="text-black">Acesso ao Sistema de Execução Penal</span>
+                  </span>
+                </p>
+                <p className="font-semibold text-gray-400 text-left pt-5">
+                  <span className="material-icons align-middle">
+                    done
+                  </span>
+                  <span className="pl-2">
+                    <span className="text-black">Suporte Garantido</span>
+                  </span>
+                </p>
+                <p className="w-full py-4 bg-blue-600 mt-8 rounded-xl text-white">
+                  <button type="submit" className="font-medium" onClick={handleSubscriptionAnual}>
+                    Assinar Plano
+                  </button>
+                  <span className="pl-2 material-icons align-middle text-sm">
+                    east
+                  </span>
+                </p>
               </div>
               <div className="relative top-4">
                 <p className="bg-green-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">33% de Desconto</p>
