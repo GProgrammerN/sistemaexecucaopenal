@@ -13,7 +13,7 @@ export default function Notificacoes() {
       <Conteudo children=' ' />
       <Conteudo children='Quaisquer dúvidas ou solicitações podem ser feitas através do email: enio.perfil@gmail.com, em breve divulgaremos WhatsApp para atendimento. ' />
       <Conteudo children=' ' />
-      <Conteudo children='25/07/2023 - o botão gerar pdf agora possibilita 2 tipos de relatórios, a ficha do clientes com as datas das possíveis progressões e também um relatório com os clientes com possíveis progressões e livramento condicional nos próximos 60 dias ou menos bastanto digitar 1 ou 2 e ENTER.' />      
+      <Conteudo children='25/07/2023 - O botão Gerar Pdf agora possibilita 2 tipos de relatórios, a ficha dos clientes com as datas das possíveis progressões e também um relatório com os clientes com possíveis progressões e livramento condicional nos próximos 60 dias ou menos, bastando digitar 1 ou 2 e ENTER.' />
     </Layout>
   )
 }
