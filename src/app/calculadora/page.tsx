@@ -7,6 +7,7 @@ import { TbSelect } from "react-icons/tb"
 import { TbTrashOff } from "react-icons/tb"
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
+import { differenceInDays } from "date-fns";
 
 var clientes = [{}]
 clientes.shift()
@@ -139,15 +140,10 @@ export default function Home() {
                     var datarc = new Date(datalc)
                     var dataAtual = new Date()
     
-                    let c1 = Math.abs(dataAtual.getTime() - datar1.getTime())
-                    let d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-    
-                    let c2 = Math.abs(dataAtual.getTime() - datar2.getTime())
-                    let d2 = Math.ceil(c2 / (1000 * 3600 * 24))
-    
-                    let c3 = Math.abs(dataAtual.getTime() - datarc.getTime())
-                    let d3 = Math.ceil(c3 / (1000 * 3600 * 24))
-                    if (d1 <= 60 || d2 <= 60 || d3 <= 60) {
+                    let d1 = differenceInDays(datar1, dataAtual)
+                    let d2 = differenceInDays(datar2, dataAtual)
+                    let d3 = differenceInDays(datarc, dataAtual)
+                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
                         clientes2.push(x)
                         console.log(x)
                     }
@@ -180,16 +176,10 @@ export default function Home() {
                     var datar2 = new Date(datap2)
                     var datarc = new Date(datalc)
                     var dataAtual = new Date()
-    
-                    let c1 = Math.abs(dataAtual.getTime() - datar1.getTime())
-                    let d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-    
-                    let c2 = Math.abs(dataAtual.getTime() - datar2.getTime())
-                    let d2 = Math.ceil(c2 / (1000 * 3600 * 24))
-    
-                    let c3 = Math.abs(dataAtual.getTime() - datarc.getTime())
-                    let d3 = Math.ceil(c3 / (1000 * 3600 * 24))
-                    if (d1 <= 60 || d2 <= 60 || d3 <= 60) {
+                    let d1 = differenceInDays(datar1, dataAtual)
+                    let d2 = differenceInDays(datar2, dataAtual)
+                    let d3 = differenceInDays(datarc, dataAtual)
+                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
                         clientes2.push(x)
                     }
                 });
@@ -831,8 +821,7 @@ export default function Home() {
             if (parseInt(deli.diasPena) > 0) {
                 dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
             }
-            c1 = Math.abs(dataf.getTime() - xdataini.getTime())
-            d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+            d1 = differenceInDays(dataf, xdataini)
             if (deli.tipocrime == "1") {
                 if (deli.prirei == "1") {
                     calculal = (d1 / 3 * 1)
@@ -934,8 +923,7 @@ export default function Home() {
                 if (parseInt(deli.diasPena) > 0) {
                     dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
                 }
-                c1 = Math.abs(dataf.getTime() - xdataini.getTime())
-                d1 = Math.ceil(c1 / (1000 * 3600 * 24))
+                d1 = differenceInDays(dataf, xdataini)
                 if (deli.tipocrime == "1") {
                     if (deli.prirei == "1") {
                         calculap = (d1 * 16 / 100)
@@ -1026,14 +1014,11 @@ export default function Home() {
             if (parseInt(deli.diasPena) > 0) {
                 dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
             }
-            c1 = Math.abs(dataf.getTime() - xdataini.getTime())
-            d1 = Math.ceil(c1 / (1000 * 3600 * 24))
-
+            d1 = differenceInDays(dataf, xdataini)
             if (vez === 1) {
                 var xx = new Date(y)
                 var yy = new Date(xdataprisao)
-                c2 = Math.abs(xx.getTime() - yy.getTime())
-                d2 = Math.ceil(c2 / (1000 * 3600 * 24))
+                d2 = differenceInDays(xx, yy)
                 d1 = (d1 - d2)
                 vez = 2
             }
