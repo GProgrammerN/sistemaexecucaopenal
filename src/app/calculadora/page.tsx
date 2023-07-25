@@ -130,8 +130,8 @@ export default function Home() {
             db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    var x = doc.data()
-                    const obj = JSON.parse(JSON.stringify(x))
+                    var y = doc.data()
+                    const obj = JSON.parse(JSON.stringify(y))
                     var datap1 = obj.dataprogressao
                     var datap2 = obj.dataprogressao2
                     var datalc = obj.datacondicional
@@ -144,8 +144,7 @@ export default function Home() {
                     let d2 = differenceInDays(datar2, dataAtual)
                     let d3 = differenceInDays(datarc, dataAtual)
                     if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
-                        clientes2.push(x)
-                        console.log(x)
+                        clientes2.push(y)
                     }
                 });
                 setCliento(clientes2)
@@ -167,8 +166,8 @@ export default function Home() {
             db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    var x = doc.data()
-                    const obj = JSON.parse(JSON.stringify(x))
+                    var y = doc.data()
+                    const obj = JSON.parse(JSON.stringify(y))
                     var datap1 = obj.dataprogressao
                     var datap2 = obj.dataprogressao2
                     var datalc = obj.datacondicional
@@ -180,12 +179,11 @@ export default function Home() {
                     let d2 = differenceInDays(datar2, dataAtual)
                     let d3 = differenceInDays(datarc, dataAtual)
                     if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
-                        clientes2.push(x)
+                        clientes2.push(y)
                     }
                 });
                 setCliento(clientes2)
                 clientes2 = []
-                console.log(cliento)
             })
 
     }, [status])
@@ -246,7 +244,6 @@ export default function Home() {
 
     function buscar(event: FormEvent) {
         const palavra = event.target.value
-        console.log(palavra)
         if (palavra != '') {
             setEstabuscando(true)
             const dados = new Array
@@ -1363,7 +1360,7 @@ export default function Home() {
                                 :
                                 clienta?.map(cli => {
                                     return (
-                                        <div key='clienta' className="flex justify-start text-sm pl-1 pt-1 items-center">
+                                        <div key={cli.nome} className="flex justify-start text-sm pl-1 pt-1 items-center">
                                             <a className="cursor-pointer mr-1 text-green-800" onClick={() => editar(cli)}>
                                                 <TbSelect />
                                             </a>
@@ -1440,7 +1437,7 @@ export default function Home() {
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full">
                             {delita?.map(deli => {
                                 return (
-                                    <div key='delita' className="flex justify-start text-sm pl-1 pt-1 items-center">
+                                    <div key={deli.descriD} className="flex justify-start text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editardelito(deli)}>
                                             <TbSelect />
                                         </a>
@@ -1507,7 +1504,7 @@ export default function Home() {
                         <div className=" bg-blue-400 text-center border-2 overflow-auto h-20 w-full lg:w-2/5">
                             {remica?.map(remi => {
                                 return (
-                                    <div key='remica' className="flex justify-start sm:text-sm pl-1 pt-1 items-center">
+                                    <div key={remi.descricao} className="flex justify-start sm:text-sm pl-1 pt-1 items-center">
                                         <a className="text-right mr-1 cursor-pointer font-bold text-green-800" onClick={() => editarremicao(remi)}>
                                             <TbSelect />
                                         </a>
