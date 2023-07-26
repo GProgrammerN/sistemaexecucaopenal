@@ -63,6 +63,20 @@ export default function Autenticacao() {
         }
     }
 
+    function formatDate(Ref: Date) {
+        var d = new Date(Ref),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
     function gravar() {
         const db = firebase.firestore();
         var id = firebase.auth().currentUser?.uid
@@ -75,11 +89,12 @@ export default function Autenticacao() {
                     var dia = dataAtual.getDate();
                     var mes = (dataAtual.getMonth() + 2);
                     var ano = dataAtual.getFullYear();
-                    var validade = new Date(ano, mes, dia).toString()
+                    var validade = new Date(ano, mes, dia)
+                    var validade2 = formatDate(validade)
                     db.collection('usuario/').doc(id).set({
                         user: id,
                         email: xemail,
-                        expira: validade,
+                        expira: validade2,
                         assinatura: ''
                     })
                 } else {
