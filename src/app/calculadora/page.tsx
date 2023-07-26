@@ -390,6 +390,22 @@ export default function Home() {
         setStatus3(!status3)
     }
 
+    function novo () {
+        setNome('')
+        setMatricula('')
+        setPresidio('')
+        setProcesso('')
+        setDataprisao('')
+        setDataprogressao('')
+        setDataprogressao2('')
+        setDatacondicional('')
+        setDatafim('')
+        setDatafalta('')
+        setAtualizando(false)
+        setStatus(!status)
+        setMostra(!mostra)
+    }
+
     function atualizar() {
 
         db.collection("usuario").doc(id).collection("clientes").doc(xnome).update({
@@ -417,6 +433,7 @@ export default function Home() {
             setDatafalta('')
             setAtualizando(false)
             setStatus(!status)
+            setMostra(!mostra)
         }).catch((erro) => {
             alert('Erro ao atualizar cliente' + erro.message)
         })
@@ -1092,7 +1109,7 @@ export default function Home() {
         }).catch((error) => {
             alert('Erro inesperado ao gravar dataprogressao2 ' + error.message)
         })
-        setStatus(!status)
+//        setStatus(!status)
     }
     //---------------------------> CALCULA E GRAVA PROGRESSAO2
 
@@ -1424,7 +1441,8 @@ export default function Home() {
             </main>
             {atualizando ?
                 <div className="flex justify-center sm:justify-end flex-wrap">
-                    <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
+                    <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={novo}>NOVO</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={chamarelatorios}>Gerar PDF</button>
                 </div>
