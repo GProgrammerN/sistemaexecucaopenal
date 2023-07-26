@@ -127,7 +127,7 @@ export default function Home() {
             }
             )
 
-            db.collection("usuario/" + id + "/clientes/").get()
+        db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     var y = doc.data()
@@ -139,11 +139,11 @@ export default function Home() {
                     var datar2 = new Date(datap2)
                     var datarc = new Date(datalc)
                     var dataAtual = new Date()
-    
+
                     let d1 = differenceInDays(datar1, dataAtual)
                     let d2 = differenceInDays(datar2, dataAtual)
                     let d3 = differenceInDays(datarc, dataAtual)
-                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
+                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0 || d3 <= 60 && d3 >= 0) {
                         clientes2.push(y)
                     }
                 });
@@ -163,7 +163,7 @@ export default function Home() {
                 clientes = []
             }
             )
-            db.collection("usuario/" + id + "/clientes/").get()
+        db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     var y = doc.data()
@@ -178,7 +178,7 @@ export default function Home() {
                     let d1 = differenceInDays(datar1, dataAtual)
                     let d2 = differenceInDays(datar2, dataAtual)
                     let d3 = differenceInDays(datarc, dataAtual)
-                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0|| d3 <= 60 && d3 >= 0) {
+                    if (d1 <= 60 && d1 >= 0 || d2 <= 60 && d2 >= 0 || d3 <= 60 && d3 >= 0) {
                         clientes2.push(y)
                     }
                 });
@@ -748,9 +748,9 @@ export default function Home() {
 
     function formatDate2(Ref: Date) {
         var d = new Date(Ref)
-        if (!isNaN(d.getTime())){
+        if (!isNaN(d.getTime())) {
             d.setDate(d.getDate() + 1)
-    
+
             var month = '' + (d.getMonth() + 1)
             var day = '' + d.getDate()
             var year = d.getFullYear()
@@ -758,10 +758,10 @@ export default function Home() {
                 month = '0' + month;
             if (day.length < 2)
                 day = '0' + day;
-    
+
             return [day, month, year].join('/');
-        }else{
-            return['//']
+        } else {
+            return ['//']
         }
     }
 
@@ -891,26 +891,22 @@ export default function Home() {
             alert('Erro inesperado ao gravar condicional ' + error.message)
         })
         //----------------------------------------------> ATÉ AQUI CALCULOU E GRAVOU CONDICIONAL
-
         const xpro = new Date(xdataprogressao)
         const dataatual = new Date()
-        if (xpro > dataatual || xdataprogressao === '//' || xdataprogressao === '') {
-            if (xdatafalta === '//' || xdatafalta === '') {
-                var dataf = new Date(xdataprisao)
-            } else {
-                var dataf = new Date(xdatafalta)
-            }
+        if (xdatafalta != '' && xdatafalta != '//' || xpro > dataatual || xdataprogressao === '//' || xdataprogressao === '') {
             var xdataini = new Date(xdataprisao)
-            var xdatap = new Date(xdataprisao)
+            if (xdatafalta === '//' || xdatafalta === '') {
+                var xdatap = new Date(xdataprisao)
+            } else {
+                var xdatap = new Date(xdatafalta)
+            }
             var c1 = 0
             var d1 = 0
             var calculap = 0
+            let vez = 1
+            let d2 = 0
             delita?.map(deli => {
-                if (xdatafalta === '//' || xdatafalta === '') {
-                    var dataf = new Date(xdataprisao)
-                } else {
-                    var dataf = new Date(xdatafalta)
-                }
+                var dataf = new Date(xdataprisao)
                 if (parseInt(deli.anosPena) > 0) {
                     dataf.setDate(dataf.getDate() + (parseInt(deli.anosPena) * 365))
                 }
@@ -920,7 +916,17 @@ export default function Home() {
                 if (parseInt(deli.diasPena) > 0) {
                     dataf.setDate(dataf.getDate() + parseInt(deli.diasPena))
                 }
+
                 d1 = differenceInDays(dataf, xdataini)
+                if (xdatafalta != '//' && xdatafalta != '') {
+                    if (vez === 1) {
+                        var xx = new Date(xdatafalta)
+                        var yy = new Date(xdataprisao)
+                        d2 = differenceInDays(xx, yy)
+                        d1 = (d1 - d2)
+                        vez = 2
+                    }
+                }
                 if (deli.tipocrime == "1") {
                     if (deli.prirei == "1") {
                         calculap = (d1 * 16 / 100)
@@ -974,6 +980,7 @@ export default function Home() {
             })
             // bug de datas acrescentar 1 dia
             xdatap.setDate(xdatap.getDate() + 1 - remissao)
+            remissao=0
             var y = formatDate(xdatap)
             y = y.toString()
             setDataprogressao(y)
@@ -1243,9 +1250,9 @@ export default function Home() {
 
     function chamarelatorios() {
         var tipo = prompt("(1) - Relatório de progressão / (2) - Relatório 60 dias ou menos")
-        if (tipo == '1'){
+        if (tipo == '1') {
             gerarPDF()
-        }else{
+        } else {
             gerarPDF2()
         }
     }
@@ -1279,7 +1286,7 @@ export default function Home() {
 
         const details = [
             {
-                text: ['Relatório de progressões ou condicionais próximos a 60 dias'+ '\n\n'],
+                text: ['Relatório de progressões ou condicionais próximos a 60 dias' + '\n\n'],
                 fontSize: 14,
                 alignment: 'center',
                 bold: true,
