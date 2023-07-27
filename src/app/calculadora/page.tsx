@@ -390,7 +390,7 @@ export default function Home() {
         setStatus3(!status3)
     }
 
-    function novo () {
+    function novo() {
         setNome('')
         setMatricula('')
         setPresidio('')
@@ -997,7 +997,7 @@ export default function Home() {
             })
             // bug de datas acrescentar 1 dia
             xdatap.setDate(xdatap.getDate() + 1 - remissao)
-            remissao=0
+            remissao = 0
             var y = formatDate(xdatap)
             y = y.toString()
             setDataprogressao(y)
@@ -1109,7 +1109,7 @@ export default function Home() {
         }).catch((error) => {
             alert('Erro inesperado ao gravar dataprogressao2 ' + error.message)
         })
-//        setStatus(!status)
+        //        setStatus(!status)
     }
     //---------------------------> CALCULA E GRAVA PROGRESSAO2
 
@@ -1441,7 +1441,7 @@ export default function Home() {
             </main>
             {atualizando ?
                 <div className="flex justify-center sm:justify-end flex-wrap">
-                    <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={novo}>NOVO</button>
+                    <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={novo}>NOVO</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizar}>ATUALIZAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={calculardatas}>CALCULAR</button>
                     <button className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={chamarelatorios}>Gerar PDF</button>
@@ -1567,7 +1567,7 @@ export default function Home() {
                             </label>
                         </div>
                     </form>
-                    <div className="flex justify-center sm:justify-end flex-wrap">
+                    <div className="flex sm:justify-end flex-wrap">
                         {atualizando3 ?
                             <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
                             :
