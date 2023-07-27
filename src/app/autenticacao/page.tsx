@@ -5,7 +5,6 @@ import { FcGoogle } from 'react-icons/fc'
 import fundo from "../../../public/images/JusticaCalc2.jpg"
 import Image from "next/image";
 import { useState } from "react";
-import AuthInput from "@/components/auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
 import { useAuth } from "@/data/context/AuthContext";
 import { useRouter } from "next/navigation";
@@ -16,52 +15,13 @@ export default function Autenticacao() {
 
     const { cadastrar, login, usuario, loginGoogle } = useAuth()
 
-    const [modo, setModo] = useState<'login' | 'cadastro'>('login')
     const [erro, setErro] = useState(null)
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
 
     function exibirErro(msg: any, tempoSegundos = 5) {
         setErro(msg)
         setTimeout(() => setErro(null), tempoSegundos * 1000)
     }
 
-    function resetasenha() {
-        firebase.auth().sendPasswordResetEmail(email)
-            .then(() => {
-                //
-                //            
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var erro = error.message;
-            })
-    }
-
-    async function submeter() {
-        try {
-            if (modo === 'login') {
-                await login(email, senha)
-            } else {
-                await cadastrar(email, senha)
-            }
-        } catch (e: any) {
-
-            if (e.code == 'auth/user-disabled') {
-                exibirErro('O usuário informado está desabilitado.')
-            } else if (e.code == 'auth/user-not-found') {
-                exibirErro('O usuário informado não está cadastrado.')
-            } else if (e.code == 'auth/invalid-email') {
-                exibirErro('O domínio do e-mail informado é inválido.')
-            } else if (e.code == 'auth/wrong-password') {
-                exibirErro('A senha informada está incorreta.')
-            } /*else {
-                exibirErro('Erro desconhecido')
-            }*/
-
-
-        }
-    }
 
     function formatDate(Ref: Date) {
         var d = new Date(Ref),
@@ -110,12 +70,6 @@ export default function Autenticacao() {
                             Cookies.set('bloqueio', 'true')
                         }
                         window.location.assign('/assinatura')
-                        /*                        useRouter().push('/assinatura')
-                                                firebase.auth().signOut().then(() => {
-                                                    //logout
-                                                }).catch(() => {
-                                                    //{logout}
-                                                })*/
                     }
                 }
             })
@@ -123,7 +77,6 @@ export default function Autenticacao() {
                 console.error(error);
             });
     }
-
 
     if (usuario) {
         gravar()
