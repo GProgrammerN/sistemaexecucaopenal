@@ -69,7 +69,7 @@ export default function PreviewPage() {
 
   function cancelar() {
     if (typeof window !== "undefined") {
-      window.open('https://billing.stripe.com/p/login/test_14k4jA29h2zV8lqbII')
+      window.open('https://billing.stripe.com/p/login/9AQaFE6cl4Z2036cMM')
     }
   }
 
