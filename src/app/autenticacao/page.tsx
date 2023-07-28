@@ -94,9 +94,6 @@ export default function Autenticacao() {
                     <h1 className={`text-2xl font-bold mt-3 mb-3 text-green-800 text-center`}>
                         Seja Bem Vindo ao Sistema de Execução Penal.
                     </h1>
-                    <h1 className={`text-2xl font-bold mt-3 mb-3 text-red-800 text-center`}>
-                        Em manutenção.
-                    </h1>
                 </div>
                 {erro ? (
                     <div className={`
@@ -107,7 +104,6 @@ export default function Autenticacao() {
                         <span className={`ml-3`}>{erro}</span>
                     </div>
                 ) : false}
-                {/*
 
                 <button onClick={loginGoogle} className={`flex flex-row justify-center items-center
                      w-full bg-blue-400 hover:bg-blue-600
@@ -119,7 +115,7 @@ export default function Autenticacao() {
                 <h2 className='text-xl text-center text-green-600 font-bold mt-1'>
                     60 dias grátis para avaliação
                 </h2>
-            */}
+
             </div>
         </div>
     )
