@@ -3,7 +3,7 @@ import Layout from "@/components/template/Layout"
 import { FormEvent, useEffect, useState } from "react"
 import firebase from '../../firebase/config'
 import { differenceInDays } from "date-fns";
-
+import emailjs from "@emailjs/browser"
 var usuarios = [{}]
 usuarios.shift()
 
@@ -34,6 +34,10 @@ type Cliente = {
 }
 
 export default function Home() {
+    const serviceId  = "service_zbyy5yp"
+    const templateId = "template_mlj4cpu" 
+
+    emailjs.init('Rtk3sJJY32T9F-kZY')
 
 
     // Clientes
@@ -61,7 +65,7 @@ export default function Home() {
         console.log(usuarios)
     }
 
-    function buscar(vid: string){
+    function buscar(vid: string, mail: string){
        db.collection("usuario/" + vid + "/clientes/").get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -83,19 +87,20 @@ export default function Home() {
 //                    }
             });
             setCliento(clientes2)
+//            console.log(clientes2)
+            disparaemail(clientes2, mail)
+
             clientes2 = []
-            console.log(clientes2)
-            alert(vid)
         })
-        return(clientes2)
+        return
     }
 
 
     function clientesf() {
         var tamanho = usuario?.length
         for(let contador=0; contador < tamanho; contador ++ ){
-           var { user } = usuario[contador];
-           buscar(user)
+           var { user, email } = usuario[contador];
+           buscar(user, email)
         }
     }
 
@@ -118,6 +123,15 @@ export default function Home() {
         }
     }
 
+    function disparaemail(cli: Object, xmail: string){
+        var xmessage = "" 
+        const obj = JSON.parse(JSON.stringify(cli))
+        console.log(xmail,obj)
+        obj?.map((ob) => {
+             xmessage = xmessage + ob.nome+ " "+ob.presidio+" "+ob.matricula+" "+ob.processo+" "+formatDate2(ob.progressao)+" "+formatDate2(ob.progressao2)+" "+formatDate2(ob.condicional)+"\n"
+        })
+        emailjs.send(serviceId, templateId, {email: xmail, message: xmessage })
+    }
 
     return (
         <Layout titulo="Sistema de Controle de Execução Penal"
