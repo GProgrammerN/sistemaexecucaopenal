@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/template/Layout";
 import firebase from "../../firebase/config";
-import { TbSelect } from "react-icons/tb"
+import { TbH3, TbSelect } from "react-icons/tb";
 
 var prompts = [{}];
 prompts.shift();
@@ -19,12 +19,14 @@ export default function Ai() {
   const [promptMessage, setPromptMessage] = useState("");
   const [aiText, setAiText] = useState("");
   const db = firebase.firestore();
-  const [prompete, setPrompete] = useState("")
+  const [prompete, setPrompete] = useState("");
+  const [processando, setProcessando] = useState(false);
 
   const [prompta, setPrompta] = useState<Prompt[]>();
 
   useEffect(() => {
-    db.collection("/areas/penal/prompts").get()
+    db.collection("/areas/penal/prompts")
+      .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var x = doc.data();
@@ -36,7 +38,7 @@ export default function Ai() {
       });
   }, []);
 
-    const handleFileChange = async (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
 
     if (file) {
@@ -56,7 +58,7 @@ export default function Ai() {
   };
 
   function editar(ref: string) {
-    setPrompete(ref)
+    setPrompete(ref);
   }
 
   function mesclar() {
@@ -64,6 +66,7 @@ export default function Ai() {
   }
 
   const handleClickButton = async (event) => {
+    setProcessando(true);
     const aiResponse = await fetch("/api/generate-ai-completion", {
       method: "POST",
       body: JSON.stringify(promptMessage),
@@ -71,6 +74,7 @@ export default function Ai() {
 
     if (aiResponse.ok) {
       const dataText = await aiResponse.json();
+      setProcessando(false);
       setAiText(dataText.text);
     }
   };
@@ -90,6 +94,10 @@ export default function Ai() {
           placeholder="Selecione um arquivo PDF para ser analisado e utilizado pela IA."
         />
         <textarea cols="80" rows="8" value={pdfContent} readOnly></textarea>
+        <h3>
+          Selecione um dos prompts de IA abaixo clicando no ícone verde em
+          seguida clique em MESCLAR.
+        </h3>
         <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
           {prompta?.map((pro) => {
             return (
@@ -98,7 +106,8 @@ export default function Ai() {
                 className="flex justify-start text-sm pl-1 pt-1 items-center"
               >
                 <a
-                  className="cursor-pointer mr-1 text-green-800" onClick={() => editar(pro.prompt)}
+                  className="cursor-pointer mr-1 text-green-800"
+                  onClick={() => editar(pro.prompt)}
                 >
                   <TbSelect />
                 </a>
@@ -107,10 +116,10 @@ export default function Ai() {
             );
           })}
         </div>
-
         <button onClick={mesclar}>Mesclar</button>
         <textarea cols="80" rows="8" value={promptMessage} readOnly></textarea>
         <button onClick={handleClickButton}>Gerar</button>
+        {processando ? <h3>Processando aguarde...</h3> : <></>}
         <textarea cols="80" rows="8" value={aiText} readOnly></textarea>
       </div>
     </Layout>
