@@ -38,6 +38,10 @@ export default function Ai() {
       });
   }, []);
 
+  useEffect(() => {
+    setPromptMessage(prompete.replace("{transcription}", pdfContent));
+  },[prompete])
+
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
 
@@ -93,17 +97,16 @@ export default function Ai() {
           onChange={handleFileChange}
           placeholder="Selecione um arquivo PDF para ser analisado e utilizado pela IA."
         />
-        <textarea cols="80" rows="8" value={pdfContent} readOnly></textarea>
+        <textarea cols="80" rows="10" value={pdfContent} readOnly></textarea>
         <h3>
-          Selecione um dos prompts de IA abaixo clicando no ícone verde em
-          seguida clique em MESCLAR.
+          Selecione um dos prompts de IA abaixo clicando no ícone verde.
         </h3>
-        <div className=" bg-blue-400 text-center border-2 h-20 overflow-auto">
+        <div className=" bg-blue-400 text-center border-2 h-24 overflow-auto">
           {prompta?.map((pro) => {
             return (
               <div
                 key={pro.id}
-                className="flex justify-start text-sm pl-1 pt-1 items-center"
+                className="flex justify-start text-base pl-1 pt-1 items-center"
               >
                 <a
                   className="cursor-pointer mr-1 text-green-800"
@@ -116,11 +119,15 @@ export default function Ai() {
             );
           })}
         </div>
-        <button onClick={mesclar}>Mesclar</button>
-        <textarea cols="80" rows="8" value={promptMessage} readOnly></textarea>
         <button onClick={handleClickButton}>Gerar</button>
-        {processando ? <h3>Processando aguarde...</h3> : <></>}
-        <textarea cols="80" rows="8" value={aiText} readOnly></textarea>
+        {processando ? 
+          <div className='animate-pulse'>
+            <h3 >
+              Aguarde processando...</h3>
+          </div>
+           : 
+           <></>}
+        <textarea cols="80" rows="10" value={aiText} readOnly></textarea>
       </div>
     </Layout>
   );
