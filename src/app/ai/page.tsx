@@ -21,6 +21,7 @@ export default function Ai() {
   const db = firebase.firestore();
   const [prompete, setPrompete] = useState("");
   const [processando, setProcessando] = useState(false);
+  const [descricao, setDescricao] = useState("")
 
   const [prompta, setPrompta] = useState<Prompt[]>();
 
@@ -61,12 +62,9 @@ export default function Ai() {
     }
   };
 
-  function editar(ref: string) {
+  function editar(ref: string, ide: string) {
     setPrompete(ref);
-  }
-
-  function mesclar() {
-    setPromptMessage(prompete.replace("{transcription}", pdfContent));
+    setDescricao(ide)
   }
 
   const handleClickButton = async (event) => {
@@ -110,7 +108,7 @@ export default function Ai() {
               >
                 <a
                   className="cursor-pointer mr-1 text-green-800"
-                  onClick={() => editar(pro.prompt)}
+                  onClick={() => editar(pro.prompt, pro.id)}
                 >
                   <TbSelect />
                 </a>
@@ -119,7 +117,7 @@ export default function Ai() {
             );
           })}
         </div>
-        <button onClick={handleClickButton}>Gerar</button>
+        <button onClick={handleClickButton}>Gerar {descricao}</button>
         {processando ? 
           <div className='animate-pulse'>
             <h3 >
