@@ -4,7 +4,8 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/template/Layout";
 import firebase from "../../firebase/config";
-import { TbH3, TbSelect } from "react-icons/tb";
+import { TbSelect } from "react-icons/tb";
+import { useCompletion } from "ai/react";
 
 var prompts = [{}];
 prompts.shift();
@@ -21,9 +22,15 @@ export default function Ai() {
   const db = firebase.firestore();
   const [prompete, setPrompete] = useState("");
   const [processando, setProcessando] = useState(false);
-  const [descricao, setDescricao] = useState("")
+  const [descricao, setDescricao] = useState("");
 
   const [prompta, setPrompta] = useState<Prompt[]>();
+
+  const { input, completion, isLoading, handleInputChange, handleSubmit } =
+    useCompletion({
+      api: "/api/completion",
+      body: { promptMessage },
+    });
 
   useEffect(() => {
     db.collection("/areas/penal/prompts")
@@ -41,7 +48,7 @@ export default function Ai() {
 
   useEffect(() => {
     setPromptMessage(prompete.replace("{transcription}", pdfContent));
-  },[prompete])
+  }, [prompete]);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -64,22 +71,8 @@ export default function Ai() {
 
   function editar(ref: string, ide: string) {
     setPrompete(ref);
-    setDescricao(ide)
+    setDescricao(ide);
   }
-
-  const handleClickButton = async (event) => {
-    setProcessando(true);
-    const aiResponse = await fetch("/api/generate-ai-completion", {
-      method: "POST",
-      body: JSON.stringify(promptMessage),
-    });
-
-    if (aiResponse.ok) {
-      const dataText = await aiResponse.json();
-      setProcessando(false);
-      setAiText(dataText.text);
-    }
-  };
 
   return (
     <Layout
@@ -96,9 +89,7 @@ export default function Ai() {
           placeholder="Selecione um arquivo PDF para ser analisado e utilizado pela IA."
         />
         <textarea cols="80" rows="10" value={pdfContent} readOnly></textarea>
-        <h3>
-          Selecione um dos prompts de IA abaixo clicando no ícone verde.
-        </h3>
+        <h3>Selecione um dos prompts de IA abaixo clicando no ícone verde.</h3>
         <div className=" bg-blue-400 text-center border-2 h-24 overflow-auto">
           {prompta?.map((pro) => {
             return (
@@ -117,15 +108,22 @@ export default function Ai() {
             );
           })}
         </div>
-        <button onClick={handleClickButton}>Gerar {descricao}</button>
-        {processando ? 
-          <div className='animate-pulse'>
-            <h3 >
-              Aguarde processando...</h3>
-          </div>
-           : 
-           <></>}
-        <textarea cols="80" rows="10" value={aiText} readOnly></textarea>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <textarea
+                cols="80"
+                rows="5"
+                value={completion}
+                readOnly
+              ></textarea>
+              <input value={input} onChange={handleInputChange} />
+            </div>
+            <button disabled={isLoading} type="submit">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </Layout>
   );
