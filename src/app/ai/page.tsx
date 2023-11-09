@@ -24,6 +24,8 @@ export default function Ai() {
   const [processando, setProcessando] = useState(false);
   const [descricao, setDescricao] = useState("");
 
+  const [busca, setBusca] = useState<Prompt[]>();
+  const [estabuscando, setEstabuscando] = useState(false);
   const [prompta, setPrompta] = useState<Prompt[]>();
 
   const { input, completion, isLoading, handleInputChange, handleSubmit } =
@@ -74,73 +76,127 @@ export default function Ai() {
     setDescricao(ide);
   }
 
+  function buscar(event: FormEvent) {
+    const palavra = event.target.value;
+    if (palavra != "") {
+      setEstabuscando(true);
+      const dados = new Array();
+      prompta?.map((pro) => {
+        const regra = new RegExp(event.target.value, "gi");
+        if (regra.test(pro.id)) {
+          dados.push(pro);
+        }
+      });
+      setBusca(dados);
+    } else {
+      setEstabuscando(false);
+    }
+  }
+
   return (
     <Layout
-      titulo="Chat GPT 4.0"
+      titulo="Chat GPT"
       subtitulo="Aqui você irá utilizar a IA ChatGPT para auxiliá-lo no seu dia a dia!"
       tipoHeight="h-screen"
     >
       <form onSubmit={handleSubmit}>
-
-        <div className="flex flex-col rounded-md
-text-white
-dark:text-black dark:placeholder-white">
-          <div className="flex justify-around bg-gray-900 py-8">
-            <div className="flex flex-col">
-              <h3 className="dark:text-white">Selecione um arquivo PDF para ser analisado e utilizado pela IA.</h3>
+        <div
+          className="flex rounded-md 
+          flex-col
+        text-white
+        dark:text-black dark:placeholder-white"
+        >
+          <div className="flex justify-around bg-gray-900 flex-wrap pb-8">
+            <div className="flex flex-col max-w-full">
+              <h3 className="dark:text-white">
+                Selecione um arquivo PDF para ser analisado e utilizado pela IA.
+              </h3>
               <input
                 type="file"
                 accept=".pdf"
                 onChange={(event) => {
-                  handleFileChange(event)
-                  handleInputChange(event)
+                  handleFileChange(event);
+                  handleInputChange(event);
                 }}
-
                 placeholder="Selecione um arquivo PDF para ser analisado e utilizado pela IA."
-                className="rounded-md bg-green-400 w-[90vh]"
+                className="rounded-md bg-green-400 w-full"
               />
-              <textarea cols="80" rows="10" value={pdfContent} readOnly
-                className="rounded-md"></textarea>
+              <textarea
+                cols="80"
+                rows="10"
+                value={pdfContent}
+                readOnly
+                className="rounded-md text-black"
+              ></textarea>
             </div>
             <div>
               <h3 className="dark:text-white">
-                Selecione um dos prompts de IA abaixo clicando no ícone verde.
+                Selecione um dos prompts de IA abaixo.
               </h3>
-              <div className=" bg-blue-400 text-center w-[90vh] border-2 h-24 overflow-auto">
-                {prompta?.map((pro) => {
-                  return (
-                    <div
-                      key={pro.id}
-                      className="flex justify-start text-base pl-1 pt-1 items-center"
-                    >
-                      <a
-                        className="cursor-pointer mr-1 text-green-800"
-                        onClick={() => editar(pro.prompt, pro.id)}
-                      >
-                        <TbSelect />
-                      </a>
-                      <p>{pro.id}</p>
-                    </div>
-                  );
-                })}
+              <div className="flex flex-col justify-between items-left">
+                <input
+                  type="text"
+                  className=" dark:bg-gray-400 dark:placeholder-white"
+                  placeholder="Busque por palavras chave."
+                  onChange={buscar}
+                />
+              </div>
+              <div className=" bg-blue-400 text-center w-[727px] h-[246px] border-2 overflow-auto">
+                {estabuscando
+                  ? busca?.map((pro) => {
+                      return (
+                        <div
+                          key={pro.id}
+                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                        >
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
+                        </div>
+                      );
+                    })
+                  : prompta?.map((pro) => {
+                      return (
+                        <div
+                          key={pro.id}
+                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                        >
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
-          <button disabled={isLoading} type="submit" className="w-48 mt-2 mb-2 h-12 rounded-md bg-green-400 self-center
-      hover:bg-green-500">Gerar {descricao}</button>
-          {processando ?
-            <div className='animate-pulse text-center select-none'>
-              <h3>
-                Aguarde processando... (Pode demorar até 3 minutos.)</h3>
-            </div>
-            :
-            <></>}
-          <textarea cols="80" rows="10" value={completion} readOnly
-            className="rounded-md"></textarea>
-        </div >
-      </form >
+          <button
+            disabled={isLoading}
+            type="submit"
+            className="w-48 mt-8 sm:mt-4 mb-4 h-12 rounded-md bg-green-400 self-center
+      hover:bg-green-500"
+          >
+            Gerar {descricao}
+          </button>
+          <textarea
+            cols="80"
+            rows="10"
+            value={completion}
+            readOnly
+            className="rounded-md lg:w-[1500px] w-[727px] self-center text-black"
+          ></textarea>
+        </div>
+      </form>
     </Layout>
-  )
+  );
   /*
     <Layout
       titulo="Chat GPT 4.0"
@@ -197,6 +253,4 @@ dark:text-black dark:placeholder-white">
       </form>
     </Layout>
           */
-
-
 }
