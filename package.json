@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.12.1",
     "@stripe/stripe-js": "^1.54.1",
     "@types/js-cookie": "^3.0.3",
     "ai": "^2.2.20",
