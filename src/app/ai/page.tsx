@@ -106,7 +106,7 @@ export default function Ai() {
         text-white
         dark:text-black dark:placeholder-white"
         >
-          <div className="flex justify-around bg-gray-900 flex-wrap pb-8">
+          <div className="flex flex-col justify-around bg-gray-900 flex-wrap pb-8">
             <div className="flex flex-col max-w-full">
               <h3 className="dark:text-white">
                 Selecione um arquivo PDF para ser analisado e utilizado pela IA.
@@ -141,40 +141,40 @@ export default function Ai() {
                   onChange={buscar}
                 />
               </div>
-              <div className=" bg-blue-400 text-center w-[727px] h-[246px] border-2 overflow-auto">
+              <div className=" bg-blue-400 text-center lg:w-[90vh] border-2 overflow-auto">
                 {estabuscando
                   ? busca?.map((pro) => {
-                      return (
-                        <div
-                          key={pro.id}
-                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                    return (
+                      <div
+                        key={pro.id}
+                        className="flex justify-start text-base pl-1 pt-1 items-center"
+                      >
+                        <a
+                          className="cursor-pointer mr-1 text-green-800"
+                          onClick={() => editar(pro.prompt, pro.id)}
                         >
-                          <a
-                            className="cursor-pointer mr-1 text-green-800"
-                            onClick={() => editar(pro.prompt, pro.id)}
-                          >
-                            <TbSelect />
-                          </a>
-                          <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                        </div>
-                      );
-                    })
+                          <TbSelect />
+                        </a>
+                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
+                      </div>
+                    );
+                  })
                   : prompta?.map((pro) => {
-                      return (
-                        <div
-                          key={pro.id}
-                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                    return (
+                      <div
+                        key={pro.id}
+                        className="flex justify-start text-base pl-1 pt-1 items-center"
+                      >
+                        <a
+                          className="cursor-pointer mr-1 text-green-800"
+                          onClick={() => editar(pro.prompt, pro.id)}
                         >
-                          <a
-                            className="cursor-pointer mr-1 text-green-800"
-                            onClick={() => editar(pro.prompt, pro.id)}
-                          >
-                            <TbSelect />
-                          </a>
-                          <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                        </div>
-                      );
-                    })}
+                          <TbSelect />
+                        </a>
+                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -187,11 +187,10 @@ export default function Ai() {
             Gerar {descricao}
           </button>
           <textarea
-            cols="80"
-            rows="10"
+
             value={completion}
             readOnly
-            className="rounded-md lg:w-[1500px] w-[727px] self-center text-black"
+            className="rounded-md w-full h-[400px] self-center text-black"
           ></textarea>
         </div>
       </form>
