@@ -1518,9 +1518,9 @@ export default function Home() {
                         </div>
                     </form>
                     {atualizando2 ?
-                        <button className="cursor-pointer w-32 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizardelito}>ATUALIZAR</button>
+                        <button className="cursor-pointer w-32 self-center sm:self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizardelito}>ATUALIZAR</button>
                         :
-                        <button className="cursor-pointer w-24 self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
+                        <button className="cursor-pointer w-24 self-center sm:self-end mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={gravardelito}>GRAVAR</button>
                     }
 
                     <h1 className="mt-4 sm:mt-0">Cadastro de Detração e Remições</h1>
@@ -1567,7 +1567,7 @@ export default function Home() {
                             </label>
                         </div>
                     </form>
-                    <div className="flex sm:justify-end flex-wrap">
+                    <div className="flex self-center sm:justify-end flex-wrap">
                         {atualizando3 ?
                             <button className="cursor-pointer w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded" onClick={atualizarremicao}>ATUALIZAR</button>
                             :
