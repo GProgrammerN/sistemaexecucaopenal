@@ -46,10 +46,10 @@ export default function Home() {
     } 
     
 
-    const serviceId = "service_zbyy5yp"
-    const templateId = "template_mlj4cpu"
+    const serviceId = process.env.EMAILJSSERVICEID
+    const templateId = process.env.EMAILJSTEMPLATEID
 
-    emailjs.init('Rtk3sJJY32T9F-kZY')
+    emailjs.init(process.env.EMAILJSINITCODE as string)
 
 
     useEffect(() => {
