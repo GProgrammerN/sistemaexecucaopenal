@@ -46,8 +46,8 @@ export default function Home() {
     } 
     
 
-    const serviceId = process.env.EMAILJSSERVICEID
-    const templateId = process.env.EMAILJSTEMPLATEID
+    const serviceId = process.env.EMAILJSSERVICEID as string
+    const templateId = process.env.EMAILJSTEMPLATEID as string
 
     emailjs.init(process.env.EMAILJSINITCODE as string)
 
