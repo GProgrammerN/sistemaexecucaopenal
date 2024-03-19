@@ -10,7 +10,7 @@ export default function Home() {
   const [xdataprogressao, setDataprogressao] = useState("//");
   const [xdatacondicional, setDatacondicional] = useState("//");
   const [xdatafim, setDatafim] = useState("//");
-  
+
   const [xtipocrime, setTipocrime] = useState("");
   const [xprirei, setPrirei] = useState("");
   const [xdiasPena, setDiasPena] = useState("");
@@ -68,9 +68,9 @@ export default function Home() {
     x = x.toString();
     setDatafim(x);
 
-    var xdatal      = new Date(xdataprisao);
-    var xdataini    = new Date(xdataprisao);
-    var xdatap      = new Date(xdataprisao);
+    var xdatal = new Date(xdataprisao);
+    var xdataini = new Date(xdataprisao);
+    var xdatap = new Date(xdataprisao);
     var c1 = 0;
     var d1 = 0;
     var calculap = 0;
@@ -82,40 +82,40 @@ export default function Home() {
       if (xprirei == "1") {
         calculal = (d1 / 3) * 1;
         calculap = (d1 * 16) / 100;
-    } else {
+      } else {
         calculal = (d1 / 2) * 1;
         calculap = (d1 * 20) / 100;
-    }
+      }
     }
     if (xtipocrime == "2") {
       if (xprirei == "1") {
         calculal = (d1 / 3) * 1;
         calculap = (d1 * 25) / 100;
-    } else {
+      } else {
         calculal = (d1 / 2) * 1;
         calculap = (d1 * 30) / 100;
-    }
+      }
     }
     if (xtipocrime == "3") {
       if (xprirei == "1") {
         calculal = (d1 * 2) / 3;
         calculap = (d1 * 40) / 100;
-    } else {
+      } else {
         calculal = d1;
         calculap = (d1 * 60) / 100;
-    }
+      }
     }
     if (xtipocrime == "4") {
       calculal = d1;
       if (xprirei == "1") {
         calculap = (d1 * 50) / 100;
-    } else {
+      } else {
         calculap = (d1 * 70) / 100;
-    }
+      }
     }
     if (xtipocrime == "5") {
-        calculap = (d1 * 1) / 6;
-        if (xprirei == "1") {
+      calculap = (d1 * 1) / 6;
+      if (xprirei == "1") {
         calculal = (d1 / 3) * 1;
       } else {
         calculal = (d1 / 2) * 1;
@@ -125,26 +125,26 @@ export default function Home() {
       if (xprirei == "1") {
         calculal = (d1 / 3) * 1;
         calculap = (d1 * 2) / 5;
-    } else {
+      } else {
         calculal = (d1 / 2) * 1;
         calculap = (d1 * 3) / 5;
-    }
+      }
     }
     if (xtipocrime == "7") {
       calculal = (d1 / 3) * 2;
       calculap = (d1 * 1) / 6;
     }
     if (xtipocrime == "8" || xtipocrime == "9") {
-        calculap = (d1 * 50) / 100;
-        if (xprirei == "1") {
+      calculap = (d1 * 50) / 100;
+      if (xprirei == "1") {
         calculal = (d1 / 3) * 2;
       } else {
         calculal = d1;
       }
     }
     if (xtipocrime == "10") {
-        calculap = (d1 * 1) / 8;
-        if (xprirei == "1") {
+      calculap = (d1 * 1) / 8;
+      if (xprirei == "1") {
         calculal = (d1 / 3) * 1;
       } else {
         calculal = (d1 / 2) * 1;
@@ -160,8 +160,8 @@ export default function Home() {
     y = y.toString();
     setDatacondicional(z);
     setDataprogressao(y);
-    alert(z+' '+y)
-}
+    alert(z + ' ' + y)
+  }
 
   return (
     <Layout
@@ -173,7 +173,7 @@ export default function Home() {
       <main className="flex justify-center items-center">
         <form
           className="mr-1 w-full flex flex-col border-2 rounded
-                lg:flex-row"
+                "
         >
           <div className="flex flex-row flex-wrap items-center p-1 dark:text-white text-black justify-between">
             <label className="mt-1 sm:mt-0">
@@ -316,8 +316,7 @@ export default function Home() {
         </form>
       </main>
       <form
-        className="border-2 flex flex-col rounded
-                    lg:flex-row"
+        className="border-2 mt-2 flex flex-col rounded"
       >
         <div className="flex flex-row flex-wrap justify-between items-center w-full lg:w-3/5">
           <label>
