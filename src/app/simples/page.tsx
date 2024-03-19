@@ -71,7 +71,6 @@ export default function Home() {
     var xdatal = new Date(xdataprisao);
     var xdataini = new Date(xdataprisao);
     var xdatap = new Date(xdataprisao);
-    var c1 = 0;
     var d1 = 0;
     var calculap = 0;
     var calculal = 0;
@@ -150,17 +149,17 @@ export default function Home() {
         calculal = (d1 / 2) * 1;
       }
     }
-    xdatal.setDate(xdatal.getDate() + calculal);
-    xdatap.setDate(xdatap.getDate() + calculap);
-    xdatal.setDate(xdatal.getDate() + 1 - remissao);
-    xdatap.setDate(xdatap.getDate() + 1 - remissao);
+    xdatal.setDate(xdatal.getDate() + calculal + 1 - remissao);
+    xdatap.setDate(xdatap.getDate() + calculap + 1 - remissao);
+//    xdatal.setDate(xdatal.getDate() + 1 - remissao);
+//    xdatap.setDate(xdatap.getDate() + 1 - remissao);
     var z = formatDate(xdatal);
     var y = formatDate(xdatap);
     z = z.toString();
     y = y.toString();
     setDatacondicional(z);
     setDataprogressao(y);
-    alert(z + ' ' + y)
+//    alert(z + ' ' + y)
   }
 
   return (
@@ -278,8 +277,37 @@ export default function Home() {
                 onChange={(event) => setDiasPena(event.target.value)}
               />
             </label>
-
-            <label className="mt-1 sm:mt-0">
+            <label>
+            Detração
+            <input
+              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
+              type="number"
+              value={xqtdREMI}
+              placeholder="Dias"
+              onChange={(event) => setQtdREMI(event.target.value)}
+            />
+          </label>
+          <label>
+            Remição Estudos
+            <input
+              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
+              type="number"
+              value={xqtdESTU}
+              placeholder="Horas"
+              onChange={(event) => setQtdESTU(event.target.value)}
+            />
+          </label>
+          <label>
+            Remição Trabalho
+            <input
+              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
+              type="number"
+              value={xqtdTRAB}
+              placeholder="Dias"
+              onChange={(event) => setQtdTRAB(event.target.value)}
+            />
+          </label>
+          <label className="mt-1 sm:mt-0">
               Progressão:
               <input
                 className="block dark:bg-gray-400 w-auto"
@@ -312,45 +340,8 @@ export default function Home() {
               />
             </label>
           </div>
-          <div className="flex flex-row flex-wrap justify-between items-center"></div>
         </form>
       </main>
-      <form
-        className="border-2 mt-2 flex flex-col rounded"
-      >
-        <div className="flex flex-row flex-wrap justify-between items-center w-full lg:w-3/5">
-          <label>
-            Detração
-            <input
-              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
-              type="number"
-              value={xqtdREMI}
-              placeholder="Dias"
-              onChange={(event) => setQtdREMI(event.target.value)}
-            />
-          </label>
-          <label>
-            Remição Estudos
-            <input
-              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
-              type="number"
-              value={xqtdESTU}
-              placeholder="Horas"
-              onChange={(event) => setQtdESTU(event.target.value)}
-            />
-          </label>
-          <label>
-            Remição Trabalho
-            <input
-              className="block w-16 dark:bg-gray-400 dark:placeholder-white"
-              type="number"
-              value={xqtdTRAB}
-              placeholder="Dias"
-              onChange={(event) => setQtdTRAB(event.target.value)}
-            />
-          </label>
-        </div>
-      </form>
       <div className="flex justify-center sm:justify-end flex-wrap">
         <button
           className="cursor-pointer ml-3 w-32 mt-3 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 border-4 text-white py-1 px-2 rounded"
