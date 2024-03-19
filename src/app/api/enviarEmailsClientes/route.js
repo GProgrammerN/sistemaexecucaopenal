@@ -1,19 +1,22 @@
 // pages/api/enviarEmailsClientes.js
-import { db } from '../../firebaseConfig';
+import { db } from '../../../firebase/firebase-admin-config'
 import nodemailer from 'nodemailer';
 
-export default async function handler(req, res) {
-    const clientesRef = db.collection('clientes');
-    const snapshot = await clientesRef.where('data', '>', 'x').get(); // Substitua 'x' pelo valor específico
+export async function POST(req: Request) {
 
+    const clientesRef = db.collection("usuario")
+    const snapshot = await clientesRef.where('email', '!=', '').get()
+    
     if (snapshot.empty) {
         return res.status(404).json({ message: 'Nenhum cliente encontrado.' });
     }
 
     let clientes = [];
     snapshot.forEach(doc => {
-        clientes.push({ id: doc.id, ...doc.data() });
+        clientes.push({ email: doc.email, ...doc.data() });
     });
+
+    console.log(clientes)
 
     await enviarEmailsParaClientes(clientes);
 

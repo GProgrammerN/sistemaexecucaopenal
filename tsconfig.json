@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "pages/api/extract-pdf/route.js"
-  ],
+, "src/app/api/enviarEmailsClientes/route.js"  ],
   "exclude": ["node_modules"]
 }

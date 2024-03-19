@@ -19,6 +19,7 @@ export default function MenuLateral() {
                 <Logo />
             </div>
             <ul className="flex-grow">
+                <MenuItem url="/simples" texto="Calc.Simples" icone={IconeCalculadora} />
                 <MenuItem url="/calculadora" texto="Sistema" icone={IconeCalculadora} />
                 <MenuItem url="/ai" texto="ChatGPT" icone={IconeAi} />
                 <MenuItem url="/assinatura" texto="Assinatura" icone={IconeAssinatura} />
