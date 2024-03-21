@@ -123,7 +123,7 @@ export default function Home() {
         var xassinatura = obj.assinatura;
         if (xassinatura !== "3") {
             alert("Você não tem acesso a esse módulo");
-            useRouter().push('/assinatura')
+            //useRouter().push('/assinatura')
             //window.location.assign("/assinatura");
         }
     });
