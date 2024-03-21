@@ -8,7 +8,7 @@ import { TbTrashOff } from "react-icons/tb"
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
 import { differenceInDays } from "date-fns";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 var clientes = [{}]
 clientes.shift()
@@ -117,14 +117,15 @@ export default function Home() {
     var id = firebase.auth().currentUser?.uid;
     const referencia = db.collection("usuario/").doc(id);
     referencia.get().then((doc) => {
-      const dados = doc.data();
-      const obj = JSON.parse(JSON.stringify(dados));
-      var datae = obj.expira;
-      var xassinatura = obj.assinatura;
-      if (xassinatura !== "3") {
-        alert("Você não tem acesso a esse módulo");
-        useRouter().push('/assinatura')
-      }
+        const dados = doc.data();
+        const obj = JSON.parse(JSON.stringify(dados));
+        var datae = obj.expira;
+        var xassinatura = obj.assinatura;
+        if (xassinatura !== "3") {
+            alert("Você não tem acesso a esse módulo");
+            useRouter().push('/assinatura')
+            //window.location.assign("/assinatura");
+        }
     });
 
     useEffect(() => {
