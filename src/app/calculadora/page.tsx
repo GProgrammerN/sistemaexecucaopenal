@@ -8,6 +8,7 @@ import { TbTrashOff } from "react-icons/tb"
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
 import { differenceInDays } from "date-fns";
+import { useRouter } from "next/router";
 
 var clientes = [{}]
 clientes.shift()
@@ -112,7 +113,7 @@ export default function Home() {
     if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
-/*
+
     var id = firebase.auth().currentUser?.uid;
     const referencia = db.collection("usuario/").doc(id);
     referencia.get().then((doc) => {
@@ -122,10 +123,10 @@ export default function Home() {
       var xassinatura = obj.assinatura;
       if (xassinatura !== "3") {
         alert("Você não tem acesso a esse módulo");
-        window.location.assign("/assinatura");
+        useRouter().push('/assinatura')
       }
     });
-*/
+
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
