@@ -85,10 +85,10 @@ export default function PreviewPage() {
           <div className="hidden mt-4
             lg:flex flex-row">
             <div className="w-96 p-8 bg-white text-center rounded-3xl pr-16 shadow-xl">
-              <h1 className="text-black font-semibold text-2xl">Mensal</h1>
+              <h1 className="text-black font-semibold text-2xl">Básico</h1>
               <p className="pt-2 tracking-wide">
                 <span className="text-gray-400 align-top">R$ </span>
-                <span className="text-3xl font-semibold text-black">30</span>
+                <span className="text-3xl font-semibold text-black">10</span>
                 <span className="text-gray-400 font-medium">/mês</span>
               </p>
               <hr className="mt-4 border-1" />
@@ -98,7 +98,7 @@ export default function PreviewPage() {
                     done
                   </span>
                   <span className="pl-2">
-                    <span className="text-black">Acesso ao Sistema de Execução Penal</span>
+                    <span className="text-black">Acesso a Calculadora Simplificada de Execução Penal.</span>
                   </span>
                 </p>
                 <p className="font-semibold text-gray-400 text-left pt-5">
@@ -121,11 +121,11 @@ export default function PreviewPage() {
             </div>
 
             <div className="w-80 p-8 bg-gray-900 text-center rounded-3xl text-white border-4 shadow-xl border-white transform scale-125">
-              <h1 className="text-white font-semibold text-2xl">Semestral</h1>
+              <h1 className="text-white font-semibold text-2xl">Intermediário</h1>
               <p className="pt-2 tracking-wide">
                 <span className="text-gray-400 align-top">R$ </span>
-                <span className="text-3xl font-semibold">150</span>
-                <span className="text-gray-400 font-medium">/semestre</span>
+                <span className="text-3xl font-semibold">30</span>
+                <span className="text-gray-400 font-medium">/mês</span>
               </p>
               <hr className="mt-4 border-1 border-gray-600" />
               <div className="pt-8">
@@ -134,7 +134,7 @@ export default function PreviewPage() {
                     done
                   </span>
                   <span className="pl-2">
-                    <span className="text-white">Acesso ao Sistema de Execução Penal</span>
+                    <span className="text-white">Acesso a Calculadora Simplificada de Execução Penal e ao ChatGPT.</span>
                   </span>
                 </p>
                 <p className="font-semibold text-gray-400 text-left pt-5">
@@ -154,18 +154,14 @@ export default function PreviewPage() {
                   </span>
                 </p>
               </div>
-              <div className="relative top-4">
-                <p className="bg-green-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">17% de Desconto</p>
-              </div>
-
             </div>
 
             <div className="w-96 p-8 bg-white text-center rounded-3xl pl-16 shadow-xl">
-              <h1 className="text-black font-semibold text-2xl">Anual</h1>
+              <h1 className="text-black font-semibold text-2xl">Completo</h1>
               <p className="pt-2 tracking-wide">
                 <span className="text-gray-400 align-top">R$ </span>
-                <span className="text-3xl text-black font-semibold">240</span>
-                <span className="text-gray-400 font-medium">/ano</span>
+                <span className="text-3xl text-black font-semibold">50</span>
+                <span className="text-gray-400 font-medium">/mês</span>
               </p>
               <hr className="mt-4 border-1" />
               <div className="pt-8">
@@ -174,7 +170,7 @@ export default function PreviewPage() {
                     done
                   </span>
                   <span className="pl-2">
-                    <span className="text-black">Acesso ao Sistema de Execução Penal</span>
+                    <span className="text-black">Acesso a Calculadora Simplificada de Execução Penal, ao Sistema de Execução Penal e ao ChatGPT.</span>
                   </span>
                 </p>
                 <p className="font-semibold text-gray-400 text-left pt-5">
@@ -193,9 +189,6 @@ export default function PreviewPage() {
                     east
                   </span>
                 </p>
-              </div>
-              <div className="relative top-4">
-                <p className="bg-green-700 font-semibold px-4 py-1 rounded-full uppercase text-xs">33% de Desconto</p>
               </div>
             </div>
           </div>

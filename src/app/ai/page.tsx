@@ -6,6 +6,7 @@ import Layout from "@/components/template/Layout";
 import firebase from "../../firebase/config";
 import { TbSelect } from "react-icons/tb";
 import { useCompletion } from "ai/react";
+import Cookies from "js-cookie";
 
 var prompts = [{}];
 prompts.shift();
@@ -27,6 +28,10 @@ export default function Ai() {
   const [busca, setBusca] = useState<Prompt[]>();
   const [estabuscando, setEstabuscando] = useState(false);
   const [prompta, setPrompta] = useState<Prompt[]>();
+
+  if (Cookies.get('bloqueio')) {
+    window.location.assign('/assinatura')
+  }
 
   const { input, completion, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
