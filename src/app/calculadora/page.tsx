@@ -115,8 +115,9 @@ export default function Home() {
         window.location.assign("/assinatura");
     }
 
-    const referencia = db.collection("usuario/").doc(id);
-    /*     referencia.get().then((doc) => {
+    useEffect(() => {
+        const referencia = db.collection("usuario/").doc(id);
+        referencia.get().then((doc) => {
             const dados = doc.data();
             const obj = JSON.parse(JSON.stringify(dados));
             var datae = obj.expira;
@@ -125,10 +126,9 @@ export default function Home() {
                 alert("Você não tem acesso a esse módulo");
                 window.location.assign('/assinatura');
             }
-            
+
         })
-        */
-    useEffect(() => {
+
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
