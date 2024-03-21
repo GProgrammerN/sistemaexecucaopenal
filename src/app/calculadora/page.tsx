@@ -108,25 +108,31 @@ export default function Home() {
 
     const [mostra, setMostra] = useState(false)
 
-    var id = firebase.auth().currentUser?.uid;
+
+    var currentUser = firebase.auth().currentUser;
+    if (!currentUser) {
+        window.location.assign("/autenticacao");
+        return;
+    }
+    var id = currentUser.uid;
 
     if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
 
-    db.collection("usuario/" + id).get()
-        .then((doc) => {
-            
-            const dados = doc.data();
-            const obj = JSON.parse(JSON.stringify(dados));
-            var datae = obj.expira;
-            var xassinatura = obj.assinatura;
-            if (xassinatura !== "3") {
-                alert("Você não tem acesso a esse módulo");
-                window.location.assign("/assinatura");
-            }
-            
-        })
+    const referencia = db.collection("usuario/").doc(id);
+    referencia.get().then((doc) => {
+        const dados = doc.data();
+        const obj = JSON.parse(JSON.stringify(dados));
+        var datae = obj.expira;
+        var xassinatura = obj.assinatura;
+        if (xassinatura !== "3") {
+            alert("Você não tem acesso a esse módulo");
+            window.location.assign("/assinatura");
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
