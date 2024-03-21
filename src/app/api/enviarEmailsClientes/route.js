@@ -1,4 +1,5 @@
 // pages/api/enviarEmailsClientes.js
+/*
 import { db } from '../../../firebase/firebase-admin-config'
 import nodemailer from 'nodemailer';
 
@@ -51,3 +52,4 @@ async function enviarEmailsParaClientes(clientes) {
     }
 }
 
+*/
