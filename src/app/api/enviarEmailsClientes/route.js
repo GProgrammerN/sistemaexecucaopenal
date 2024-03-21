@@ -2,11 +2,11 @@
 import { db } from '../../../firebase/firebase-admin-config'
 import nodemailer from 'nodemailer';
 
-export async function POST(req: Request) {
+export async function POST(req) {
 
     const clientesRef = db.collection("usuario")
     const snapshot = await clientesRef.where('email', '!=', '').get()
-    
+
     if (snapshot.empty) {
         return res.status(404).json({ message: 'Nenhum cliente encontrado.' });
     }
