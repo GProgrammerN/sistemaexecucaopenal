@@ -108,14 +108,14 @@ export default function Home() {
 
     const [mostra, setMostra] = useState(false)
 
-    var id = firebase.auth().currentUser?.uid
+    var id = firebase.auth().currentUser?.uid;
 
     if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
 
     const referencia = db.collection("usuario/").doc(id);
-    referencia.get().then((doc) => {
+    /*referencia.get().then((doc) => {
         const dados = doc.data();
         const obj = JSON.parse(JSON.stringify(dados));
         var datae = obj.expira;
@@ -125,7 +125,7 @@ export default function Home() {
             window.location.assign("/assinatura");
         }
     });
-
+*/
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
