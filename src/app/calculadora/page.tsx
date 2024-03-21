@@ -112,7 +112,7 @@ export default function Home() {
     if (Cookies.get('bloqueio')) {
         window.location.assign('/assinatura')
     }
-
+/*
     var id = firebase.auth().currentUser?.uid;
     const referencia = db.collection("usuario/").doc(id);
     referencia.get().then((doc) => {
@@ -125,8 +125,7 @@ export default function Home() {
         window.location.assign("/assinatura");
       }
     });
-  
-
+*/
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
