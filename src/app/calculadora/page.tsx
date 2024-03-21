@@ -111,13 +111,15 @@ export default function Home() {
 
     var currentUser = firebase.auth().currentUser;
     if (!currentUser) {
-        window.location.assign("/autenticacao");
+        //        window.location.assign("/autenticacao");
+        useRouter().push('/autenticacao');
         return;
     }
     var id = currentUser.uid;
 
     if (Cookies.get('bloqueio')) {
-        window.location.assign('/assinatura')
+        useRouter().push('/assinatura');
+        //        window.location.assign('/assinatura')
     }
 
     const referencia = db.collection("usuario/").doc(id);
@@ -128,7 +130,8 @@ export default function Home() {
         var xassinatura = obj.assinatura;
         if (xassinatura !== "3") {
             alert("Você não tem acesso a esse módulo");
-            window.location.assign("/assinatura");
+            useRouter().push('/assinatura');
+            //            window.location.assign("/assinatura");
         }
     }).catch((error) => {
         console.log(error)
