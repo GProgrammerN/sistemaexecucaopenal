@@ -20,7 +20,6 @@ export default function Ai() {
   const [pdfContent, setPdfContent] = useState("");
   const [promptMessage, setPromptMessage] = useState("");
   const [aiText, setAiText] = useState("");
-  const db = firebase.firestore();
   const [prompete, setPrompete] = useState("");
   const [processando, setProcessando] = useState(false);
   const [descricao, setDescricao] = useState("");
@@ -29,9 +28,23 @@ export default function Ai() {
   const [estabuscando, setEstabuscando] = useState(false);
   const [prompta, setPrompta] = useState<Prompt[]>();
 
-  if (Cookies.get('bloqueio')) {
-    window.location.assign('/assinatura')
+  if (Cookies.get("bloqueio")) {
+    window.location.assign("/assinatura");
   }
+
+  const db = firebase.firestore();
+  var id = firebase.auth().currentUser?.uid;
+  const referencia = db.collection("usuario/").doc(id);
+  referencia.get().then((doc) => {
+    const dados = doc.data();
+    const obj = JSON.parse(JSON.stringify(dados));
+    var datae = obj.expira;
+    var xassinatura = obj.assinatura;
+    if (xassinatura !== "2" && xassinatura !== "3") {
+      alert("Você não tem acesso a esse módulo");
+      window.location.assign("/assinatura");
+    }
+  });
 
   const { input, completion, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
@@ -149,37 +162,47 @@ export default function Ai() {
               <div className=" bg-blue-400 text-center lg:w-[90vh] border-2 overflow-auto">
                 {estabuscando
                   ? busca?.map((pro) => {
-                    return (
-                      <div
-                        key={pro.id}
-                        className="flex justify-start text-base pl-1 pt-1 items-center"
-                      >
-                        <a
-                          className="cursor-pointer mr-1 text-green-800"
-                          onClick={() => editar(pro.prompt, pro.id)}
+                      return (
+                        <div
+                          key={pro.id}
+                          className="flex justify-start text-base pl-1 pt-1 items-center"
                         >
-                          <TbSelect />
-                        </a>
-                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                      </div>
-                    );
-                  })
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p
+                            className="cursor-pointer select-none"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            {pro.id}
+                          </p>
+                        </div>
+                      );
+                    })
                   : prompta?.map((pro) => {
-                    return (
-                      <div
-                        key={pro.id}
-                        className="flex justify-start text-base pl-1 pt-1 items-center"
-                      >
-                        <a
-                          className="cursor-pointer mr-1 text-green-800"
-                          onClick={() => editar(pro.prompt, pro.id)}
+                      return (
+                        <div
+                          key={pro.id}
+                          className="flex justify-start text-base pl-1 pt-1 items-center"
                         >
-                          <TbSelect />
-                        </a>
-                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                      </div>
-                    );
-                  })}
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p
+                            className="cursor-pointer select-none"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            {pro.id}
+                          </p>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
@@ -192,7 +215,6 @@ export default function Ai() {
             Gerar {descricao}
           </button>
           <textarea
-
             value={completion}
             readOnly
             className="rounded-md w-full h-[400px] self-center text-black"

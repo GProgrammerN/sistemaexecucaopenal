@@ -6,12 +6,13 @@ export async function POST(request: Request) {
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        price: 'price_1NNKHQDJ0RG7mjZb4gYh3K0I',
+        price: 'price_1OwlRfDJ0RG7mjZbIu4XcZeE',
         quantity: 1,
       }
     ],
     mode: 'subscription',
-    success_url: `http://sistemaexecucaopenal.vercel.app/assinatura/?success=true`,
+    success_url: `http://localhost:3000/assinatura/?success3=true`,
+    //    success_url: `http://sistemaexecucaopenal.vercel.app/assinatura/?success3=true`,
     cancel_url: `http://sistemaexecucaopenal.vercel.app/assinatura/?canceled=true`,
   })
   return NextResponse.json(session.url)

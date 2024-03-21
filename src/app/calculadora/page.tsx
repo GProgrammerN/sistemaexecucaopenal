@@ -113,6 +113,19 @@ export default function Home() {
         window.location.assign('/assinatura')
     }
 
+    var id = firebase.auth().currentUser?.uid;
+    const referencia = db.collection("usuario/").doc(id);
+    referencia.get().then((doc) => {
+      const dados = doc.data();
+      const obj = JSON.parse(JSON.stringify(dados));
+      var datae = obj.expira;
+      var xassinatura = obj.assinatura;
+      if (xassinatura !== "3") {
+        alert("Você não tem acesso a esse módulo");
+        window.location.assign("/assinatura");
+      }
+    });
+  
 
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()

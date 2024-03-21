@@ -8,9 +8,24 @@ export default function PreviewPage() {
 
   if (typeof window !== "undefined") {
     const query = new URLSearchParams(window.location.search);
-    if (query.get('success')) {
+    if (query.get('success1')) {
       if (!cookies.get('assinatura')) {
-        let xid = cookies.set('assinatura', 'true')
+        let xid = cookies.set('assinatura', '1')
+      }
+      if (cookies.get('bloqueio')) {
+        cookies.remove('bloqueio')
+      }
+    }
+    if (query.get('success2')) {
+      if (!cookies.get('assinatura')) {
+        let xid = cookies.set('assinatura', '2')
+      }
+      if (cookies.get('bloqueio')) {
+        cookies.remove('bloqueio')
+      }
+    }if (query.get('success3')) {
+      if (!cookies.get('assinatura')) {
+        let xid = cookies.set('assinatura', '3')
       }
       if (cookies.get('bloqueio')) {
         cookies.remove('bloqueio')
