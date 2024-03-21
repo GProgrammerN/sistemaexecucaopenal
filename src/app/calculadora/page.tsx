@@ -111,7 +111,6 @@ export default function Home() {
 
     var currentUser = firebase.auth().currentUser;
     if (!currentUser) {
-        //        window.location.assign("/autenticacao");
         useRouter().push('/autenticacao');
         return;
     }
@@ -119,23 +118,40 @@ export default function Home() {
 
     if (Cookies.get('bloqueio')) {
         useRouter().push('/assinatura');
-        //        window.location.assign('/assinatura')
     }
 
     const referencia = db.collection("usuario/").doc(id);
-    referencia.get().then((doc) => {
-        const dados = doc.data();
-        const obj = JSON.parse(JSON.stringify(dados));
-        var datae = obj.expira;
-        var xassinatura = obj.assinatura;
-        if (xassinatura !== "3") {
-            alert("Você não tem acesso a esse módulo");
-            useRouter().push('/assinatura');
-            //            window.location.assign("/assinatura");
-        }
-    }).catch((error) => {
-        console.log(error)
-    })
+    referencia.get()
+        .then((doc) => {
+            const dados = doc.data();
+            const obj = JSON.parse(JSON.stringify(dados));
+            var datae = obj.expira;
+            var datar = new Date(datae);
+            var dataAtual = new Date();
+            var xassinatura = obj.assinatura;
+            if (xassinatura !== "3") {
+                alert("Você não tem acesso a esse módulo.");
+                window.location.assign("/assinatura");
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    /*
+        const referencia = db.collection("usuario/").doc(id);
+        referencia.get().then((doc) => {
+            const dados = doc.data();
+            const obj = JSON.parse(JSON.stringify(dados));
+            var datae = obj.expira;
+            var xassinatura = obj.assinatura;
+            if (xassinatura !== "3") {
+                alert("Você não tem acesso a esse módulo");
+                useRouter().push('/assinatura');
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        */
     useEffect(() => {
         db.collection("usuario/" + id + "/clientes/").get()
             .then((querySnapshot) => {
