@@ -114,7 +114,6 @@ export default function Home() {
         window.location.assign('/assinatura')
     }
 
-    var id = firebase.auth().currentUser?.uid;
     const referencia = db.collection("usuario/").doc(id);
     referencia.get().then((doc) => {
         const dados = doc.data();
@@ -123,8 +122,7 @@ export default function Home() {
         var xassinatura = obj.assinatura;
         if (xassinatura !== "3") {
             alert("Você não tem acesso a esse módulo");
-            //useRouter().push('/assinatura')
-            //window.location.assign("/assinatura");
+            window.location.assign("/assinatura");
         }
     });
 
