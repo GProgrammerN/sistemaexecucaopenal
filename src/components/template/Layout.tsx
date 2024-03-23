@@ -9,7 +9,7 @@ import ForcarAutenticacao from "../auth/ForcarAutenticacao";
 interface LayoutProps {
     titulo: string
     subtitulo: string
-    tipoHeight: string
+    tipoHeight?: string
     children?: any
 }
 
