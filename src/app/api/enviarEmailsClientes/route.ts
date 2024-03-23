@@ -31,13 +31,15 @@ function formatDate2(Ref: Date) {
 export async function POST(req: Request) {
   const clientesRef = db.collection("usuario");
   const snapshot = await clientesRef.where("email", "!=", "").get();
+
   if (snapshot.empty) {
     return NextResponse.json({ message: "Nenhum cliente encontrado." });
   } else {
-    console.log(snapshot);
+//    console.log(snapshot);
   }
 
   let usuarios = [];
+
   snapshot.forEach((doc) => {
     usuarios.push({
       email: doc.data().email,
@@ -51,10 +53,9 @@ export async function POST(req: Request) {
   for (let contador = 0; contador < tamanho; contador++) {
     var { user, email } = usuarios[contador];
 
-    let vid = user;
     let mail = email;
 
-    db.collection("usuario/" + vid + "/clientes/")
+    db.collection("usuario/" + user + "/clientes/")
       .get()
       .then(async (querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -80,11 +81,9 @@ export async function POST(req: Request) {
             clientes2.push(y);
           }
         });
-        let cli = clientes2;
-        let xmail = mail;
         var xmessage = "";
-        const obj = JSON.parse(JSON.stringify(cli));
-        console.log(xmail, obj);
+        const obj = JSON.parse(JSON.stringify(clientes2));
+//        console.log(mail, obj);
         obj?.forEach((ob) => {
           xmessage =
             xmessage +
@@ -104,7 +103,9 @@ export async function POST(req: Request) {
             "\n";
         });
         if (xmessage != "") {
-          console.log(xmail, xmessage);
+
+//          console.log("mandou email para",mail, xmessage);
+          
           const { data } = await axios.post(
             "https://api.emailjs.com/api/v1.0/email/send",
             {
@@ -112,7 +113,7 @@ export async function POST(req: Request) {
               template_id: templateId,
               user_id: userId,
               template_params: {
-                email: xmail,
+                email: mail,
                 message: xmessage,
               }
             },
