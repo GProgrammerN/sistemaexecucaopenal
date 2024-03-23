@@ -6,6 +6,7 @@ import Layout from "@/components/template/Layout";
 import firebase from "../../firebase/config";
 import { TbSelect } from "react-icons/tb";
 import { useCompletion } from "ai/react";
+import Cookies from "js-cookie";
 
 var prompts = [{}];
 prompts.shift();
@@ -19,7 +20,6 @@ export default function Ai() {
   const [pdfContent, setPdfContent] = useState("");
   const [promptMessage, setPromptMessage] = useState("");
   const [aiText, setAiText] = useState("");
-  const db = firebase.firestore();
   const [prompete, setPrompete] = useState("");
   const [processando, setProcessando] = useState(false);
   const [descricao, setDescricao] = useState("");
@@ -27,6 +27,24 @@ export default function Ai() {
   const [busca, setBusca] = useState<Prompt[]>();
   const [estabuscando, setEstabuscando] = useState(false);
   const [prompta, setPrompta] = useState<Prompt[]>();
+
+  if (Cookies.get("bloqueio")) {
+    window.location.assign("/assinatura");
+  }
+
+  const db = firebase.firestore();
+  var id = firebase.auth().currentUser?.uid;
+  const referencia = db.collection("usuario/").doc(id);
+  referencia.get().then((doc) => {
+    const dados = doc.data();
+    const obj = JSON.parse(JSON.stringify(dados));
+    var datae = obj.expira;
+    var xassinatura = obj.assinatura;
+    if (xassinatura !== "2" && xassinatura !== "3") {
+      alert("Você não tem acesso a esse módulo");
+      window.location.assign("/assinatura");
+    }
+  });
 
   const { input, completion, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
@@ -153,12 +171,21 @@ export default function Ai() {
                           className="cursor-pointer mr-1 text-green-800"
                           onClick={() => editar(pro.prompt, pro.id)}
                         >
-                          <TbSelect />
-                        </a>
-                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                      </div>
-                    );
-                  })
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p
+                            className="cursor-pointer select-none"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            {pro.id}
+                          </p>
+                        </div>
+                      );
+                    })
                   : prompta?.map((pro) => {
                     return (
                       <div
@@ -169,12 +196,21 @@ export default function Ai() {
                           className="cursor-pointer mr-1 text-green-800"
                           onClick={() => editar(pro.prompt, pro.id)}
                         >
-                          <TbSelect />
-                        </a>
-                        <p className='cursor-pointer select-none' onClick={() => editar(pro.prompt, pro.id)} >{pro.id}</p>
-                      </div>
-                    );
-                  })}
+                          <a
+                            className="cursor-pointer mr-1 text-green-800"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            <TbSelect />
+                          </a>
+                          <p
+                            className="cursor-pointer select-none"
+                            onClick={() => editar(pro.prompt, pro.id)}
+                          >
+                            {pro.id}
+                          </p>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>
@@ -187,7 +223,6 @@ export default function Ai() {
             Gerar {descricao}
           </button>
           <textarea
-
             value={completion}
             readOnly
             className="rounded-md w-full h-[400px] self-center text-black"
@@ -196,60 +231,4 @@ export default function Ai() {
       </form>
     </Layout>
   );
-  /*
-    <Layout
-      titulo="Chat GPT 4.0"
-      subtitulo="Aqui você irá utilizar a IA ChatGPT para auxiliá-lo no seu dia a dia!"
-      tipoHeight="h-screen"
-    >
-      <form onSubmit={handleSubmit}>
-        <h3>Selecione um arquivo PDF para ser analisado e utilizado pela IA.</h3>
-        <div className="flex flex-col dark:text-black text-white dark:bg-gray-400 dark:placeholder-white">
-          <input
-            type="file"
-            accept=".pdf"
-            value={input}
-            onChange={(event) => {
-              handleFileChange(event)
-              handleInputChange(event)
-            }}
-            placeholder="Selecione um arquivo PDF para ser analisado e utilizado pela IA."
-          />
-          <textarea cols="80" rows="10" value={pdfContent} readOnly></textarea>
-          <h3>Selecione um dos prompts de IA abaixo clicando no ícone verde.</h3>
-          <div className=" bg-blue-400 text-center border-2 h-24 overflow-auto">
-            {prompta?.map((pro) => {
-              return (
-                <div
-                  key={pro.id}
-                  className="flex justify-start text-base pl-1 pt-1 items-center"
-                >
-                  <a
-                    className="cursor-pointer mr-1 text-green-800"
-                    onClick={() => editar(pro.prompt, pro.id)}
-                  >
-                    <TbSelect />
-                  </a>
-                  <p>{pro.id}</p>
-                </div>
-              );
-            })}
-          </div>
-          <div>
-            <div>
-              <textarea
-                cols="80"
-                rows="5"
-                value={completion}
-                readOnly
-              ></textarea>
-            </div>
-            <button disabled={isLoading} type="submit">
-              Submit
-            </button>
-          </div>
-        </div>
-      </form>
-    </Layout>
-          */
 }

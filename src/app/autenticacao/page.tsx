@@ -62,7 +62,7 @@ export default function Autenticacao() {
                     var datar = new Date(datae)
                     var dataAtual = new Date()
                     var xassinatura = obj.assinatura
-                    if (datar <= dataAtual && xassinatura !== 'true') {
+                    if (datar <= dataAtual && xassinatura === '') {
                         alert("Validade do sistema expirada! Renove a assinatura.")
                         if (!Cookies.get('bloqueio')) {
                             Cookies.set('bloqueio', 'true')

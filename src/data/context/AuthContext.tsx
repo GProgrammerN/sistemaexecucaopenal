@@ -40,9 +40,10 @@ function gerenciarCookie(logado: boolean) {
     if (Cookies.get('assinatura')) {
         const db = firebase.firestore()
         const id = firebase.auth().currentUser?.uid
+        const assina = Cookies.get('assinatura')
         Cookies.remove('assinatura')
         db.collection('usuario').doc(id).update({
-            assinatura: 'true'
+            assinatura: assina
         })
     }
 }
