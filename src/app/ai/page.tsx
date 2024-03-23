@@ -115,8 +115,7 @@ export default function Ai() {
     <Layout
       titulo="Chat GPT"
       subtitulo="Aqui você irá utilizar a IA ChatGPT para auxiliá-lo no seu dia a dia!"
-      tipoHeight="h-screen"
-    >
+      tipoHeight="h-screen">
       <form onSubmit={handleSubmit}>
         <div
           className="flex rounded-md 
@@ -183,9 +182,9 @@ export default function Ai() {
                           >
                             {pro.id}
                           </p>
-                        </div>
-                      );
-                    })
+                      </div>
+                    );
+                  })
                   : prompta?.map((pro) => {
                     return (
                       <div
@@ -208,9 +207,9 @@ export default function Ai() {
                           >
                             {pro.id}
                           </p>
-                        </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
