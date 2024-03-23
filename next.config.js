@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ["pdf-parse"],
-  },
+    serverComponentsExternalPackages: [
+      "pdf-parse",
+      '@react-email/components',
+      '@react-email/render',
+      '@react-email/tailwind'
+]
+  },
 };
 
 module.exports = {
