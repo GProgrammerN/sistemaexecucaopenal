@@ -162,10 +162,14 @@ export default function Ai() {
               <div className=" bg-blue-400 text-center lg:w-[90vh] border-2 overflow-auto">
                 {estabuscando
                   ? busca?.map((pro) => {
-                      return (
-                        <div
-                          key={pro.id}
-                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                    return (
+                      <div
+                        key={pro.id}
+                        className="flex justify-start text-base pl-1 pt-1 items-center"
+                      >
+                        <a
+                          className="cursor-pointer mr-1 text-green-800"
+                          onClick={() => editar(pro.prompt, pro.id)}
                         >
                           <a
                             className="cursor-pointer mr-1 text-green-800"
@@ -183,10 +187,14 @@ export default function Ai() {
                       );
                     })
                   : prompta?.map((pro) => {
-                      return (
-                        <div
-                          key={pro.id}
-                          className="flex justify-start text-base pl-1 pt-1 items-center"
+                    return (
+                      <div
+                        key={pro.id}
+                        className="flex justify-start text-base pl-1 pt-1 items-center"
+                      >
+                        <a
+                          className="cursor-pointer mr-1 text-green-800"
+                          onClick={() => editar(pro.prompt, pro.id)}
                         >
                           <a
                             className="cursor-pointer mr-1 text-green-800"
