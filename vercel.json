@@ -1,6 +1,6 @@
 {
   "crons": [{
-    "path": "http://sistemaexecucaopenal.vercel.app/api/cron",
+    "path": "/api/cron",
     "schedule": "0 5 * * 1"
   }]
 }
