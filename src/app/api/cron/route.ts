@@ -104,9 +104,9 @@ export async function GET(req: Request) {
         });
         if (xmessage != "") {
 
-//          console.log("mandou email para",mail, xmessage);
+          console.log("mandou email para",mail, xmessage);
           
-          const { data } = await axios.post(
+          /*const { data } = await axios.post(
             "https://api.emailjs.com/api/v1.0/email/send",
             {
               service_id: serviceId,
@@ -122,7 +122,7 @@ export async function GET(req: Request) {
                 "Content-Type": "application/json",
               },
             }
-          );
+          );*/
         }
         clientes2 = [];
       });
