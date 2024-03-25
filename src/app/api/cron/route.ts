@@ -33,9 +33,9 @@ export async function GET(req: Request) {
   const snapshot = await clientesRef.where("email", "!=", "").get();
 
   if (snapshot.empty) {
-    return NextResponse.json({ message: "Nenhum cliente encontrado." });
+    return new Response(JSON.stringify({ message: "Nenhum cliente encontrado." }));
   } else {
-//    console.log(snapshot);
+    //    console.log(snapshot);
   }
 
   let usuarios = [];
@@ -83,7 +83,7 @@ export async function GET(req: Request) {
         });
         var xmessage = "";
         const obj = JSON.parse(JSON.stringify(clientes2));
-//        console.log(mail, obj);
+        //        console.log(mail, obj);
         obj?.forEach((ob) => {
           xmessage =
             xmessage +
@@ -104,9 +104,9 @@ export async function GET(req: Request) {
         });
         if (xmessage != "") {
 
-          console.log("mandou email para",mail, xmessage);
-          
-          /*const { data } = await axios.post(
+          console.log("mandou email para", mail, xmessage);
+
+          const { data } = await axios.post(
             "https://api.emailjs.com/api/v1.0/email/send",
             {
               service_id: serviceId,
@@ -122,9 +122,10 @@ export async function GET(req: Request) {
                 "Content-Type": "application/json",
               },
             }
-          );*/
+          );
         }
         clientes2 = [];
       });
   }
+  return new Response(JSON.stringify({ message: "Processamento concluído." }), { status: 200 });
 }
