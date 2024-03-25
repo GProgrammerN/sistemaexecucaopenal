@@ -28,7 +28,7 @@ function formatDate2(Ref: Date) {
   }
 }
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   const clientesRef = db.collection("usuario");
   const snapshot = await clientesRef.where("email", "!=", "").get();
 
