@@ -33,9 +33,7 @@ export async function GET(req: Request) {
   const snapshot = await clientesRef.where("email", "!=", "").get();
 
   if (snapshot.empty) {
-    return NextResponse.json({ message: "Nenhum cliente encontrado." });
-  } else {
-//    console.log(snapshot);
+    return new Response(JSON.stringify({ message: "Nenhum cliente encontrado." }), { status: 200 });
   }
 
   let usuarios = [];
@@ -49,82 +47,67 @@ export async function GET(req: Request) {
     });
   });
 
-  var tamanho = usuarios?.length;
-  for (let contador = 0; contador < tamanho; contador++) {
-    var { user, email } = usuarios[contador];
-
+  for (const usuario of usuarios) {
+    const { user, email } = usuario;
     let mail = email;
 
-    db.collection("usuario/" + user + "/clientes/")
-      .get()
-      .then(async (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var y = doc.data();
-          const obj = JSON.parse(JSON.stringify(y));
-          var datap1 = obj.dataprogressao;
-          var datap2 = obj.dataprogressao2;
-          var datalc = obj.datacondicional;
-          var datar1 = new Date(datap1);
-          var datar2 = new Date(datap2);
-          var datarc = new Date(datalc);
-          var dataAtual = new Date();
+    try {
+      const querySnapshot = await db.collection("usuario/" + user + "/clientes/").get();
 
-          let d1 = differenceInDays(datar1, dataAtual);
-          let d2 = differenceInDays(datar2, dataAtual);
-          let d3 = differenceInDays(datarc, dataAtual);
+      let clientes = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const { dataprogressao, dataprogressao2, datacondicional } = data;
+        const datar1 = new Date(dataprogressao);
+        const datar2 = new Date(dataprogressao2);
+        const datarc = new Date(datacondicional);
+        const dataAtual = new Date();
 
-          if (
-            (d1 <= 60 && d1 >= 0) ||
-            (d2 <= 60 && d2 >= 0) ||
-            (d3 <= 60 && d3 >= 0)
-          ) {
-            clientes2.push(y);
-          }
-        });
-        var xmessage = "";
-        const obj = JSON.parse(JSON.stringify(clientes2));
-//        console.log(mail, obj);
-        obj?.forEach((ob) => {
-          xmessage =
-            xmessage +
-            ob.nome +
-            " " +
-            ob.presidio +
-            " " +
-            ob.matricula +
-            " " +
-            ob.processo +
-            " 1ª Progressão: " +
-            formatDate2(ob.dataprogressao) +
-            " 2ª Progressão: " +
-            formatDate2(ob.dataprogressao2) +
-            " Condicional: " +
-            formatDate2(ob.datacondicional) +
-            "\n";
-        });
-        if (xmessage != "") {
+        let d1 = differenceInDays(datar1, dataAtual);
+        let d2 = differenceInDays(datar2, dataAtual);
+        let d3 = differenceInDays(datarc, dataAtual);
 
-          console.log("mandou email para",mail, xmessage);
-          
-          /*const { data } = await axios.post(
-            "https://api.emailjs.com/api/v1.0/email/send",
-            {
-              service_id: serviceId,
-              template_id: templateId,
-              user_id: userId,
-              template_params: {
-                email: mail,
-                message: xmessage,
-              }
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );*/
+        if ((d1 <= 60 && d1 >= 0) || (d2 <= 60 && d2 >= 0) || (d3 <= 60 && d3 >= 0)) {
+          clientes.push(data);
         }
-        clientes2 = [];
       });
+
+      let xmessage = "";
+      clientes.forEach((cliente) => {
+        xmessage +=
+          `${cliente.nome} ${cliente.presidio} ${cliente.matricula} ${cliente.processo} ` +
+          `1ª Progressão: ${formatDate2(cliente.dataprogressao)} ` +
+          `2ª Progressão: ${formatDate2(cliente.dataprogressao2)} ` +
+          `Condicional: ${formatDate2(cliente.datacondicional)}\n`;
+      });
+
+      if (xmessage !== "") {
+        console.log("mandou email para", mail, xmessage);
+        const response = await axios.post(
+          "https://api.emailjs.com/api/v1.0/email/send",
+          {
+            service_id: serviceId,
+            template_id: templateId,
+            user_id: userId,
+            template_params: {
+              email: mail,
+              message: xmessage,
+            },
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        // Você pode adicionar alguma lógica aqui para lidar com a resposta da API, se necessário.
+      }
+    } catch (error) {
+      // Aqui você pode tratar o erro, por exemplo, registrando-o em um arquivo de log.
+      console.error("Erro ao processar o usuário:", user, error);
+    }
   }
+  return new Response(JSON.stringify({ message: "Processamento concluído." }), { status: 200 });
 }
+
